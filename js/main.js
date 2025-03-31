@@ -101,8 +101,8 @@ function afficher()
         px -= pvx;
     if (moveForward)
         py -= pvy;
-    // if (moveBack)
-    //     py += pvy;
+    if (moveBack)
+        py += pvy;
     
     console.log(px, py);
     play.fillRect((px), (py), 20, 20);
