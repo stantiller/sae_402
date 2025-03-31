@@ -2,6 +2,10 @@
 var H = window.innerHeight;
 var W = window.innerWidth;
 
+// collisions murs
+let Wa = W - 20;
+let Ha = H - 20;
+
 // taille et selection des zones
 const background = document.querySelector(".background");
 const ennemy = document.querySelector(".ennemyZone");
@@ -22,8 +26,18 @@ let boss = ennemy.getContext("2d");
 let bul = bullets.getContext("2d");
 let play = player.getContext("2d");
 
+// player
+let moveRight = false;
+let moveLeft = false;
+let moveForward = false;
+let moveBack = false;
+let px = W/2-10;
+let py = H-200;
+let pvx = 2;
+let pvy = 2;
+
 // bullets
-const nbrBullets = 4;
+const nbrBullets = 2;
 var tripleBullets = [];
 let xValue = 200;
 for (let i = 0; i < nbrBullets; i++)
@@ -58,22 +72,6 @@ for (let i = 0; i < nbrBullets; i++)
     );
     xValue -= 40;
 }
-// let x = 200;
-// let xg = 200;
-// let xd = 200;
-// let y = 10;
-// let vy = 2;
-// let vx = 0.5;
-
-// player
-let moveRight = false;
-let moveLeft = false;
-let moveForward = false;
-let moveBack = false;
-let px = W/2-10;
-let py = H-200;
-let pvx = 2;
-let pvy = 2;
 
 
 function playerControl(event)
@@ -167,11 +165,8 @@ function afficher()
 
         });
     });
-    
 
-    let Wa = W - 20;
-    let Ha = H - 20;
-
+    // mouvement joueur
     if (moveRight)
         px += pvx;
     if (moveLeft)
@@ -181,6 +176,7 @@ function afficher()
     if (moveBack)
         py += pvy;
 
+    // collisions mur
     if (px < 0){
         px = 0;
     }
@@ -194,23 +190,9 @@ function afficher()
         py = Ha;
     }
     
-    // console.log(px, py);
-
+    // affichage joueur
     play.fillRect((px), (py), 20, 20);
-    
-    // if (point.x < 0 || point.x > W) 
-    //     point.vx = -point.vx;
-    // if (point.y < 0 || point.y > H) 
-    //     point.vy = -point.vy;
 
-    // if (point.x < 0) 
-    //     point.x = W;
-    // if (point.x > W)
-    //     point.x = 0;
-    // if (point.y < 0 || point.y > H) 
-    //     point.y = H;
-    // if (point.y > H)
-    //     point.y = 0;
 
     window.requestAnimationFrame(afficher);
 }
