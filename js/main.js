@@ -124,13 +124,13 @@ function afficher()
         bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
 
-        let distx = px - bullet.x;
-        let disty = py - bullet.y
-
-        if (distx < 5 || distx < -5 && disty < 5 || disty < -5){
+        let distx = Math.abs(px - bullet.x);
+        let disty = Math.abs(py - bullet.y);
+        
+        if (distx < 5 && disty < 5) {
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
-        }
+        }        
 
     });
 
@@ -140,13 +140,13 @@ function afficher()
         bullet.x += bullet.vx;
         bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
-        let distx = px - bullet.x;
-        let disty = py - bullet.y
-
-        if (distx < 5 || distx < -5 && disty < 5 || disty < -5){
+        let distx = Math.abs(px - bullet.x);
+        let disty = Math.abs(py - bullet.y);
+        
+        if (distx < 5 && disty < 5) {
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
-        }
+        }        
 
     });
 
@@ -156,13 +156,13 @@ function afficher()
         bullet.x -= bullet.vx;
         bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
-        let distx = px - bullet.x;
-        let disty = py - bullet.y
-
-        if (distx < 5 || distx < -5 && disty < 5 || disty < -5){
+        let distx = Math.abs(px - bullet.x);
+        let disty = Math.abs(py - bullet.y);
+        
+        if (distx < 5 && disty < 5) {
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
-        }
+        }        
 
     });
 
