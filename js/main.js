@@ -1,3 +1,176 @@
+// taille de l'écran
+var H = window.innerHeight;
+var W = window.innerWidth;
+
+// taille et selection des zones
+const background = document.querySelector(".background");
+const ennemy = document.querySelector(".ennemyZone");
+const bullets = document.querySelector(".bulletZone");
+const player = document.querySelector(".playerZone");
+background.height = H;
+background.width = W;
+ennemy.height = H;
+ennemy.width = W;
+bullets.height = H;
+bullets.width = W;
+player.height = H;
+player.width = W;
+
+// variables de contexte
+let bg = background.getContext("2d");
+let boss = ennemy.getContext("2d");
+let bul = bullets.getContext("2d");
+let play = player.getContext("2d");
+
+// bullet speed
+let x = 200;
+let xg = 200;
+let xd = 200;
+let y = 10;
+let vy = 2;
+let xyg = -0.5;
+let xyd = 0.5;
+
+// player speed
+let moveRight = false;
+let moveLeft = false;
+let moveForward = false;
+let moveBack = false;
+let px = W/2-10;
+let py = H-200;
+let pvx = 1;
+let pvy = 1;
+
+function playerControl(event)
+{
+
+    let gamma = event.gamma;
+    let beta = event.beta;
+
+    console.log(gamma, beta);
+
+    if (gamma > 25)
+        // droite
+        moveRight = true;
+    if (gamma < -25)
+        // gauche
+        moveLeft = true;
+    if (beta < 0)
+        // avant
+        moveForward = true;
+    if (beta > 35)
+        // arriere
+        moveBack = true;
+
+    if (gamma < 25)
+        // droite
+        moveRight = false;
+    if (gamma > -25)
+        // gauche
+        moveLeft = false;
+    if (beta > 0)
+        // avant
+        moveForward = false;
+    if (beta < 35)
+        // arriere
+        moveBack = false;
+}
+
+
+
+function afficher()
+{
+    bg.fillStyle = "skyblue";
+    bg.fillRect(0, 0, W, H);
+    bul.clearRect(0, 0, W, H);
+    play.clearRect(0, 0, W, H);
+
+    // point.x += vx;
+    y += vy;
+    xg += xyg;
+    xd += xyd;
+    
+    bul.fillStyle = "black";
+    bul.fillRect((x), (y), 8, 8);
+    bul.fillRect((xg), (y), 8, 8);
+    bul.fillRect((xd), (y), 8, 8);
+
+    if (moveRight)
+        px += pvx;
+    if (moveLeft)
+        px -= pvx;
+    if (moveForward)
+        py -= pvy;
+    // if (moveBack)
+    //     py += pvy;
+    
+    console.log(px, py);
+    play.fillRect((px), (py), 20, 20);
+    
+    // if (point.x < 0 || point.x > W) 
+    //     point.vx = -point.vx;
+    // if (point.y < 0 || point.y > H) 
+    //     point.vy = -point.vy;
+
+    // if (point.x < 0) 
+    //     point.x = W;
+    // if (point.x > W)
+    //     point.x = 0;
+    // if (point.y < 0 || point.y > H) 
+    //     point.y = H;
+    // if (point.y > H)
+    //     point.y = 0;
+
+    window.requestAnimationFrame(afficher);
+}
+window.addEventListener("deviceorientation", playerControl, true);
+afficher();
+
+
+/*
+var move = 0
+
+function wow()
+{
+    ctx.fillStyle = "skyblue";
+    ctx.fillRect(0, 0, W, H);
+    ctx.beginPath();
+    ctx.moveTo(10, (200 + move));
+    ctx.lineTo(200, 10);
+    ctx.lineTo((300 + move), 300);
+    ctx.stroke();
+    move = move + 1;
+    if (move == 300)
+    {
+        move = 1;
+        ctx.clearRect(0, 0, W, H);
+    }
+    affichage();
+}
+
+wow();
+
+
+const nbrPoints = 5;
+var points = [];
+
+for (let i = 0; i < nbrPoints; i++)
+{
+    points.push(
+        {   x: 200,
+            xg: 200,
+            xd: 200,
+            y: 100
+            // vx: Math.random()*4-2,
+            // vy: Math.random()*4-2
+        }
+    );
+}
+    
+*/
+
+
+
 // // Config
 
 // const dX = 10;
@@ -86,145 +259,3 @@
 //     y += vY;
 //     block.style.transform = `translate(${x}px, ${y}px)`;
 // }
-
-
-
-
-var H = window.innerHeight;
-var W = window.innerWidth;
-const nbrPoints = 5;
-var points = [];
-
-const background = document.querySelector(".background");
-const ennemy = document.querySelector(".ennemyZone");
-const bullets = document.querySelector(".bulletZone");
-const player = document.querySelector(".playerZone");
-background.height = H;
-background.width = W;
-ennemy.height = H;
-ennemy.width = W;
-bullets.height = H;
-bullets.width = W;
-player.height = H;
-player.width = W;
-
-let bg = background.getContext("2d");
-let boss = ennemy.getContext("2d");
-let bul = bullets.getContext("2d");
-let play = player.getContext("2d");
-
-let vy = 2;
-let xyg = -0.5;
-let xyd = 0.5;
-
-// player speed
-let px = W/2;
-let py = H-200;
-let pvx = 1;
-let pvy = 1;
-
-window.addEventListener("deviceorientation", playerControl, true);
-
-function playerControl(event)
-{
-    let gamma = event.gamma;
-    let beta = event.beta;
-
-    console.log(gamma, beta);
-
-    if (gamma > 25){
-        // droite
-        px + pvx;
-    }
-    if (gamma < -25){
-        // gauche
-        px - pvx;
-    }
-    if (beta < 5){
-        // avant
-        py - pvy;
-    }
-    if (beta > 40){
-        // arriere
-        py + pvy;
-    }
-}
-
-bul.lineWidth = 4;
-
-for (let i = 0; i < nbrPoints; i++)
-{
-    points.push(
-        {   x: 200,
-            xg: 200,
-            xd: 200,
-            y: 100
-            // vx: Math.random()*4-2,
-            // vy: Math.random()*4-2
-        }
-    );
-}
-
-function afficher()
-{
-    bg.fillStyle = "skyblue";
-    bg.fillRect(0, 0, W, H);
-    bul.clearRect(0, 0, W, H);
-    play.clearRect(0, 0, W, H);
-    points.forEach(point => {
-
-        // point.x += vx;
-        point.y += vy;
-        point.xg += xyg;
-        point.xd += xyd;
-        
-        bul.fillStyle = "black";
-        bul.fillRect((point.x), (point.y), 8, 8)
-        bul.fillRect((point.xg), (point.y), 8, 8)
-        bul.fillRect((point.xd), (point.y), 8, 8)
-
-        playerControl();
-        play.fillRect((px), (py), 20, 20);
-        
-        // if (point.x < 0 || point.x > W) 
-        //     point.vx = -point.vx;
-        // if (point.y < 0 || point.y > H) 
-        //     point.vy = -point.vy;
-    
-        // if (point.x < 0) 
-        //     point.x = W;
-        // if (point.x > W)
-        //     point.x = 0;
-        // if (point.y < 0 || point.y > H) 
-        //     point.y = H;
-        // if (point.y > H)
-        //     point.y = 0;
-       
-    });
-    window.requestAnimationFrame(afficher);
-}
-afficher();
-
-
-/*
-var move = 0
-
-function wow()
-{
-    ctx.fillStyle = "skyblue";
-    ctx.fillRect(0, 0, W, H);
-    ctx.beginPath();
-    ctx.moveTo(10, (200 + move));
-    ctx.lineTo(200, 10);
-    ctx.lineTo((300 + move), 300);
-    ctx.stroke();
-    move = move + 1;
-    if (move == 300)
-    {
-        move = 1;
-        ctx.clearRect(0, 0, W, H);
-    }
-    affichage();
-}
-
-wow();*/
