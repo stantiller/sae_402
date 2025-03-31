@@ -121,7 +121,6 @@ function afficher()
     play.clearRect(0, 0, W, H)
 
     tripleBullets.forEach(tripleBullet => {
-        console.log(tripleBullet)
         tripleBullet[0].forEach(bullet => {
 
             bullet.y += bullet.vy;
@@ -170,6 +169,9 @@ function afficher()
     });
     
 
+    let Wa = W - 20;
+    let Ha = H - 20;
+
     if (moveRight)
         px += pvx;
     if (moveLeft)
@@ -178,6 +180,19 @@ function afficher()
         py -= pvy;
     if (moveBack)
         py += pvy;
+
+    if (px < 0){
+        px = 0;
+    }
+    if (px > Wa){
+        px = Wa;
+    }
+    if (py < 0){
+        py = 0;
+    }
+    if (py > Ha){
+        py = Ha;
+    }
     
     // console.log(px, py);
 
