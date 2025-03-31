@@ -95,14 +95,62 @@ var W = window.innerWidth;
 const nbrPoints = 5;
 var points = [];
 
+const background = document.querySelector(".background");
+const ennemy = document.querySelector(".ennemyZone");
 const bullets = document.querySelector(".bulletZone");
 const player = document.querySelector(".playerZone");
-canvas.height = H;
-canvas.width = W;
+background.height = H;
+background.width = W;
+ennemy.height = H;
+ennemy.width = W;
+bullets.height = H;
+bullets.width = W;
+player.height = H;
+player.width = W;
 
-var bul = canvas.getContext("2d");
+let bg = background.getContext("2d");
+let boss = ennemy.getContext("2d");
+let bul = bullets.getContext("2d");
+let play = player.getContext("2d");
 
-ctx.lineWidth = 4;
+let vy = 2;
+let xyg = -0.5;
+let xyd = 0.5;
+
+// player speed
+let px = W/2;
+let py = H-200;
+let pvx = 1;
+let pvy = 1;
+
+window.addEventListener("deviceorientation", playerControl, true);
+
+function playerControl(event)
+{
+    let gamma = event.gamma;
+    let beta = event.beta;
+
+    console.log(gamma, beta);
+
+    if (gamma > 25){
+        // droite
+        px + pvx;
+    }
+    if (gamma < -25){
+        // gauche
+        px - pvx;
+    }
+    if (beta < 5){
+        // avant
+        py - pvy;
+    }
+    if (beta > 40){
+        // arriere
+        py + pvy;
+    }
+}
+
+bul.lineWidth = 4;
 
 for (let i = 0; i < nbrPoints; i++)
 {
@@ -117,14 +165,12 @@ for (let i = 0; i < nbrPoints; i++)
     );
 }
 
-let vy = 2;
-let xyg = -0.5;
-let xyd = 0.5;
-
 function afficher()
 {
-    bul.fillStyle = "skyblue";
-    bul.fillRect(0, 0, W, H);
+    bg.fillStyle = "skyblue";
+    bg.fillRect(0, 0, W, H);
+    bul.clearRect(0, 0, W, H);
+    play.clearRect(0, 0, W, H);
     points.forEach(point => {
 
         // point.x += vx;
@@ -136,6 +182,9 @@ function afficher()
         bul.fillRect((point.x), (point.y), 8, 8)
         bul.fillRect((point.xg), (point.y), 8, 8)
         bul.fillRect((point.xd), (point.y), 8, 8)
+
+        playerControl();
+        play.fillRect((px), (py), 20, 20);
         
         // if (point.x < 0 || point.x > W) 
         //     point.vx = -point.vx;
