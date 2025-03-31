@@ -118,8 +118,6 @@ function afficher()
     bul.clearRect(0, 0, W, H);
     play.clearRect(0, 0, W, H)
 
-    animationFrame = window.requestAnimationFrame(afficher);
-
     tripleBullets[0].forEach(bullet => {
 
         bullet.y += bullet.vy;
@@ -131,10 +129,7 @@ function afficher()
         let disty = Math.abs(py - bullet.y);
         
         if (distx < 10 && disty < 10) {
-            bg.fillStyle = "#FFAAAA";
-            bg.fillRect(0, 0, W, H);
-            cancelAnimationFrame(animationFrame);
-            return;
+            stopGame();
         }        
 
     });
@@ -149,10 +144,7 @@ function afficher()
         let disty = Math.abs(py - bullet.y);
         
         if (distx < 10 && disty < 10) {
-            bg.fillStyle = "#FFAAAA";
-            bg.fillRect(0, 0, W, H);
-            cancelAnimationFrame(animationFrame);
-            return;
+            stopGame();
         }        
 
     });
@@ -167,10 +159,7 @@ function afficher()
         let disty = Math.abs(py - bullet.y);
         
         if (distx < 10 && disty < 10) {
-            bg.fillStyle = "#FFAAAA";
-            bg.fillRect(0, 0, W, H);
-            cancelAnimationFrame(animationFrame);
-            return;
+            stopGame();
         }        
 
     });
@@ -202,11 +191,17 @@ function afficher()
     // if (point.y > H)
     //     point.y = 0;
 
-    
+    animationFrame = window.requestAnimationFrame(afficher);
 }
 window.addEventListener("deviceorientation", playerControl, true);
 afficher();
 
+function stopGame()
+{
+    bg.fillStyle = "#FFAAAA";
+    bg.fillRect(0, 0, W, H);
+    cancelAnimationFrame(animationFrame);
+}
 
 /*
 var move = 0
