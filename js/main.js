@@ -22,8 +22,6 @@ let boss = ennemy.getContext("2d");
 let bul = bullets.getContext("2d");
 let play = player.getContext("2d");
 
-
-
 // bullets
 const nbrBullets = 5;
 var tripleBullets = [];
@@ -72,6 +70,9 @@ let px = W/2-10;
 let py = H-200;
 let pvx = 2;
 let pvy = 2;
+
+// jeu en cours
+let animationFrame;
 
 function playerControl(event)
 {
@@ -130,7 +131,7 @@ function afficher()
         if (distx < 10 && disty < 10) {
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
-            cancelAnimationFrame(afficher);
+            cancelAnimationFrame(animationFrame);
             return;
         }        
 
@@ -148,7 +149,7 @@ function afficher()
         if (distx < 10 && disty < 10) {
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
-            cancelAnimationFrame(afficher);
+            cancelAnimationFrame(animationFrame);
             return;
         }        
 
@@ -166,7 +167,7 @@ function afficher()
         if (distx < 10 && disty < 10) {
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
-            cancelAnimationFrame(afficher);
+            cancelAnimationFrame(animationFrame);
             return;
         }        
 
@@ -199,7 +200,7 @@ function afficher()
     // if (point.y > H)
     //     point.y = 0;
 
-    window.requestAnimationFrame(afficher);
+    animationFrame = window.requestAnimationFrame(afficher);
 }
 window.addEventListener("deviceorientation", playerControl, true);
 afficher();
