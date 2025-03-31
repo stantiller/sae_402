@@ -22,16 +22,48 @@ let boss = ennemy.getContext("2d");
 let bul = bullets.getContext("2d");
 let play = player.getContext("2d");
 
-// bullet speed
-let x = 200;
-let xg = 200;
-let xd = 200;
-let y = 10;
-let vy = 2;
-let xyg = -0.5;
-let xyd = 0.5;
 
-// player speed
+
+// bullets
+const nbrBullets = 5;
+var tripleBullets = [];
+for (let i = 0; i < nbrBullets; i++)
+{
+    tripleBullets.push(
+        [
+            {   
+                x: 200,
+                y: 100,
+                vx: 0.5,
+                vy: 2
+            }
+        ],
+        [
+            {   
+                x: 200,
+                y: 100,
+                vx: 0.5,
+                vy: 2
+            }
+        ],
+        [
+            {   
+                x: 200,
+                y: 100,
+                vx: 0.5,
+                vy: 2
+            }
+        ]
+    );
+}
+// let x = 200;
+// let xg = 200;
+// let xd = 200;
+// let y = 10;
+// let vy = 2;
+// let vx = 0.5;
+
+// player
 let moveRight = false;
 let moveLeft = false;
 let moveForward = false;
@@ -47,7 +79,7 @@ function playerControl(event)
     let gamma = event.gamma;
     let beta = event.beta;
 
-    console.log(gamma, beta);
+    // console.log(gamma, beta);
 
     if (gamma > 5)
         // droite
@@ -77,23 +109,51 @@ function playerControl(event)
 }
 
 
-
 function afficher()
 {
     bg.fillStyle = "skyblue";
     bg.fillRect(0, 0, W, H);
     bul.clearRect(0, 0, W, H);
-    play.clearRect(0, 0, W, H);
+    play.clearRect(0, 0, W, H)
 
-    // point.x += vx;
-    y += vy;
-    xg += xyg;
-    xd += xyd;
-    
-    bul.fillStyle = "black";
-    bul.fillRect((x), (y), 8, 8);
-    bul.fillRect((xg), (y), 8, 8);
-    bul.fillRect((xd), (y), 8, 8);
+    tripleBullets[0].forEach(bullet => {
+
+        bullet.y += bullet.vy;
+
+        bul.fillRect((bullet.x), (bullet.y), 8, 8);
+
+        if (px == bullet.x && py == bullet.y){
+            bg.fillStyle = "red";
+            bg.fillRect(0, 0, W, H);
+        }
+
+    });
+
+    tripleBullets[1].forEach(bullet => {
+
+        bullet.y += bullet.vy;
+        bullet.x += bullet.vx;
+        bul.fillRect((bullet.x), (bullet.y), 8, 8);
+
+        if (px == bullet.x && py == bullet.y){
+            bg.fillStyle = "red";
+            bg.fillRect(0, 0, W, H);
+        }
+
+    });
+
+    tripleBullets[2].forEach(bullet => {
+
+        bullet.y += bullet.vy;
+        bullet.x -= bullet.vx;
+        bul.fillRect((bullet.x), (bullet.y), 8, 8);
+
+        if (px == bullet.x && py == bullet.y){
+            bg.fillStyle = "red";
+            bg.fillRect(0, 0, W, H);
+        }
+
+    });
 
     if (moveRight)
         px += pvx;
@@ -104,7 +164,8 @@ function afficher()
     if (moveBack)
         py += pvy;
     
-    console.log(px, py);
+    // console.log(px, py);
+
     play.fillRect((px), (py), 20, 20);
     
     // if (point.x < 0 || point.x > W) 
