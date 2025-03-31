@@ -130,6 +130,8 @@ function afficher()
         if (distx < 10 && disty < 10) {
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
+            cancelAnimationFrame(afficher);
+            return;
         }        
 
     });
@@ -146,6 +148,8 @@ function afficher()
         if (distx < 10 && disty < 10) {
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
+            cancelAnimationFrame(afficher);
+            return;
         }        
 
     });
@@ -162,6 +166,8 @@ function afficher()
         if (distx < 10 && disty < 10) {
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
+            cancelAnimationFrame(afficher);
+            return;
         }        
 
     });
