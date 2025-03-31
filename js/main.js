@@ -38,7 +38,7 @@ let pvy = 2;
 
 // bullets and patterns
 const nbrPattern1 = 2;
-const nbrPattern2 = 2;
+const nbrPattern2 = 5;
 var tripleBullets = [];
 var aBullets = [];
 let xValue = 200;
@@ -75,6 +75,7 @@ for (let i = 0; i < nbrPattern1; i++)
     xValue -= 40;
 }
 
+Xvalue = W/2-50;
 setTimeout(() => {
     for (let i = 0; i < nbrPattern2; i++)
     {
@@ -84,7 +85,7 @@ setTimeout(() => {
                     {   
                         x: xValue,
                         y: 100,
-                        vx: 0.5,
+                        vx: 0,
                         vy: 2
                     }
                 ],
@@ -92,7 +93,7 @@ setTimeout(() => {
                     {   
                         x: xValue,
                         y: 100,
-                        vx: 0.5,
+                        vx: 0,
                         vy: 2
                     }
                 ],
@@ -100,13 +101,13 @@ setTimeout(() => {
                     {   
                         x: xValue,
                         y: 100,
-                        vx: 0.5,
+                        vx: 0,
                         vy: 2
                     }
                 ]
             ]
         );
-        xValue -= 40;
+        xValue += 50;
     }
 }, 3000);
 
@@ -206,18 +207,14 @@ function afficher()
         py += pvy;
 
     // collisions mur
-    if (px < 0){
+    if (px < 0)
         px = 0;
-    }
-    if (px > Wa){
+    if (px > Wa)
         px = Wa;
-    }
-    if (py < 0){
+    if (py < 0)
         py = 0;
-    }
-    if (py > Ha){
+    if (py > Ha)
         py = Ha;
-    }
     
     // affichage joueur
     play.fillRect((px), (py), 20, 20);
