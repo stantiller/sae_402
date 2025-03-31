@@ -127,7 +127,7 @@ function afficher()
         let distx = px - bullet.x;
         let disty = py - bullet.y
 
-        if (distx < 10 || distx > -10 && disty < 10 || disty > -10){
+        if (distx < 5 || distx < -5 && disty < 5 || disty < -5){
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
         }
@@ -143,8 +143,8 @@ function afficher()
         let distx = px - bullet.x;
         let disty = py - bullet.y
 
-        if (distx < 50 && disty < 50){
-            bg.fillStyle = "red";
+        if (distx < 5 || distx < -5 && disty < 5 || disty < -5){
+            bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
         }
 
@@ -159,8 +159,8 @@ function afficher()
         let distx = px - bullet.x;
         let disty = py - bullet.y
 
-        if (distx < 50 && disty < 50){
-            bg.fillStyle = "red";
+        if (distx < 5 || distx < -5 && disty < 5 || disty < -5){
+            bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
         }
 
