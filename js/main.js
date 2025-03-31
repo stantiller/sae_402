@@ -49,29 +49,29 @@ function playerControl(event)
 
     console.log(gamma, beta);
 
-    if (gamma > 20)
+    if (gamma > 10)
         // droite
         moveRight = true;
-    if (gamma < -20)
+    if (gamma < -10)
         // gauche
         moveLeft = true;
     if (beta < 0)
         // avant
         moveForward = true;
-    if (beta > 25)
+    if (beta > 15)
         // arriere
         moveBack = true;
 
-    if (gamma < 20)
+    if (gamma < 10)
         // droite
         moveRight = false;
-    if (gamma > -20)
+    if (gamma > -10)
         // gauche
         moveLeft = false;
     if (beta > 0)
         // avant
         moveForward = false;
-    if (beta < 25)
+    if (beta < 15)
         // arriere
         moveBack = false;
 }
