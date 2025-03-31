@@ -139,7 +139,10 @@ function afficher()
         bullet.x += bullet.vx;
         bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
-        if (px == bullet.x && py == bullet.y){
+        let distx = px - bullet.x;
+        let disty = py - bullet.y
+
+        if (distx < 50 && disty < 50){
             bg.fillStyle = "red";
             bg.fillRect(0, 0, W, H);
         }
@@ -152,7 +155,10 @@ function afficher()
         bullet.x -= bullet.vx;
         bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
-        if (px == bullet.x && py == bullet.y){
+        let distx = px - bullet.x;
+        let disty = py - bullet.y
+
+        if (distx < 50 && disty < 50){
             bg.fillStyle = "red";
             bg.fillRect(0, 0, W, H);
         }
