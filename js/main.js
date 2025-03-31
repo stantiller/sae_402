@@ -23,36 +23,40 @@ let bul = bullets.getContext("2d");
 let play = player.getContext("2d");
 
 // bullets
-const nbrBullets = 5;
+const nbrBullets = 4;
 var tripleBullets = [];
+let xValue = 200;
 for (let i = 0; i < nbrBullets; i++)
 {
     tripleBullets.push(
         [
-            {   
-                x: 200,
-                y: 100,
-                vx: 0.5,
-                vy: 2
-            }
-        ],
-        [
-            {   
-                x: 200,
-                y: 100,
-                vx: 0.5,
-                vy: 2
-            }
-        ],
-        [
-            {   
-                x: 200,
-                y: 100,
-                vx: 0.5,
-                vy: 2
-            }
+            [
+                {   
+                    x: xValue,
+                    y: 100,
+                    vx: 0.5,
+                    vy: 2
+                }
+            ],
+            [
+                {   
+                    x: xValue,
+                    y: 100,
+                    vx: 0.5,
+                    vy: 2
+                }
+            ],
+            [
+                {   
+                    x: xValue,
+                    y: 100,
+                    vx: 0.5,
+                    vy: 2
+                }
+            ]
         ]
     );
+    xValue -= 40;
 }
 // let x = 200;
 // let xg = 200;
@@ -71,8 +75,6 @@ let py = H-200;
 let pvx = 2;
 let pvy = 2;
 
-// jeu en cours
-let animationFrame;
 
 function playerControl(event)
 {
@@ -118,51 +120,55 @@ function afficher()
     bul.clearRect(0, 0, W, H);
     play.clearRect(0, 0, W, H)
 
-    tripleBullets[0].forEach(bullet => {
+    tripleBullets.forEach(tripleBullet => {
+        console.log(tripleBullet)
+        tripleBullet[0].forEach(bullet => {
 
-        bullet.y += bullet.vy;
+            bullet.y += bullet.vy;
 
-        bul.fillRect((bullet.x), (bullet.y), 8, 8);
+            bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
 
-        let distx = Math.abs(px - bullet.x);
-        let disty = Math.abs(py - bullet.y);
-        
-        if (distx < 10 && disty < 10) {
-            stopGame();
-        }        
+            let distx = Math.abs(px - bullet.x);
+            let disty = Math.abs(py - bullet.y);
+            
+            if (distx < 10 && disty < 10) {
+                stopGame();
+            }        
 
+        });
+
+        tripleBullet[1].forEach(bullet => {
+
+            bullet.y += bullet.vy;
+            bullet.x += bullet.vx;
+            bul.fillRect((bullet.x), (bullet.y), 8, 8);
+
+            let distx = Math.abs(px - bullet.x);
+            let disty = Math.abs(py - bullet.y);
+
+            if (distx < 10 && disty < 10) {
+                stopGame();
+            }        
+
+        });
+
+        tripleBullet[2].forEach(bullet => {
+
+            bullet.y += bullet.vy;
+            bullet.x -= bullet.vx;
+            bul.fillRect((bullet.x), (bullet.y), 8, 8);
+
+            let distx = Math.abs(px - bullet.x);
+            let disty = Math.abs(py - bullet.y);
+
+            if (distx < 10 && disty < 10) {
+                stopGame();
+            }        
+
+        });
     });
-
-    tripleBullets[1].forEach(bullet => {
-
-        bullet.y += bullet.vy;
-        bullet.x += bullet.vx;
-        bul.fillRect((bullet.x), (bullet.y), 8, 8);
-
-        let distx = Math.abs(px - bullet.x);
-        let disty = Math.abs(py - bullet.y);
-        
-        if (distx < 10 && disty < 10) {
-            stopGame();
-        }        
-
-    });
-
-    tripleBullets[2].forEach(bullet => {
-
-        bullet.y += bullet.vy;
-        bullet.x -= bullet.vx;
-        bul.fillRect((bullet.x), (bullet.y), 8, 8);
-
-        let distx = Math.abs(px - bullet.x);
-        let disty = Math.abs(py - bullet.y);
-        
-        if (distx < 10 && disty < 10) {
-            stopGame();
-        }        
-
-    });
+    
 
     if (moveRight)
         px += pvx;
@@ -191,7 +197,7 @@ function afficher()
     // if (point.y > H)
     //     point.y = 0;
 
-    animationFrame = window.requestAnimationFrame(afficher);
+    window.requestAnimationFrame(afficher);
 }
 window.addEventListener("deviceorientation", playerControl, true);
 afficher();
@@ -200,7 +206,6 @@ function stopGame()
 {
     bg.fillStyle = "#FFAAAA";
     bg.fillRect(0, 0, W, H);
-    cancelAnimationFrame(animationFrame);
 }
 
 /*
