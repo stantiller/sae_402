@@ -36,11 +36,13 @@ let py = H-200;
 let pvx = 2;
 let pvy = 2;
 
-// bullets
-const nbrBullets = 2;
+// bullets and patterns
+const nbrPattern1 = 2;
+const nbrPattern2 = 2;
 var tripleBullets = [];
+var aBullets = [];
 let xValue = 200;
-for (let i = 0; i < nbrBullets; i++)
+for (let i = 0; i < nbrPattern1; i++)
 {
     tripleBullets.push(
         [
@@ -73,6 +75,41 @@ for (let i = 0; i < nbrBullets; i++)
     xValue -= 40;
 }
 
+setTimeout(() => {
+    for (let i = 0; i < nbrPattern2; i++)
+    {
+        tripleBullets.push(
+            [
+                [
+                    {   
+                        x: xValue,
+                        y: 100,
+                        vx: 0.5,
+                        vy: 2
+                    }
+                ],
+                [
+                    {   
+                        x: xValue,
+                        y: 100,
+                        vx: 0.5,
+                        vy: 2
+                    }
+                ],
+                [
+                    {   
+                        x: xValue,
+                        y: 100,
+                        vx: 0.5,
+                        vy: 2
+                    }
+                ]
+            ]
+        );
+        xValue -= 40;
+    }
+}, 3000);
+
 
 function playerControl(event)
 {
@@ -83,30 +120,22 @@ function playerControl(event)
 
     // activer mouvement
     if (gamma > 5)
-        // droite
         moveRight = true;
     if (gamma < -5)
-        // gauche
         moveLeft = true;
     if (beta < 0)
-        // avant
         moveForward = true;
     if (beta > 5)
-        // arriere
         moveBack = true;
 
     // desactiver mouvement
     if (gamma < 5)
-        // droite
         moveRight = false;
     if (gamma > -5)
-        // gauche
         moveLeft = false;
     if (beta > 0)
-        // avant
         moveForward = false;
     if (beta < 5)
-        // arriere
         moveBack = false;
 }
 
