@@ -75,12 +75,12 @@ let pvy = 2;
 
 function playerControl(event)
 {
-
     let gamma = event.gamma;
     let beta = event.beta;
 
     // console.log(gamma, beta);
 
+    // activer mouvement
     if (gamma > 5)
         // droite
         moveRight = true;
@@ -94,6 +94,7 @@ function playerControl(event)
         // arriere
         moveBack = true;
 
+    // desactiver mouvement
     if (gamma < 5)
         // droite
         moveRight = false;
@@ -126,7 +127,7 @@ function afficher()
         let distx = px - bullet.x;
         let disty = py - bullet.y
 
-        if (distx < 10 && disty < 10){
+        if (distx < 10 || distx > -10 && disty < 10 || disty > -10){
             bg.fillStyle = "#FFAAAA";
             bg.fillRect(0, 0, W, H);
         }
