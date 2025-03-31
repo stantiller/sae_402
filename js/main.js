@@ -38,8 +38,8 @@ let moveForward = false;
 let moveBack = false;
 let px = W/2-10;
 let py = H-200;
-let pvx = 1;
-let pvy = 1;
+let pvx = 2;
+let pvy = 2;
 
 function playerControl(event)
 {
