@@ -158,14 +158,14 @@ function afficher()
         py += pvy;
 
     // collisions mur
-    if (px < 0 + pHitbox)
-        px = 0 + pHitbox;
-    if (px > Wa - pHitbox)
-        px = Wa -pHitbox;
-    if (py < 0 + pHitbox)
-        py = 0 + pHitbox;
-    if (py > Ha - pHitbox)
-        py = Ha - pHitbox;
+    if (px < 0)
+        px = 0;
+    if (px > Wa)
+        px = Wa;
+    if (py < 0)
+        py = 0;
+    if (py > Ha)
+        py = Ha;
     
     // affichage joueur
     play.fillRect((px), (py), pHitbox*2, pHitbox*2);
@@ -176,6 +176,7 @@ function afficher()
 window.addEventListener("deviceorientation", playerControl, true);
 afficher();
 
+// verification de collision joueur
 function bulletCollision(bullet)
 {
     let distx = Math.abs((px + pHitbox) - bullet.x);
@@ -186,6 +187,7 @@ function bulletCollision(bullet)
     }
 }
 
+// arret du jeu 
 function stopGame()
 {
     bg.fillStyle = "#FFAAAA";
