@@ -39,8 +39,8 @@ let pvy = 2;
 // sons
 let plDead = new Audio('sounds/pldead00.wav');
 let bulletSound = new Audio('sounds/tan02.wav');
-plDead.volume = 0.05;
-bulletSound.volume = 0.05;
+plDead.volume = 0.15;
+bulletSound.volume = 0.15;
 
 // bullets and patterns
 const nbrPattern1 = 2;
