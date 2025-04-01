@@ -36,15 +36,21 @@ let py = H-200;
 let pvx = 2;
 let pvy = 2;
 
+// sons
+let plDead = new Audio('sounds/pldead00.wav');
+let bulletSound = new Audio('sounds/tan02.wav');
+plDead.volume = 0.05;
+bulletSound.volume = 0.05;
+
 // bullets and patterns
 const nbrPattern1 = 2;
 const nbrPattern2 = 5;
-var tripleBullets = [];
-var aBullets = [];
+var pattern1 = [];
+var pattern2 = [];
 let xValue = 200;
 for (let i = 0; i < nbrPattern1; i++)
 {
-    tripleBullets.push(
+    pattern1.push(
         [
             [
                 {   
@@ -73,30 +79,16 @@ for (let i = 0; i < nbrPattern1; i++)
         ]
     );
     xValue -= 40;
+    bulletSound.load();
+    bulletSound.play();
 }
 
 Xvalue = W/2-50;
 setTimeout(() => {
     for (let i = 0; i < nbrPattern2; i++)
     {
-        tripleBullets.push(
+        pattern2.push(
             [
-                [
-                    {   
-                        x: xValue,
-                        y: 100,
-                        vx: 0,
-                        vy: 2
-                    }
-                ],
-                [
-                    {   
-                        x: xValue,
-                        y: 100,
-                        vx: 0,
-                        vy: 2
-                    }
-                ],
                 [
                     {   
                         x: xValue,
@@ -108,6 +100,8 @@ setTimeout(() => {
             ]
         );
         xValue += 50;
+        bulletSound.load();
+        bulletSound.play();
     }
 }, 3000);
 
@@ -148,53 +142,9 @@ function afficher()
     bul.clearRect(0, 0, W, H);
     play.clearRect(0, 0, W, H)
 
-    tripleBullets.forEach(tripleBullet => {
-        tripleBullet[0].forEach(bullet => {
+    bulletPattern1();
 
-            bullet.y += bullet.vy;
-
-            bul.fillRect((bullet.x), (bullet.y), 8, 8);
-
-
-            let distx = Math.abs(px - bullet.x);
-            let disty = Math.abs(py - bullet.y);
-            
-            if (distx < 10 && disty < 10) {
-                stopGame();
-            }        
-
-        });
-
-        tripleBullet[1].forEach(bullet => {
-
-            bullet.y += bullet.vy;
-            bullet.x += bullet.vx;
-            bul.fillRect((bullet.x), (bullet.y), 8, 8);
-
-            let distx = Math.abs(px - bullet.x);
-            let disty = Math.abs(py - bullet.y);
-
-            if (distx < 10 && disty < 10) {
-                stopGame();
-            }        
-
-        });
-
-        tripleBullet[2].forEach(bullet => {
-
-            bullet.y += bullet.vy;
-            bullet.x -= bullet.vx;
-            bul.fillRect((bullet.x), (bullet.y), 8, 8);
-
-            let distx = Math.abs(px - bullet.x);
-            let disty = Math.abs(py - bullet.y);
-
-            if (distx < 10 && disty < 10) {
-                stopGame();
-            }        
-
-        });
-    });
+    bulletPattern2();
 
     // mouvement joueur
     if (moveRight)
@@ -229,9 +179,91 @@ function stopGame()
 {
     bg.fillStyle = "#FFAAAA";
     bg.fillRect(0, 0, W, H);
+    plDead.load();
+    plDead.play();
 }
 
+// affichage des patternes
+function bulletPattern1()
+{
+    pattern1.forEach(tripleBullet => {
+        tripleBullet[0].forEach(bullet => {
+
+            bullet.y += bullet.vy;
+
+            bul.fillRect((bullet.x), (bullet.y), 8, 8);
+
+
+            let distx = Math.abs(px - bullet.x);
+            let disty = Math.abs(py - bullet.y);
+            
+            if (distx < 10 && disty < 10) {
+                stopGame();
+            }
+
+        });
+
+        tripleBullet[1].forEach(bullet => {
+
+            bullet.y += bullet.vy;
+            bullet.x += bullet.vx;
+            bul.fillRect((bullet.x), (bullet.y), 8, 8);
+
+            let distx = Math.abs(px - bullet.x);
+            let disty = Math.abs(py - bullet.y);
+
+            if (distx < 10 && disty < 10) {
+                stopGame();
+            }        
+
+        });
+
+        tripleBullet[2].forEach(bullet => {
+
+            bullet.y += bullet.vy;
+            bullet.x -= bullet.vx;
+            bul.fillRect((bullet.x), (bullet.y), 8, 8);
+
+            let distx = Math.abs(px - bullet.x);
+            let disty = Math.abs(py - bullet.y);
+
+            if (distx < 10 && disty < 10) {
+                stopGame();
+            }        
+
+        });
+    });
+}
+
+function bulletPattern2()
+{
+    pattern2.forEach(straightBullet => {
+        straightBullet[0].forEach(bullet => {
+
+            bullet.y += bullet.vy;
+
+            bul.fillRect((bullet.x), (bullet.y), 8, 8);
+
+
+            let distx = Math.abs(px - bullet.x);
+            let disty = Math.abs(py - bullet.y);
+            
+            if (distx < 10 && disty < 10) {
+                stopGame();
+            }        
+
+        });
+    });
+}
+
+
+
+// -----------------------------------------------------------------------------
+// poubelle --------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+
 /*
+
 var move = 0
 
 function wow()
@@ -271,95 +303,95 @@ for (let i = 0; i < nbrPoints; i++)
     );
 }
     
+
+
+// Config
+
+const dX = 10;
+const dY = 10;
+const dTimer = 15;
+
+// Initialisation
+
+let block = document.querySelector(".block");
+let x = 0;
+let y = 0;
+let vX = 0;
+let vY = 0;
+
+let timer = -1;
+
+let keys = [];
+
+// Event
+
+window.addEventListener("keydown", yay);
+window.addEventListener("keyup", stop);
+
+function yay(event){
+    if (timer == -1){
+        timer = setInterval(wow, dTimer)
+        wow();
+    }
+
+    let index = keys.indexOf(event.key);
+    if (index > -1){
+        return;
+    }
+    else {
+        keys.push(event.keys);
+        switch(event.key){
+            case "ArrowUp":
+                console.log("haut");
+                vY -= dY;
+                break;
+            case "ArrowDown":
+                console.log("bas");
+                vY += dY;
+                break;
+            case "ArrowRight":
+                console.log("droite");
+                vX += dX;
+                break;
+            case "ArrowLeft":
+                console.log("gauche");
+                vX -= dX;
+                break;
+        }
+    }   
+}
+
+function stop(event){
+    let index = keys.indexOf(event.key);
+    if (index >= -1){
+        keys.splice(index, 1);
+    }
+
+    if (keys.length == 0){
+        clearInterval(timer);
+        timer = -1;
+    }
+
+    switch(event.key){
+        case "ArrowUp":
+            vY += dY;
+            break;
+        case "ArrowDown":
+            vY -= dY;
+            break;
+        case "ArrowRight":
+            vX -= dX;
+            break;
+        case "ArrowLeft":
+            vX += dX;
+            break;
+    }
+}
+
+function wow(){
+    x += vX;
+    y += vY;
+    block.style.transform = `translate(${x}px, ${y}px)`;
+}
+
 */
-
-
-
-// // Config
-
-// const dX = 10;
-// const dY = 10;
-// const dTimer = 15;
-
-// // Initialisation
-
-// let block = document.querySelector(".block");
-// let x = 0;
-// let y = 0;
-// let vX = 0;
-// let vY = 0;
-
-// let timer = -1;
-
-// let keys = [];
-
-// // Event
-
-// window.addEventListener("keydown", yay);
-// window.addEventListener("keyup", stop);
-
-// function yay(event){
-//     if (timer == -1){
-//         timer = setInterval(wow, dTimer)
-//         wow();
-//     }
-
-//     let index = keys.indexOf(event.key);
-//     if (index > -1){
-//         return;
-//     }
-//     else {
-//         keys.push(event.keys);
-//         switch(event.key){
-//             case "ArrowUp":
-//                 console.log("haut");
-//                 vY -= dY;
-//                 break;
-//             case "ArrowDown":
-//                 console.log("bas");
-//                 vY += dY;
-//                 break;
-//             case "ArrowRight":
-//                 console.log("droite");
-//                 vX += dX;
-//                 break;
-//             case "ArrowLeft":
-//                 console.log("gauche");
-//                 vX -= dX;
-//                 break;
-//         }
-//     }   
-// }
-
-// function stop(event){
-//     let index = keys.indexOf(event.key);
-//     if (index >= -1){
-//         keys.splice(index, 1);
-//     }
-
-//     if (keys.length == 0){
-//         clearInterval(timer);
-//         timer = -1;
-//     }
-
-//     switch(event.key){
-//         case "ArrowUp":
-//             vY += dY;
-//             break;
-//         case "ArrowDown":
-//             vY -= dY;
-//             break;
-//         case "ArrowRight":
-//             vX -= dX;
-//             break;
-//         case "ArrowLeft":
-//             vX += dX;
-//             break;
-//     }
-// }
-
-// function wow(){
-//     x += vX;
-//     y += vY;
-//     block.style.transform = `translate(${x}px, ${y}px)`;
-// }
