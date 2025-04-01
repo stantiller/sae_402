@@ -176,6 +176,16 @@ function afficher()
 window.addEventListener("deviceorientation", playerControl, true);
 afficher();
 
+function bulletCollision(bullet)
+{
+    let distx = Math.abs((px + pHitbox) - bullet.x);
+    let disty = Math.abs((py + pHitbox) - bullet.y);
+    
+    if (distx < pHitbox && disty < pHitbox) {
+        stopGame();
+    }
+}
+
 function stopGame()
 {
     bg.fillStyle = "#FFAAAA";
@@ -194,13 +204,7 @@ function bulletPattern1()
 
             bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
-
-            let distx = Math.abs((px + pHitbox) - bullet.x);
-            let disty = Math.abs((py + pHitbox) - bullet.y);
-            
-            if (distx < pHitbox && disty < pHitbox) {
-                stopGame();
-            }
+            bulletCollision(bullet);
 
         });
 
@@ -210,12 +214,7 @@ function bulletPattern1()
             bullet.x += bullet.vx;
             bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
-            let distx = Math.abs(px - bullet.x);
-            let disty = Math.abs(py - bullet.y);
-
-            if (distx < 10 && disty < 10) {
-                stopGame();
-            }        
+            bulletCollision(bullet);
 
         });
 
@@ -225,12 +224,7 @@ function bulletPattern1()
             bullet.x -= bullet.vx;
             bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
-            let distx = Math.abs(px - bullet.x);
-            let disty = Math.abs(py - bullet.y);
-
-            if (distx < 10 && disty < 10) {
-                stopGame();
-            }        
+            bulletCollision(bullet); 
 
         });
     });
@@ -245,13 +239,7 @@ function bulletPattern2()
 
             bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
-
-            let distx = Math.abs(px - bullet.x);
-            let disty = Math.abs(py - bullet.y);
-            
-            if (distx < 10 && disty < 10) {
-                stopGame();
-            }        
+            bulletCollision(bullet);     
 
         });
     });
