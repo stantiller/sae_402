@@ -35,12 +35,13 @@ let px = W/2-10;
 let py = H-200;
 let pvx = 2;
 let pvy = 2;
+let pHitbox = 20/2;
 
 // sons
 let plDead = new Audio('sounds/pldead00.wav');
 let bulletSound = new Audio('sounds/tan02.wav');
-plDead.volume = 0.15;
-bulletSound.volume = 0.15;
+plDead.volume = 0.30;
+bulletSound.volume = 0.30;
 
 // bullets and patterns
 const nbrPattern1 = 2;
@@ -157,17 +158,17 @@ function afficher()
         py += pvy;
 
     // collisions mur
-    if (px < 0)
-        px = 0;
-    if (px > Wa)
-        px = Wa;
-    if (py < 0)
-        py = 0;
-    if (py > Ha)
-        py = Ha;
+    if (px < 0 + pHitbox)
+        px = 0 + pHitbox;
+    if (px > Wa - pHitbox)
+        px = Wa -pHitbox;
+    if (py < 0 + pHitbox)
+        py = 0 + pHitbox;
+    if (py > Ha - pHitbox)
+        py = Ha - pHitbox;
     
     // affichage joueur
-    play.fillRect((px), (py), 20, 20);
+    play.fillRect((px), (py), pHitbox*2, pHitbox*2);
 
 
     window.requestAnimationFrame(afficher);
@@ -194,10 +195,10 @@ function bulletPattern1()
             bul.fillRect((bullet.x), (bullet.y), 8, 8);
 
 
-            let distx = Math.abs(px - bullet.x);
-            let disty = Math.abs(py - bullet.y);
+            let distx = Math.abs((px + pHitbox) - bullet.x);
+            let disty = Math.abs((py + pHitbox) - bullet.y);
             
-            if (distx < 10 && disty < 10) {
+            if (distx < pHitbox && disty < pHitbox) {
                 stopGame();
             }
 
