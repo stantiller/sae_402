@@ -214,11 +214,23 @@ function afficher()
 window.addEventListener("deviceorientation", playerControl, true);
 afficher();
 
+
 // verification de collision joueur
 function bulletCollision(bullet)
 {
     let distx = Math.abs((px + pHitbox) - bullet.x);
     let disty = Math.abs((py + pHitbox) - bullet.y);
+    
+    if (distx < pHitbox && disty < pHitbox) {
+        stopGame();
+    }
+}
+
+// collision avec le boss
+function ennemyPlayerCollision()
+{
+    let distx = Math.abs((px + pHitbox) - (ex + pHitbox));
+    let disty = Math.abs((py + pHitbox) - (ey + pHitbox));
     
     if (distx < pHitbox && disty < pHitbox) {
         stopGame();
@@ -239,8 +251,6 @@ function ennemyCollision(pBullet)
         ennemyHit();
     }
 }
-
-// ennemy touché
 function ennemyHit()
 {
     // bg.fillStyle = "#AAFFAA";
