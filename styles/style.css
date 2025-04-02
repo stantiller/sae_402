@@ -8,15 +8,19 @@ canvas
     top: 0;
     left: 0;
 }
-.bulletZone
+#score
+{
+    z-index: 4;
+}
+#bulletZone
 {
     z-index: 3;
 }
-.playerZone
+#playerZone
 {
     z-index: 2;
 }
-.ennemyZone
+#ennemyZone
 {
     z-index: 1;
 }

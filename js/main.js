@@ -7,10 +7,13 @@ let Wa = W - 20;
 let Ha = H - 20;
 
 // taille et selection des zones
-const background = document.querySelector(".background");
-const ennemy = document.querySelector(".ennemyZone");
-const bullets = document.querySelector(".bulletZone");
-const player = document.querySelector(".playerZone");
+const showScore = document.getElementById("score");
+const background = document.getElementById("background");
+const ennemy = document.getElementById("ennemyZone");
+const bullets = document.getElementById("bulletZone");
+const player = document.getElementById("playerZone");
+showScore.height = 400;
+showScore.width = W;
 background.height = H;
 background.width = W;
 ennemy.height = H;
@@ -21,6 +24,7 @@ player.height = H;
 player.width = W;
 
 // variables de contexte
+let ctxScore = showScore.getContext("2d");
 let bg = background.getContext("2d");
 let boss = ennemy.getContext("2d");
 let bul = bullets.getContext("2d");
@@ -211,6 +215,9 @@ function afficher()
     playerShoot();
 
     // console.log(score);
+    ctxScore.clearRect(0, 0, W, H)
+    ctxScore.font = "20px Arial";
+    ctxScore.fillText(score, 10, 30);
 
     window.requestAnimationFrame(afficher);
 }
