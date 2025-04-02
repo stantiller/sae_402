@@ -31,17 +31,32 @@ let moveRight = false;
 let moveLeft = false;
 let moveForward = false;
 let moveBack = false;
-let px = W/2-10;
+let pHitbox = 20/2;
+let px = W/2-10 - pHitbox;
 let py = H-200;
 let pvx = 2;
 let pvy = 2;
-let pHitbox = 20/2;
+
+// ennemy
+let eMoveRight = false;
+let eMoveLeft = false;
+let eHitbox = 25/2;
+let ex = W/2-10 - eHitbox;
+let ey = 0+80;
+let evx = 2;
+let evy = 2;
 
 // sons
 let plDead = new Audio('sounds/pldead00.wav');
 let bulletSound = new Audio('sounds/tan02.wav');
 plDead.volume = 0.30;
 bulletSound.volume = 0.30;
+
+//player bullets
+let pBullets = []
+let pbHitbox = 2/2;
+let ptimer = -1;
+let fRate = 200;
 
 // bullets and patterns
 const nbrPattern1 = 2;
@@ -88,6 +103,7 @@ Xvalue = W/2-50;
 setTimeout(() => {
     for (let i = 0; i < nbrPattern2; i++)
     {
+        setTimeout(() => {
         pattern2.push(
             [
                 [
@@ -103,6 +119,7 @@ setTimeout(() => {
         xValue += 50;
         bulletSound.load();
         bulletSound.play();
+        }, 100*i);
     }
 }, 3000);
 
@@ -157,7 +174,7 @@ function afficher()
     if (moveBack)
         py += pvy;
 
-    // collisions mur
+    // collisions mur joueur
     if (px < 0)
         px = 0;
     if (px > Wa)
@@ -170,6 +187,20 @@ function afficher()
     // affichage joueur
     play.fillRect((px), (py), pHitbox*2, pHitbox*2);
 
+    // mouvement ennemy
+    if (eMoveRight)
+        ex += evx;
+    if (eMoveLeft)
+        ex -= evx;
+
+    //affichage ennemy
+    boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
+
+    if (ptimer == -1)
+    {
+        ptimer = setInterval(playerShoot, fRate)
+        playerShoot();
+    }
 
     window.requestAnimationFrame(afficher);
 }
@@ -194,6 +225,30 @@ function stopGame()
     bg.fillRect(0, 0, W, H);
     plDead.load();
     plDead.play();
+}
+
+// tir du joueur
+function playerShoot()
+{   
+    pBullets.push(
+        [
+            {   
+                pbx: px,
+                pby: py,
+                pbvy: 4
+            }
+        ]
+    );
+
+    pBullets.forEach(pBullet => {
+        
+        pBullet.pby -= pBullet.pbvy;
+
+        bul.fillRect((pBullet.pbx), (pBullet.pby), pbHitbox*2, pbHitbox*4);
+
+        // bulletCollision(bullet);
+
+    });
 }
 
 // affichage des patternes
@@ -252,6 +307,38 @@ function bulletPattern2()
 // -----------------------------------------------------------------------------
 // poubelle --------------------------------------------------------------------
 // -----------------------------------------------------------------------------
+
+/*
+
+// animation texte
+
+.animTxt>span {
+    opacity: 0;
+    transition: 0.2s;
+}
+.animTxt>span.visible {
+    opacity: 1;
+}
+
+
+document.querySelectorAll("animTxt").forEach(div => {
+    let output = "";
+    div.innerText.split("").forEach(lettre => {
+        output += `<span>${lettre}</span>`;
+    });
+    div.innerHTML = output;
+    div.addEventListener("click", afficherTxt);
+});
+
+function afficherTxt()
+{
+    [...this.children].forEach((lettre, index) => {
+        setTimeout(()=>{lettre.classList.add("visible")}, 50*index);
+    });
+}
+
+*/
+
 
 /*
 
