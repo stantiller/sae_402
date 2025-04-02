@@ -221,10 +221,10 @@ afficher();
 // verification de collision joueur
 function bulletCollision(bullet)
 {
-    let distx = Math.abs((px + pHitbox) - bullet.x);
-    let disty = Math.abs((py + pHitbox) - bullet.y);
+    let distx = Math.abs((px + pHitbox) - (bullet.x + bHitbox));
+    let disty = Math.abs((py + pHitbox) - (bullet.y + bHitbox));
     
-    if (distx < pHitbox && disty < pHitbox) {
+    if (distx < (pHitbox + bHitbox) && disty < (pHitbox + bHitbox)) {
         stopGame();
     }
 }
@@ -243,10 +243,10 @@ function ennemyPlayerCollision()
 // verification de collision ennemy
 function ennemyCollision(pBullet)
 {
-    let distx = Math.abs((ex + pHitbox) - pBullet.pbx);
-    let disty = Math.abs((ey + pHitbox) - pBullet.pby);
+    let distx = Math.abs((ex + pHitbox) - (pBullet.pbx + pbHitbox));
+    let disty = Math.abs((ey + pHitbox) - (pBullet.pby + pbHitbox));
     
-    if (distx < eHitbox && disty < eHitbox) {
+    if (distx < (eHitbox + pbHitbox) && disty < (eHitbox + pbHitbox)) {
         let index = pBullets.indexOf(pBullet);
         if (index !== -1) {
             pBullets.splice(index, 1);
