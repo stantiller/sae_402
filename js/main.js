@@ -187,6 +187,8 @@ function afficher()
         py = 0;
     if (py > Ha)
         py = Ha;
+
+    ennemyPlayerCollision();
     
     // affichage joueur
     play.fillRect((px), (py), pHitbox*2, pHitbox*2);
