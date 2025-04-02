@@ -209,7 +209,8 @@ function afficher()
     }
 
     playerShoot();
-    console.log(score);
+
+    // console.log(score);
 
     window.requestAnimationFrame(afficher);
 }
@@ -234,7 +235,7 @@ function ennemyPlayerCollision()
     let distx = Math.abs((px + pHitbox) - (ex + eHitbox));
     let disty = Math.abs((py + pHitbox) - (ey + eHitbox));
     
-    if (distx < pHitbox && disty < pHitbox) {
+    if (distx < (pHitbox + eHitbox) && disty < (pHitbox + eHitbox)) {
         stopGame();
     }
 }
