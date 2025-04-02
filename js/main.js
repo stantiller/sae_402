@@ -54,9 +54,9 @@ let evx = 2;
 let evy = 2;
 
 // sons
-let plDead = new Audio('sounds/pldead00.wav');
-let bulletSound = new Audio('sounds/tan02.wav');
-let ennemyDmg = new Audio('sounds/damage00.wav');
+const plDead = new Audio('sounds/pldead00.wav');
+const bulletSound = new Audio('sounds/tan02.wav');
+const ennemyDmg = new Audio('sounds/damage00.wav');
 plDead.volume = 0.25;
 bulletSound.volume = 0.25;
 ennemyDmg.volume = 0.15;
@@ -68,9 +68,14 @@ let ptimer = -1;
 let fRate = 200;
 
 // bullets and patterns
+const bulletImg = new Image();
+bulletImg.src = "img/bullet_sprite_sheet.png";
+let bImgx = 338;
+let bImgy = 73;
+let bImgSize = 16;
 const nbrPattern1 = 2;
 const nbrPattern2 = 5;
-let bHitbox = 8/2;
+let bHitbox = 14/2;
 let pattern1 = [];
 let pattern2 = [];
 // let xValue = 200;
@@ -132,6 +137,53 @@ setTimeout(() => {
 }, 3000);
 
 
+function afficher()
+{
+    bg.fillStyle = "skyblue";
+    bg.fillRect(0, 0, W, H);
+    bul.clearRect(0, 0, W, H);
+    play.clearRect(0, 0, W, H)
+
+    bulletPattern1();
+
+    bulletPattern2();
+
+    playerMovement();
+
+    wallCollision();
+
+    ennemyPlayerCollision();
+    
+    // affichage joueur
+    play.fillRect((px), (py), pHitbox*2, pHitbox*2);
+
+    // mouvement ennemy
+    if (eMoveRight)
+        ex += evx;
+    if (eMoveLeft)
+        ex -= evx;
+
+    //affichage ennemy
+    boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
+
+    if (ptimer == -1)
+    {
+        ptimer = setInterval(playerBullets, fRate)
+        playerBullets();
+    }
+
+    playerShoot();
+
+    ctxScore.clearRect(0, 0, W, H)
+    ctxScore.font = "20px Arial";
+    ctxScore.fillText(score, 10, 30);
+
+    window.requestAnimationFrame(afficher);
+}
+window.addEventListener("deviceorientation", playerControl, true);
+afficher();
+
+// données gyroscope et variables de mouvement
 function playerControl(event)
 {
     let gamma = event.gamma;
@@ -160,19 +212,9 @@ function playerControl(event)
         moveBack = false;
 }
 
-
-function afficher()
+// mouvement du joueur
+function playerMovement()
 {
-    bg.fillStyle = "skyblue";
-    bg.fillRect(0, 0, W, H);
-    bul.clearRect(0, 0, W, H);
-    play.clearRect(0, 0, W, H)
-
-    bulletPattern1();
-
-    bulletPattern2();
-
-    // mouvement joueur
     if (moveRight)
         px += pvx;
     if (moveLeft)
@@ -181,8 +223,11 @@ function afficher()
         py -= pvy;
     if (moveBack)
         py += pvy;
+}
 
-    // collisions mur joueur
+// collisions mur joueur
+function wallCollision()
+{
     if (px < 0)
         px = 0;
     if (px > Wa)
@@ -191,39 +236,7 @@ function afficher()
         py = 0;
     if (py > Ha)
         py = Ha;
-
-    ennemyPlayerCollision();
-    
-    // affichage joueur
-    play.fillRect((px), (py), pHitbox*2, pHitbox*2);
-
-    // mouvement ennemy
-    if (eMoveRight)
-        ex += evx;
-    if (eMoveLeft)
-        ex -= evx;
-
-    //affichage ennemy
-    boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
-
-    if (ptimer == -1)
-    {
-        ptimer = setInterval(playerBullets, fRate)
-        playerBullets();
-    }
-
-    playerShoot();
-
-    // console.log(score);
-    ctxScore.clearRect(0, 0, W, H)
-    ctxScore.font = "20px Arial";
-    ctxScore.fillText(score, 10, 30);
-
-    window.requestAnimationFrame(afficher);
 }
-window.addEventListener("deviceorientation", playerControl, true);
-afficher();
-
 
 // verification de collision joueur
 function bulletCollision(bullet)
@@ -319,7 +332,7 @@ function bulletPattern1()
 
             bullet.y += bullet.vy;
 
-            bul.fillRect((bullet.x - bHitbox), (bullet.y), bHitbox*2, bHitbox*2);
+            bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
 
             bulletCollision(bullet);
 
@@ -329,7 +342,8 @@ function bulletPattern1()
 
             bullet.y += bullet.vy;
             bullet.x += bullet.vx;
-            bul.fillRect((bullet.x - bHitbox), (bullet.y), bHitbox*2, bHitbox*2);
+
+            bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
 
             bulletCollision(bullet);
 
@@ -339,7 +353,8 @@ function bulletPattern1()
 
             bullet.y += bullet.vy;
             bullet.x -= bullet.vx;
-            bul.fillRect((bullet.x - bHitbox), (bullet.y), bHitbox*2, bHitbox*2);
+
+            bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
 
             bulletCollision(bullet); 
 
@@ -354,7 +369,7 @@ function bulletPattern2()
 
             bullet.y += bullet.vy;
 
-            bul.fillRect((bullet.x - bHitbox), (bullet.y), bHitbox*2, bHitbox*2);
+            bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
 
             bulletCollision(bullet);     
 
