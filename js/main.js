@@ -26,6 +26,9 @@ let boss = ennemy.getContext("2d");
 let bul = bullets.getContext("2d");
 let play = player.getContext("2d");
 
+// score du jeu
+let score = 0;
+
 // player
 let moveRight = false;
 let moveLeft = false;
@@ -49,52 +52,54 @@ let evy = 2;
 // sons
 let plDead = new Audio('sounds/pldead00.wav');
 let bulletSound = new Audio('sounds/tan02.wav');
-plDead.volume = 0.30;
-bulletSound.volume = 0.30;
+let ennemyDmg = new Audio('sounds/damage00.wav');
+plDead.volume = 0.25;
+bulletSound.volume = 0.25;
+ennemyDmg.volume = 0.15;
 
 //player bullets
 let pBullets = []
-let pbHitbox = 2/2;
+let pbHitbox = 4/2;
 let ptimer = -1;
 let fRate = 200;
 
 // bullets and patterns
 const nbrPattern1 = 2;
 const nbrPattern2 = 5;
-var pattern1 = [];
-var pattern2 = [];
-let xValue = 200;
+let bHitbox = 8/2;
+let pattern1 = [];
+let pattern2 = [];
+// let xValue = 200;
 for (let i = 0; i < nbrPattern1; i++)
 {
     pattern1.push(
         [
             [
                 {   
-                    x: xValue,
-                    y: 100,
+                    x: ex + eHitbox,
+                    y: ey + eHitbox,
                     vx: 0.5,
                     vy: 2
                 }
             ],
             [
                 {   
-                    x: xValue,
-                    y: 100,
+                    x: ex + eHitbox,
+                    y: ey + eHitbox,
                     vx: 0.5,
                     vy: 2
                 }
             ],
             [
                 {   
-                    x: xValue,
-                    y: 100,
+                    x: ex + eHitbox,
+                    y: ey + eHitbox,
                     vx: 0.5,
                     vy: 2
                 }
             ]
         ]
     );
-    xValue -= 40;
     bulletSound.load();
     bulletSound.play();
 }
@@ -108,15 +113,14 @@ setTimeout(() => {
             [
                 [
                     {   
-                        x: xValue,
-                        y: 100,
+                        x: ex + eHitbox,
+                        y: ey + eHitbox,
                         vx: 0,
                         vy: 2
                     }
                 ]
             ]
         );
-        xValue += 50;
         bulletSound.load();
         bulletSound.play();
         }, 100*i);
@@ -198,9 +202,12 @@ function afficher()
 
     if (ptimer == -1)
     {
-        ptimer = setInterval(playerShoot, fRate)
-        playerShoot();
+        ptimer = setInterval(playerBullets, fRate)
+        playerBullets();
     }
+
+    playerShoot();
+    console.log(score);
 
     window.requestAnimationFrame(afficher);
 }
@@ -218,6 +225,31 @@ function bulletCollision(bullet)
     }
 }
 
+// verification de collision ennemy
+function ennemyCollision(pBullet)
+{
+    let distx = Math.abs((ex + pHitbox) - pBullet.pbx);
+    let disty = Math.abs((ey + pHitbox) - pBullet.pby);
+    
+    if (distx < eHitbox && disty < eHitbox) {
+        let index = pBullets.indexOf(pBullet);
+        if (index !== -1) {
+            pBullets.splice(index, 1);
+        }
+        ennemyHit();
+    }
+}
+
+// ennemy touché
+function ennemyHit()
+{
+    // bg.fillStyle = "#AAFFAA";
+    bg.fillRect(0, 0, W, H);
+    score += 10;
+    ennemyDmg.load();
+    ennemyDmg.play();
+}
+
 // arret du jeu 
 function stopGame()
 {
@@ -228,25 +260,34 @@ function stopGame()
 }
 
 // tir du joueur
-function playerShoot()
-{   
+function playerBullets()
+{
     pBullets.push(
-        [
-            {   
-                pbx: px,
-                pby: py,
-                pbvy: 4
-            }
-        ]
+        
+        {   
+            pbx: px + pHitbox - pbHitbox,
+            pby: py,
+            pbvy: 4
+        }
+        
     );
-
+}
+function playerShoot()
+{
     pBullets.forEach(pBullet => {
         
         pBullet.pby -= pBullet.pbvy;
 
-        bul.fillRect((pBullet.pbx), (pBullet.pby), pbHitbox*2, pbHitbox*4);
+        bul.fillRect((pBullet.pbx), (pBullet.pby), pbHitbox*2, 6);
 
-        // bulletCollision(bullet);
+        ennemyCollision(pBullet);
+
+        if (pBullet.pby < 0) {
+            let index = pBullets.indexOf(pBullet);
+            if (index !== -1) {
+                pBullets.splice(index, 1);
+            }
+        }
 
     });
 }
@@ -259,7 +300,7 @@ function bulletPattern1()
 
             bullet.y += bullet.vy;
 
-            bul.fillRect((bullet.x), (bullet.y), 8, 8);
+            bul.fillRect((bullet.x - bHitbox), (bullet.y), bHitbox*2, bHitbox*2);
 
             bulletCollision(bullet);
 
@@ -269,7 +310,7 @@ function bulletPattern1()
 
             bullet.y += bullet.vy;
             bullet.x += bullet.vx;
-            bul.fillRect((bullet.x), (bullet.y), 8, 8);
+            bul.fillRect((bullet.x - bHitbox), (bullet.y), bHitbox*2, bHitbox*2);
 
             bulletCollision(bullet);
 
@@ -279,7 +320,7 @@ function bulletPattern1()
 
             bullet.y += bullet.vy;
             bullet.x -= bullet.vx;
-            bul.fillRect((bullet.x), (bullet.y), 8, 8);
+            bul.fillRect((bullet.x - bHitbox), (bullet.y), bHitbox*2, bHitbox*2);
 
             bulletCollision(bullet); 
 
@@ -294,7 +335,7 @@ function bulletPattern2()
 
             bullet.y += bullet.vy;
 
-            bul.fillRect((bullet.x), (bullet.y), 8, 8);
+            bul.fillRect((bullet.x - bHitbox), (bullet.y), bHitbox*2, bHitbox*2);
 
             bulletCollision(bullet);     
 
