@@ -231,8 +231,8 @@ function bulletCollision(bullet)
 // collision avec le boss
 function ennemyPlayerCollision()
 {
-    let distx = Math.abs((px + pHitbox) - (ex + pHitbox));
-    let disty = Math.abs((py + pHitbox) - (ey + pHitbox));
+    let distx = Math.abs((px + pHitbox) - (ex + eHitbox));
+    let disty = Math.abs((py + pHitbox) - (ey + eHitbox));
     
     if (distx < pHitbox && disty < pHitbox) {
         stopGame();
@@ -255,7 +255,6 @@ function ennemyCollision(pBullet)
 }
 function ennemyHit()
 {
-    // bg.fillStyle = "#AAFFAA";
     bg.fillRect(0, 0, W, H);
     score += 10;
     ennemyDmg.load();
