@@ -40,7 +40,7 @@ function startGame()
     // score et timer du jeu
     let score = 0;
     let countDown = -1;
-    let cdTimer = 60;
+    let cdTimer = 12818738761876723;
 
     // player
     let moveRight = false;
@@ -76,12 +76,16 @@ function startGame()
     let ptimer = -1;
     let fRate = 200;
 
-    // bullets and patterns
+    let fin = false;
+
+    // bullets sprite and coordinates
     const bulletImg = new Image();
     bulletImg.src = "img/bullet_sprite_sheet.png";
     let bImgx = 338;
     let bImgy = 73;
     let bImgSize = 16;
+
+    // bullets and patterns
     const nbrPattern1 = 2;
     const nbrPattern2 = 5;
     let bHitbox = 14/2;
@@ -199,7 +203,10 @@ function startGame()
         ctxScore.font = "20px Arial";
         ctxScore.fillText(`Score : ${score}`, 10, 30);
 
-        window.requestAnimationFrame(afficher);
+        if (fin == false)
+            window.requestAnimationFrame(afficher);
+        else
+        window.cancelAnimationFrame(afficher);
     }
     window.addEventListener("deviceorientation", playerControl, true);
     afficher();
@@ -209,6 +216,7 @@ function startGame()
     {
         if (cdTimer == 0){
             clearInterval(countDown);
+            gameWon();
         }
         else
             cdTimer -= 1;
@@ -281,8 +289,8 @@ function startGame()
         let distx = Math.abs((px + pHitbox) - (bullet.x + bHitbox));
         let disty = Math.abs((py + pHitbox) - (bullet.y + bHitbox));
 
-        if (distx < (pHitbox + bHitbox) && disty < (pHitbox + bHitbox)) {
-            stopGame();
+        if (distx < pHitbox && disty < pHitbox) {
+            playerHit();
         }
     }
 
@@ -293,7 +301,7 @@ function startGame()
         let disty = Math.abs((py + pHitbox) - (ey + eHitbox));
 
         if (distx < (pHitbox + eHitbox) && disty < (pHitbox + eHitbox)) {
-            stopGame();
+            playerHit();
         }
     }
 
@@ -319,13 +327,20 @@ function startGame()
         ennemyDmg.play();
     }
 
-    // arret du jeu 
-    function stopGame()
+    // arret du jeu
+    function playerHit()
     {
         bg.fillStyle = "#FFAAAA";
         bg.fillRect(0, 0, W, H);
         plDead.load();
         plDead.play();
+        fin = true;
+    }
+    function gameWon()
+    {
+        bg.fillStyle = "#AAFFAA";
+        bg.fillRect(0, 0, W, H);
+        fin = true;
     }
 
     // tir du joueur
