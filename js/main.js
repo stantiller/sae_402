@@ -40,7 +40,7 @@ function startGame()
     // score et timer du jeu
     let score = 0;
     let countDown = -1;
-    let cdTimer = 12818738761876723;
+    let cdTimer = 60;
 
     // player
     let moveRight = false;
@@ -48,7 +48,7 @@ function startGame()
     let moveForward = false;
     let moveBack = false;
     let pHitbox = 20/2;
-    let px = W/2-10 - pHitbox;
+    let px = W/2 - pHitbox;
     let py = H-200;
     let pvx = 2;
     let pvy = 2;
@@ -57,7 +57,7 @@ function startGame()
     let eMoveRight = false;
     let eMoveLeft = false;
     let eHitbox = 25/2;
-    let ex = W/2-10 - eHitbox;
+    let ex = W/2 - eHitbox;
     let ey = 0+80;
     let evx = 2;
     let evy = 2;
@@ -286,10 +286,10 @@ function startGame()
     // verification de collision joueur
     function bulletCollision(bullet)
     {
-        let distx = Math.abs((px + pHitbox) - (bullet.x + bHitbox));
-        let disty = Math.abs((py + pHitbox) - (bullet.y + bHitbox));
+        let distx = Math.abs((px + pHitbox) - (bullet.x));
+        let disty = Math.abs((py + pHitbox) - (bullet.y));
 
-        if (distx < pHitbox && disty < pHitbox) {
+        if (distx < (pHitbox + pHitbox) && disty < (pHitbox + pHitbox)) {
             playerHit();
         }
     }
