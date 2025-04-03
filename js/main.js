@@ -42,6 +42,10 @@ function startGame()
     let countDown = -1;
     let cdTimer = 60;
 
+    // fin du jeu gagne ou non
+    let fin = false;
+    let win = false;
+
     // player
     let moveRight = false;
     let moveLeft = false;
@@ -75,8 +79,6 @@ function startGame()
     let pbHitbox = 4/2;
     let ptimer = -1;
     let fRate = 200;
-
-    let fin = false;
 
     // bullets sprite and coordinates
     const bulletImg = new Image();
@@ -203,10 +205,16 @@ function startGame()
         ctxScore.font = "20px Arial";
         ctxScore.fillText(`Score : ${score}`, 10, 30);
 
-        if (fin == false)
-            window.requestAnimationFrame(afficher);
+        if (fin == true){
+            window.cancelAnimationFrame(afficher);
+            clearGame();
+            if (win == true)
+                winScreen();
+            else
+                loseScreen();
+        }
         else
-        window.cancelAnimationFrame(afficher);
+            window.requestAnimationFrame(afficher);
     }
     window.addEventListener("deviceorientation", playerControl, true);
     afficher();
@@ -335,12 +343,14 @@ function startGame()
         plDead.load();
         plDead.play();
         fin = true;
+        win = false;
     }
     function gameWon()
     {
         bg.fillStyle = "#AAFFAA";
         bg.fillRect(0, 0, W, H);
         fin = true;
+        win = true;
     }
 
     // tir du joueur
@@ -431,6 +441,17 @@ function startGame()
 }
 document.querySelector(".start").addEventListener("click", startGame);
 
+function clearGame()
+{
+}
+
+function winScreen()
+{
+}
+
+function loseScreen()
+{
+}
 
 
 // -----------------------------------------------------------------------------
