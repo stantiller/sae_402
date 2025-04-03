@@ -340,6 +340,7 @@ function startGame()
     {
         bg.fillStyle = "#FFAAAA";
         bg.fillRect(0, 0, W, H);
+        clearInterval(countDown);
         plDead.load();
         plDead.play();
         fin = true;
