@@ -73,9 +73,14 @@ function startGame()
     const plDead = new Audio('sounds/pldead00.wav');
     const bulletSound = new Audio('sounds/tan02.wav');
     const ennemyDmg = new Audio('sounds/damage00.wav');
+    const approachSound = new Audio();
     plDead.volume = 0.25;
     bulletSound.volume = 0.25;
     ennemyDmg.volume = 0.15;
+    let soundDist = 50;
+    let playApproachSound = false;
+    // js audio api sine wave
+    // https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode
 
     //player bullets
     let pBullets = []
@@ -105,7 +110,6 @@ function startGame()
 
     function afficher()
     {
-
         if (countDown == -1)
         {
             countDown = setInterval(countDownTimer, 1000);
