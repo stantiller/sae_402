@@ -465,7 +465,10 @@ function startGame()
         });
     }
 }
-document.querySelector(".start").addEventListener("click", startGame);
+document.querySelectorAll(".start").forEach(e => {
+    e.addEventListener("click", startGame);
+});
+
 
 function clearGame()
 {
