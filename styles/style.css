@@ -27,11 +27,24 @@ canvas
 }
 .startBackground
 {
-    position: absolute;
-    top: 0;
-    left: 0;
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.4);
+    text-align: center;
+    font-size: 30px;
+}
+.winScreen
+{
+    z-index: 10;
+    background-color: rgba(200, 255, 200, 0.4);
+    text-align: center;
+    font-size: 30px;
+}
+.loseScreen
+{
+    z-index: 10;
+    background-color: rgba(255, 200, 200, 0.4);
+    text-align: center;
+    font-size: 30px;
 }
 .start
 {
@@ -40,7 +53,6 @@ canvas
     font-size: 40px;
     margin: auto;
     margin-top: 300px;
-    text-align: center;
     z-index: 11;
 }
 .invisible

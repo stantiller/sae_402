@@ -1,34 +1,37 @@
+// taille de l'écran
+var H = window.innerHeight;
+var W = window.innerWidth;
+// taille et selection des zones
+const showScore = document.getElementById("score");
+const background = document.getElementById("background");
+const ennemy = document.getElementById("ennemyZone");
+const bullets = document.getElementById("bulletZone");
+const player = document.getElementById("playerZone");
+const startScreen = document.querySelector(".startBackground");
+const winningScreen = document.querySelector(".winScreen");
+const losingScreen = document.querySelector(".loseScreen");
+showScore.height = 400;
+showScore.width = W;
+background.height = H;
+background.width = W;
+ennemy.height = H;
+ennemy.width = W;
+bullets.height = H;
+bullets.width = W;
+player.height = H;
+player.width = W;
+
 function startGame()
 {
-    // taille de l'écran
-    var H = window.innerHeight;
-    var W = window.innerWidth;
-
-    // taille et selection des zones
-    const showScore = document.getElementById("score");
-    const background = document.getElementById("background");
-    const ennemy = document.getElementById("ennemyZone");
-    const bullets = document.getElementById("bulletZone");
-    const player = document.getElementById("playerZone");
-    showScore.height = 400;
-    showScore.width = W;
-    background.height = H;
-    background.width = W;
-    ennemy.height = H;
-    ennemy.width = W;
-    bullets.height = H;
-    bullets.width = W;
-    player.height = H;
-    player.width = W;
-
     // display
     showScore.classList.remove("invisible");
     background.classList.remove("invisible");
     ennemy.classList.remove("invisible");
     bullets.classList.remove("invisible");
     player.classList.remove("invisible");
-    // document.querySelector(".start").classList.add("invisible");
-    // document.querySelector(".startBackground").classList.add("invisible");
+    startScreen.classList.add("invisible");
+    losingScreen.classList.add("invisible");
+    winningScreen.classList.add("invisible");
 
     // variables de contexte
     let ctxScore = showScore.getContext("2d");
@@ -91,66 +94,14 @@ function startGame()
     const nbrPattern1 = 2;
     const nbrPattern2 = 5;
     let bHitbox = 14/2;
+    let pattern1Push = false;
+    let pattern2Push = false;
     let pattern1 = [];
     let pattern2 = [];
     // let xValue = 200;
-    for (let i = 0; i < nbrPattern1; i++)
-    {
-        pattern1.push(
-            [
-                [
-                    {   
-                        x: ex + eHitbox,
-                        y: ey + eHitbox,
-                        vx: 0.5,
-                        vy: 2
-                    }
-                ],
-                [
-                    {   
-                        x: ex + eHitbox,
-                        y: ey + eHitbox,
-                        vx: 0.5,
-                        vy: 2
-                    }
-                ],
-                [
-                    {   
-                        x: ex + eHitbox,
-                        y: ey + eHitbox,
-                        vx: 0.5,
-                        vy: 2
-                    }
-                ]
-            ]
-        );
-        bulletSound.load();
-        bulletSound.play();
-    }
+    
 
     // Xvalue = W/2-50;
-    setTimeout(() => {
-        for (let i = 0; i < nbrPattern2; i++)
-        {
-            setTimeout(() => {
-            pattern2.push(
-                [
-                    [
-                        {   
-                            x: ex + eHitbox,
-                            y: ey + eHitbox,
-                            vx: 0,
-                            vy: 2
-                        }
-                    ]
-                ]
-            );
-            bulletSound.load();
-            bulletSound.play();
-            }, 100*i);
-        }
-    }, 3000);
-
 
     function afficher()
     {
@@ -160,12 +111,22 @@ function startGame()
             countDown = setInterval(countDownTimer, 1000);
             countDownTimer();
         }
-        // gameTimer();
 
         bg.fillStyle = "skyblue";
         bg.fillRect(0, 0, W, H);
         bul.clearRect(0, 0, W, H);
         play.clearRect(0, 0, W, H)
+
+        if (pattern1Push == false && fin == false){
+            pushPattern1();
+            pattern1Push = true;
+        }
+        setTimeout(() => {
+            if (pattern2Push == false && fin == false){
+                pushPattern2();
+                pattern2Push = true;
+            }
+        }, 3000);
 
         bulletPattern1();
 
@@ -198,7 +159,7 @@ function startGame()
         playerShoot();
 
         // timer and score
-        // ctxScore.clearRect(0, 0, W, H)
+        console.log(cdTimer);
         ctxScore.clearRect(0, 0, W, H)
         ctxScore.font = "20px Arial";
         ctxScore.fillText(cdTimer, (W - 40), 30);
@@ -229,12 +190,14 @@ function startGame()
         else
             cdTimer -= 1;
     }
-    // function gameTimer()
-    // {
-    //     ctxScore.clearRect(0, 0, W, H)
-    //     ctxScore.font = "20px Arial";
-    //     ctxScore.fillText(cdTimer, 200, 30);
-    // }
+
+    // sons
+    function playSound(sound)
+    {
+        sound.pause();
+        sound.load();
+        sound.play();
+    }
 
     // données gyroscope et variables de mouvement
     function playerControl(event)
@@ -331,8 +294,7 @@ function startGame()
     {
         bg.fillRect(0, 0, W, H);
         score += 10;
-        ennemyDmg.load();
-        ennemyDmg.play();
+        playSound(ennemyDmg)
     }
 
     // arret du jeu
@@ -340,9 +302,11 @@ function startGame()
     {
         bg.fillStyle = "#FFAAAA";
         bg.fillRect(0, 0, W, H);
+
         clearInterval(countDown);
-        plDead.load();
-        plDead.play();
+
+        playSound(plDead);
+
         fin = true;
         win = false;
     }
@@ -385,6 +349,67 @@ function startGame()
             }
 
         });
+    }
+
+    // push des patternes
+    function pushPattern1()
+    {
+        for (let i = 0; i < nbrPattern1; i++)
+        {
+            pattern1.push(
+                [
+                    [
+                        {   
+                            x: ex + eHitbox,
+                            y: ey + eHitbox,
+                            vx: 0.5,
+                            vy: 2
+                        }
+                    ],
+                    [
+                        {   
+                            x: ex + eHitbox,
+                            y: ey + eHitbox,
+                            vx: 0.5,
+                            vy: 2
+                        }
+                    ],
+                    [
+                        {   
+                            x: ex + eHitbox,
+                            y: ey + eHitbox,
+                            vx: 0.5,
+                            vy: 2
+                        }
+                    ]
+                ]
+            );
+            playSound(bulletSound);
+        }
+    }
+
+    function pushPattern2()
+    {
+        for (let i = 0; i < nbrPattern2; i++)
+        {
+            setTimeout(() => {
+            pattern2.push(
+                [
+                    [
+                        {   
+                            x: ex + eHitbox,
+                            y: ey + eHitbox,
+                            vx: 0,
+                            vy: 2
+                        }
+                    ]
+                ]
+            );
+    
+            playSound(bulletSound);
+    
+            }, 100*i);
+        }
     }
 
     // affichage des patternes
@@ -444,14 +469,21 @@ document.querySelector(".start").addEventListener("click", startGame);
 
 function clearGame()
 {
+    showScore.classList.add("invisible");
+    background.classList.add("invisible");
+    ennemy.classList.add("invisible");
+    bullets.classList.add("invisible");
+    player.classList.add("invisible");
 }
 
 function winScreen()
 {
+    winningScreen.classList.remove("invisible");
 }
 
 function loseScreen()
 {
+    losingScreen.classList.remove("invisible");
 }
 
 
