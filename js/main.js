@@ -1,6 +1,7 @@
 // taille de l'écran
 var H = window.innerHeight;
 var W = window.innerWidth;
+
 // taille et selection des zones
 const showScore = document.getElementById("score");
 const background = document.getElementById("background");
@@ -59,6 +60,9 @@ function startGame()
     let py = H-200;
     let pvx = 2;
     let pvy = 2;
+    let gammaMove = 5;
+    let betaForwMove = 20;
+    let betaBackMove = 25;
 
     // ennemy
     let eMoveRight = false;
@@ -73,12 +77,15 @@ function startGame()
     const plDead = new Audio('sounds/pldead00.wav');
     const bulletSound = new Audio('sounds/tan02.wav');
     const ennemyDmg = new Audio('sounds/damage00.wav');
-    const approachSound = new Audio();
+    const approachSound = new AudioContext();
+    const oscillator = approachSound.createOscillator();
     plDead.volume = 0.25;
     bulletSound.volume = 0.25;
     ennemyDmg.volume = 0.15;
+    approachSound.volume = 0.03
     let soundDist = 50;
     let playApproachSound = false;
+    let maxFreq = 4000;
     // js audio api sine wave
     // https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode
 
@@ -163,7 +170,6 @@ function startGame()
         playerShoot();
 
         // timer and score
-        console.log(cdTimer);
         ctxScore.clearRect(0, 0, W, H)
         ctxScore.font = "20px Arial";
         ctxScore.fillText(cdTimer, (W - 40), 30);
@@ -202,6 +208,23 @@ function startGame()
         sound.load();
         sound.play();
     }
+    function soundDistance(distx, disty)
+    {
+        if (fin == false)
+        {
+            let dist = Math.sqrt((distx * distx) + (disty * disty));
+            // oscillator.frequency.value = (CurX / WIDTH) * maxFreq;
+            console.log(dist)
+            console.log((dist / soundDist) * maxFreq);
+            const approachSound = new AudioContext();
+            const oscillator = approachSound.createOscillator();
+            oscillator.frequency.value = (dist / soundDist) * maxFreq;
+            approachSound.volume = 0.03;
+            oscillator.volume = 0.03;
+            oscillator.connect(approachSound.destination);
+            oscillator.start();
+        }
+    }
 
     // données gyroscope et variables de mouvement
     function playerControl(event)
@@ -212,23 +235,23 @@ function startGame()
         // console.log(gamma, beta);
 
         // activer mouvement
-        if (gamma > 5)
+        if (gamma > gammaMove)
             moveRight = true;
-        if (gamma < -5)
+        if (gamma < -gammaMove)
             moveLeft = true;
-        if (beta < 0)
+        if (beta < betaForwMove)
             moveForward = true;
-        if (beta > 5)
+        if (beta > betaBackMove)
             moveBack = true;
 
         // desactiver mouvement
-        if (gamma < 5)
+        if (gamma < gammaMove)
             moveRight = false;
-        if (gamma > -5)
+        if (gamma > -gammaMove)
             moveLeft = false;
-        if (beta > 0)
+        if (beta > betaForwMove)
             moveForward = false;
-        if (beta < 5)
+        if (beta < betaBackMove)
             moveBack = false;
     }
 
@@ -264,6 +287,9 @@ function startGame()
         let distx = Math.abs((px + pHitbox) - (bullet.x));
         let disty = Math.abs((py + pHitbox) - (bullet.y));
 
+        // if (distx < soundDist && disty < soundDist) {
+            // soundDistance(distx, disty);
+        // }
         if (distx < (pHitbox + pHitbox) && disty < (pHitbox + pHitbox)) {
             playerHit();
         }
@@ -494,10 +520,6 @@ function loseScreen()
 }
 
 
-// -----------------------------------------------------------------------------
-// poubelle --------------------------------------------------------------------
-// -----------------------------------------------------------------------------
-
 /*
 
 // animation texte
@@ -525,141 +547,6 @@ function afficherTxt()
     [...this.children].forEach((lettre, index) => {
         setTimeout(()=>{lettre.classList.add("visible")}, 50*index);
     });
-}
-
-*/
-
-
-/*
-
-var move = 0
-
-function wow()
-{
-    ctx.fillStyle = "skyblue";
-    ctx.fillRect(0, 0, W, H);
-    ctx.beginPath();
-    ctx.moveTo(10, (200 + move));
-    ctx.lineTo(200, 10);
-    ctx.lineTo((300 + move), 300);
-    ctx.stroke();
-    move = move + 1;
-    if (move == 300)
-    {
-        move = 1;
-        ctx.clearRect(0, 0, W, H);
-    }
-    affichage();
-}
-
-wow();
-
-
-const nbrPoints = 5;
-var points = [];
-
-for (let i = 0; i < nbrPoints; i++)
-{
-    points.push(
-        {   x: 200,
-            xg: 200,
-            xd: 200,
-            y: 100
-            // vx: Math.random()*4-2,
-            // vy: Math.random()*4-2
-        }
-    );
-}
-    
-
-
-// Config
-
-const dX = 10;
-const dY = 10;
-const dTimer = 15;
-
-// Initialisation
-
-let block = document.querySelector(".block");
-let x = 0;
-let y = 0;
-let vX = 0;
-let vY = 0;
-
-let timer = -1;
-
-let keys = [];
-
-// Event
-
-window.addEventListener("keydown", yay);
-window.addEventListener("keyup", stop);
-
-function yay(event){
-    if (timer == -1){
-        timer = setInterval(wow, dTimer)
-        wow();
-    }
-
-    let index = keys.indexOf(event.key);
-    if (index > -1){
-        return;
-    }
-    else {
-        keys.push(event.keys);
-        switch(event.key){
-            case "ArrowUp":
-                console.log("haut");
-                vY -= dY;
-                break;
-            case "ArrowDown":
-                console.log("bas");
-                vY += dY;
-                break;
-            case "ArrowRight":
-                console.log("droite");
-                vX += dX;
-                break;
-            case "ArrowLeft":
-                console.log("gauche");
-                vX -= dX;
-                break;
-        }
-    }   
-}
-
-function stop(event){
-    let index = keys.indexOf(event.key);
-    if (index >= -1){
-        keys.splice(index, 1);
-    }
-
-    if (keys.length == 0){
-        clearInterval(timer);
-        timer = -1;
-    }
-
-    switch(event.key){
-        case "ArrowUp":
-            vY += dY;
-            break;
-        case "ArrowDown":
-            vY -= dY;
-            break;
-        case "ArrowRight":
-            vX -= dX;
-            break;
-        case "ArrowLeft":
-            vX += dX;
-            break;
-    }
-}
-
-function wow(){
-    x += vX;
-    y += vY;
-    block.style.transform = `translate(${x}px, ${y}px)`;
 }
 
 */
