@@ -68,7 +68,7 @@ function startGame()
     let eMoveRight = false;
     let eMoveLeft = false;
     let eHitbox = 25/2;
-    let ex = W/2 - eHitbox;
+    let ex = W/2 - eHitbox -100;
     let ey = 0+80;
     let evx = 2;
     let evy = 2;
@@ -125,19 +125,29 @@ function startGame()
 
         bg.fillStyle = "skyblue";
         bg.fillRect(0, 0, W, H);
+        boss.clearRect(0, 0, W, H);
         bul.clearRect(0, 0, W, H);
         play.clearRect(0, 0, W, H)
 
         if (pattern1Push == false && fin == false){
+            eMoveRight = true;
             pushPattern1();
+            setTimeout(() => {
+                eMoveRight = false;
+            }, 1000);
             pattern1Push = true;
+            
         }
         setTimeout(() => {
             if (pattern2Push == false && fin == false){
+                eMoveLeft = true;
                 pushPattern2();
+                setTimeout(() => {
+                    eMoveLeft = false;
+                }, 600);
                 pattern2Push = true;
             }
-        }, 3000);
+        }, 2500);
 
         bulletPattern1();
 
@@ -153,10 +163,7 @@ function startGame()
         play.fillRect((px), (py), pHitbox*2, pHitbox*2);
 
         // mouvement ennemy
-        if (eMoveRight)
-            ex += evx;
-        if (eMoveLeft)
-            ex -= evx;
+        ennemyMovement();
 
         //affichage ennemy
         boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
@@ -266,6 +273,15 @@ function startGame()
             py -= pvy;
         if (moveBack)
             py += pvy;
+    }
+
+    // mouvement de l'ennemi
+    function ennemyMovement()
+    {
+        if (eMoveRight == true)
+            ex += evx;
+        if (eMoveLeft ==true)
+            ex -= evx;
     }
 
     // collisions mur joueur
@@ -386,35 +402,37 @@ function startGame()
     {
         for (let i = 0; i < nbrPattern1; i++)
         {
-            pattern1.push(
-                [
+            setTimeout(() => {
+                pattern1.push(
                     [
-                        {   
-                            x: ex + eHitbox,
-                            y: ey + eHitbox,
-                            vx: 0.5,
-                            vy: 2
-                        }
-                    ],
-                    [
-                        {   
-                            x: ex + eHitbox,
-                            y: ey + eHitbox,
-                            vx: 0.5,
-                            vy: 2
-                        }
-                    ],
-                    [
-                        {   
-                            x: ex + eHitbox,
-                            y: ey + eHitbox,
-                            vx: 0.5,
-                            vy: 2
-                        }
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: 0.5,
+                                vy: 2
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: 0.5,
+                                vy: 2
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: 0.5,
+                                vy: 2
+                            }
+                        ]
                     ]
-                ]
-            );
-            playSound(bulletSound);
+                );
+                playSound(bulletSound);
+            }, 600*i);
         }
     }
 
@@ -423,20 +441,20 @@ function startGame()
         for (let i = 0; i < nbrPattern2; i++)
         {
             setTimeout(() => {
-            pattern2.push(
-                [
+                pattern2.push(
                     [
-                        {   
-                            x: ex + eHitbox,
-                            y: ey + eHitbox,
-                            vx: 0,
-                            vy: 2
-                        }
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: 0,
+                                vy: 2
+                            }
+                        ]
                     ]
-                ]
-            );
-    
-            playSound(bulletSound);
+                );
+            
+                playSound(bulletSound);
     
             }, 100*i);
         }
@@ -446,6 +464,7 @@ function startGame()
     function bulletPattern1()
     {
         pattern1.forEach(tripleBullet => {
+            
             tripleBullet[0].forEach(bullet => {
 
                 bullet.y += bullet.vy;
