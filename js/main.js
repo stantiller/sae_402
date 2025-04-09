@@ -68,9 +68,9 @@ function startGame()
     let eMoveRight = false;
     let eMoveLeft = false;
     let eHitbox = 25/2;
-    let ex = W/2 - eHitbox -100;
+    let ex = W/2 - eHitbox;
     let ey = 0+80;
-    let evx = 2;
+    let evx = 2.5;
     let evy = 2;
 
     // sons
@@ -79,13 +79,18 @@ function startGame()
     const ennemyDmg = new Audio('sounds/damage00.wav');
     const approachSound = new AudioContext();
     const oscillator = approachSound.createOscillator();
+    const gainNode = approachSound.createGain();
     plDead.volume = 0.25;
     bulletSound.volume = 0.25;
     ennemyDmg.volume = 0.15;
-    approachSound.volume = 0.03
-    let soundDist = 50;
-    let playApproachSound = false;
+    approachSoundVolume = 0.5
+    let soundDist = 100;
     let maxFreq = 4000;
+    let freq = 0;
+    oscillator.connect(gainNode);
+    gainNode.connect(approachSound.destination);
+    oscillator.start();
+    gainNode.gain.value = 0;
     // js audio api sine wave
     // https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode
 
@@ -215,22 +220,17 @@ function startGame()
         sound.load();
         sound.play();
     }
-    function soundDistance(distx, disty)
+    function soundDistance(dist)
     {
         if (fin == false)
         {
-            let dist = Math.sqrt((distx * distx) + (disty * disty));
-            // oscillator.frequency.value = (CurX / WIDTH) * maxFreq;
-            console.log(dist)
-            console.log((dist / soundDist) * maxFreq);
-            const approachSound = new AudioContext();
-            const oscillator = approachSound.createOscillator();
-            oscillator.frequency.value = (dist / soundDist) * maxFreq;
-            approachSound.volume = 0.03;
-            oscillator.volume = 0.03;
-            oscillator.connect(approachSound.destination);
-            oscillator.start();
+            freq = (-1 * ((dist / soundDist) * maxFreq)) + maxFreq;
+            console.log(dist, freq);
+            gainNode.gain.value = approachSoundVolume;
+            oscillator.frequency.value = freq;
         }
+        else
+            gainNode.gain.value = 0;
     }
 
     // données gyroscope et variables de mouvement
@@ -302,10 +302,14 @@ function startGame()
     {
         let distx = Math.abs((px + pHitbox) - (bullet.x));
         let disty = Math.abs((py + pHitbox) - (bullet.y));
+        let dist = Math.sqrt((distx * distx) + (disty * disty));
 
-        // if (distx < soundDist && disty < soundDist) {
-            // soundDistance(distx, disty);
-        // }
+        if (dist < soundDist) {
+            soundDistance(dist);
+        }
+        else if (dist < soundDist) {
+            oscillator.gain.value;
+        }
         if (distx < (pHitbox + pHitbox) && disty < (pHitbox + pHitbox)) {
             playerHit();
         }
@@ -358,8 +362,6 @@ function startGame()
     }
     function gameWon()
     {
-        bg.fillStyle = "#AAFFAA";
-        bg.fillRect(0, 0, W, H);
         fin = true;
         win = true;
     }
