@@ -189,6 +189,7 @@ function startGame()
         ctxScore.fillText(`Score : ${score}`, 10, 30);
 
         if (fin == true){
+            oscillator.gain.value = 0;
             window.cancelAnimationFrame(afficher);
             clearGame();
             if (win == true)
@@ -362,7 +363,7 @@ function startGame()
     function gameWon()
     {
         oscillator.gain.value = 0;
-        
+
         fin = true;
         win = true;
     }
