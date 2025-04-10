@@ -84,7 +84,7 @@ function startGame()
     bulletSound.volume = 0.25;
     ennemyDmg.volume = 0.15;
     approachSoundVolume = 0.5
-    let soundDist = 100;
+    let soundDist = 200;
     let maxFreq = 4000;
     let freq = 0;
     oscillator.connect(gainNode);
@@ -308,7 +308,7 @@ function startGame()
             soundDistance(dist);
         }
         else if (dist < soundDist) {
-            oscillator.gain.value;
+            oscillator.gain.value = 0;
         }
         if (distx < (pHitbox + pHitbox) && disty < (pHitbox + pHitbox)) {
             playerHit();
@@ -350,8 +350,7 @@ function startGame()
     // arret du jeu
     function playerHit()
     {
-        bg.fillStyle = "#FFAAAA";
-        bg.fillRect(0, 0, W, H);
+        oscillator.gain.value = 0;
 
         clearInterval(countDown);
 
@@ -362,6 +361,8 @@ function startGame()
     }
     function gameWon()
     {
+        oscillator.gain.value = 0;
+        
         fin = true;
         win = true;
     }
