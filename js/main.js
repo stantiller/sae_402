@@ -85,7 +85,7 @@ function startGame()
     ennemyDmg.volume = 0.15;
     approachSoundVolume = 0.5
     let soundDist = 200;
-    let maxFreq = 3800;
+    let maxFreq = 3500;
     let freq = 0;
     oscillator.connect(gainNode);
     gainNode.connect(approachSound.destination);
