@@ -85,7 +85,7 @@ function startGame()
     ennemyDmg.volume = 0.15;
     approachSoundVolume = 0.5
     let soundDist = 200;
-    let maxFreq = 4000;
+    let maxFreq = 3800;
     let freq = 0;
     oscillator.connect(gainNode);
     gainNode.connect(approachSound.destination);
@@ -189,7 +189,7 @@ function startGame()
         ctxScore.fillText(`Score : ${score}`, 10, 30);
 
         if (fin == true){
-            oscillator.gain.value = 0;
+            gainNode.gain.value = 0;
             window.cancelAnimationFrame(afficher);
             clearGame();
             if (win == true)
@@ -309,7 +309,7 @@ function startGame()
             soundDistance(dist);
         }
         else if (dist < soundDist) {
-            oscillator.gain.value = 0;
+            gainNode.gain.value = 0;
         }
         if (distx < (pHitbox + pHitbox) && disty < (pHitbox + pHitbox)) {
             playerHit();
@@ -351,7 +351,7 @@ function startGame()
     // arret du jeu
     function playerHit()
     {
-        oscillator.gain.value = 0;
+        gainNode.gain.value = 0;
 
         clearInterval(countDown);
 
@@ -362,7 +362,7 @@ function startGame()
     }
     function gameWon()
     {
-        oscillator.gain.value = 0;
+        gainNode.gain.value = 0;
 
         fin = true;
         win = true;
