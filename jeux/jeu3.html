@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Ceci est une PWA" />
-    <meta name="theme-color" content="#669900" />
-    <link rel="manifest" href="manifest.json" />
-    <title>Jeu n3</title>
-
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>Jeu 2</title>
+    <!-- <link rel="stylesheet" media="screen" href="../styles/styleJeu2.css"> -->
     <style>
       /* Le style directement inline pour voir au plus tôt la zone du premier affichage */
       body {
@@ -38,14 +35,10 @@
         height: 100vh; /* Prend toute la hauteur de la fenêtre */
       }
 
-	  #noir{
-		opacity: 0.9;
-	  }
+      #noir {
+        opacity: 0.9;
+      }
     </style>
-
-    <!-- On préload le style pour le rendre non bloquant -->
-    <link rel="preload" href="styles/style.css" as="style" />
-    <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body>
     <canvas id="colission"></canvas>
@@ -54,12 +47,6 @@
     <canvas id="noir"></canvas>
     <canvas id="player"> </canvas>
 
-    <script>
-      /* Le SW en premier pour éviter les problèmes */
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("sw.js");
-      }
-    </script>
-    <script src="js/js.js"></script>
+    <script src="/js/jeu3.js"></script>
   </body>
 </html>
