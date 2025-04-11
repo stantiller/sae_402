@@ -36,13 +36,13 @@ let posiY = 0;
 let differenceXY = 0;
 
 const backgroundImage = new Image();
-backgroundImage.src = "./images/background.jpg";
+backgroundImage.src = "../img/game3/background.jpg";
 
 const colissionImage = new Image();
-colissionImage.src = "./images/collision.jpg";
+colissionImage.src = "../img/game3/collision.jpg";
 
 const sprite = new Image();
-sprite.src = "./images/spirte/sprite.png";
+sprite.src = "../img/game3/spirte/sprite.png";
 
 function playerControl(event) {
   posiX = event.pageX || event.changedTouches[0].pageX;
@@ -61,7 +61,7 @@ function playerControl(event) {
   }
 }
 
-const pixel = ctx.getImageData(x, y, 1, 1);
+const pixel = ctxColission.getImageData(infoPlayer.x, infoPlayer.y, 1, 1);
 const data = pixel.data;
 
 window.addEventListener("touchstart", playerControl);
