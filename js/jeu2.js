@@ -57,6 +57,7 @@ function startGame()
     let t0 = performance.now();
     let tnow = 0;
     let sec = 0;
+    let defineTime = 0
 
     // fin du jeu gagne ou non
     let fin = false;
@@ -138,16 +139,20 @@ function startGame()
     function afficher()
     {
         // redéfinition de la vitesse en pixels/sec
-        tnow = performance.now();
-        sec = (tnow - t0) / 1000;
-        t0 = tnow;
-        pvx = 100*sec;
-        pvy = 100*sec;
-        evx = 100*sec;
-        evy = 100*sec;
-        pbspeedy = 300*sec;
-        ebspeedx = 50*sec;
-        ebspeedy = 100*sec;
+        if (defineTime < 10) {
+            tnow = performance.now();
+            sec = (tnow - t0) / 1000;
+            t0 = tnow;
+            pvx = 100*sec;
+            pvy = 100*sec;
+            evx = 100*sec;
+            evy = 100*sec;
+            pbspeedy = 300*sec;
+            ebspeedx = 50*sec;
+            ebspeedy = 100*sec;
+            defineTime += 1;
+        }
+        
 
         if (countDown == -1)
         {
@@ -196,7 +201,7 @@ function startGame()
         play.drawImage(pSprite, pSpritex, pSpritey, pSpriteSize, pSpriteSize, (px - (pSpriteHitbox - pHitbox)), (py - (pSpriteHitbox - pHitbox)), pSpriteHitbox*2, pSpriteHitbox*2);
         play.fillStyle = "white";
         play.fillRect((px), (py), pHitbox*2, pHitbox*2);
-        
+
         // mouvement ennemy
         ennemyMovement();
     
