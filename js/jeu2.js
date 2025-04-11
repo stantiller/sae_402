@@ -22,6 +22,15 @@ bullets.width = W;
 player.height = H;
 player.width = W;
 
+// oscillateur
+const approachSound = new AudioContext();
+const oscillator = approachSound.createOscillator();
+const gainNode = approachSound.createGain();
+oscillator.connect(gainNode);
+gainNode.connect(approachSound.destination);
+oscillator.start();
+gainNode.gain.value = 0;
+
 function startGame()
 {
     // display
@@ -82,9 +91,6 @@ function startGame()
     const plDead = new Audio('../sounds/game2/pldead00.wav');
     const bulletSound = new Audio('../sounds/game2/tan02.wav');
     const ennemyDmg = new Audio('../sounds/game2/damage00.wav');
-    const approachSound = new AudioContext();
-    const oscillator = approachSound.createOscillator();
-    const gainNode = approachSound.createGain();
     plDead.volume = 0.25;
     bulletSound.volume = 0.25;
     ennemyDmg.volume = 0.15;
@@ -92,9 +98,6 @@ function startGame()
     let soundDist = 200;
     let maxFreq = 3500;
     let freq = 0;
-    oscillator.connect(gainNode);
-    gainNode.connect(approachSound.destination);
-    oscillator.start();
     gainNode.gain.value = 0;
     // js audio api sine wave
     // https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode
@@ -132,96 +135,96 @@ function startGame()
     {
         // redéfinition de la vitesse en pixels/sec
         tnow = performance.now();
-        sec = tnow - t0;
+        sec = (tnow - t0) / 1000;
         t0 = tnow;
-        pvx = 30/sec;
-        pvy = 30/sec;
-        evx = 30/sec;
-        evy = 30/sec;
-        pbspeedy = 60/sec;
-        ebspeedx = 10/sec;
-        ebspeedy = 30/sec;
+        pvx = 100*sec;
+        pvy = 100*sec;
+        evx = 100*sec;
+        evy = 100*sec;
+        pbspeedy = 300*sec;
+        ebspeedx = 50*sec;
+        ebspeedy = 100*sec;
 
+        if (countDown == -1)
+        {
+            countDown = setInterval(countDownTimer, 1000);
+            countDownTimer();
+        }
+    
+        bg.fillStyle = "skyblue";
+        bg.fillRect(0, 0, W, H);
+        boss.clearRect(0, 0, W, H);
+        bul.clearRect(0, 0, W, H);
+        play.clearRect(0, 0, W, H)
+    
         setTimeout(() => {
-            if (countDown == -1)
-            {
-                countDown = setInterval(countDownTimer, 1000);
-                countDownTimer();
+            if (pattern1Push == false && fin == false){
+                eMoveRight = true;
+                pushPattern1();
+                setTimeout(() => {
+                    eMoveRight = false;
+                }, 1000);
+                pattern1Push = true;   
             }
-        
-            bg.fillStyle = "skyblue";
-            bg.fillRect(0, 0, W, H);
-            boss.clearRect(0, 0, W, H);
-            bul.clearRect(0, 0, W, H);
-            play.clearRect(0, 0, W, H)
-        
-            setTimeout(() => {
-                if (pattern1Push == false && fin == false){
-                    eMoveRight = true;
-                    pushPattern1();
-                    setTimeout(() => {
-                        eMoveRight = false;
-                    }, 1000);
-                    pattern1Push = true;   
-                }
-            }, 500);
-            setTimeout(() => {
-                if (pattern2Push == false && fin == false){
-                    eMoveLeft = true;
-                    pushPattern2();
-                    setTimeout(() => {
-                        eMoveLeft = false;
-                    }, 600);
-                    pattern2Push = true;
-                }
-            }, 3000);
-        
-            bulletPattern1();
-        
-            bulletPattern2();
-        
-            playerMovement();
-        
-            wallCollision();
-        
-            ennemyPlayerCollision();
-        
-            // affichage joueur
-            play.fillRect((px), (py), pHitbox*2, pHitbox*2);
-        
-            // mouvement ennemy
-            ennemyMovement();
-        
-            //affichage ennemy
-            boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
-        
+        }, 500);
+        setTimeout(() => {
+            if (pattern2Push == false && fin == false){
+                eMoveLeft = true;
+                pushPattern2();
+                setTimeout(() => {
+                    eMoveLeft = false;
+                }, 600);
+                pattern2Push = true;
+            }
+        }, 3000);
+    
+        bulletPattern1();
+    
+        bulletPattern2();
+    
+        playerMovement();
+    
+        wallCollision();
+    
+        ennemyPlayerCollision();
+    
+        // affichage joueur
+        play.fillRect((px), (py), pHitbox*2, pHitbox*2);
+    
+        // mouvement ennemy
+        ennemyMovement();
+    
+        //affichage ennemy
+        boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
+    
+        setTimeout(() => {
             if (ptimer == -1)
             {
                 ptimer = setInterval(playerBullets, fRate)
                 playerBullets();
             }
-        
-            playerShoot();
-        
-            // timer and score
-            ctxScore.clearRect(0, 0, W, H)
-            ctxScore.font = "20px Arial";
-            ctxScore.fillText(cdTimer, (W - 40), 30);
-            ctxScore.font = "20px Arial";
-            ctxScore.fillText(`Score : ${score}`, 10, 30);
-        
-            if (fin == true){
-                gainNode.gain.value = 0;
-                window.cancelAnimationFrame(afficher);
-                clearGame();
-                if (win == true)
-                    winScreen();
-                else
-                    loseScreen();
-            }
+        }, 50);
+    
+        playerShoot();
+    
+        // timer and score
+        ctxScore.clearRect(0, 0, W, H)
+        ctxScore.font = "20px Arial";
+        ctxScore.fillText(cdTimer, (W - 40), 30);
+        ctxScore.font = "20px Arial";
+        ctxScore.fillText(`Score : ${score}`, 10, 30);
+    
+        if (fin == true){
+            gainNode.gain.value = 0;
+            window.cancelAnimationFrame(afficher);
+            clearGame();
+            if (win == true)
+                winScreen();
             else
-                window.requestAnimationFrame(afficher);
-        }, 10);
+                loseScreen();
+        }
+        else
+            window.requestAnimationFrame(afficher);
     }
     window.addEventListener("deviceorientation", playerControl, true);
     afficher();
