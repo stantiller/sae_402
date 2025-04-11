@@ -45,6 +45,9 @@ function startGame()
     let score = 0;
     let countDown = -1;
     let cdTimer = 60;
+    let t0 = performance.now();
+    let tnow = 0;
+    let sec = 0;
 
     // fin du jeu gagne ou non
     let fin = false;
@@ -83,7 +86,7 @@ function startGame()
     plDead.volume = 0.25;
     bulletSound.volume = 0.25;
     ennemyDmg.volume = 0.15;
-    approachSoundVolume = 0.5
+    approachSoundVolume = 0.5;
     let soundDist = 200;
     let maxFreq = 3500;
     let freq = 0;
@@ -99,6 +102,7 @@ function startGame()
     let pbHitbox = 4/2;
     let ptimer = -1;
     let fRate = 200;
+    let pbspeedy = 4;
 
     // bullets sprite and coordinates
     const bulletImg = new Image();
@@ -115,6 +119,8 @@ function startGame()
     let pattern2Push = false;
     let pattern1 = [];
     let pattern2 = [];
+    let ebspeedx = 0.5;
+    let ebspeedy = 2;
     // let xValue = 200;
     
 
@@ -122,6 +128,18 @@ function startGame()
 
     function afficher()
     {
+        // redéfinition de la vitesse en pixels/sec
+        tnow = performance.now();
+        sec = tnow - t0;
+        t0 = tnow;
+        pvx = 30/sec;
+        pvy = 30/sec;
+        evx = 30/sec;
+        evy = 30/sec;
+        pbspeedy = 60/sec;
+        ebspeedx = 10/sec;
+        ebspeedy = 30/sec;
+
         if (countDown == -1)
         {
             countDown = setInterval(countDownTimer, 1000);
@@ -134,15 +152,16 @@ function startGame()
         bul.clearRect(0, 0, W, H);
         play.clearRect(0, 0, W, H)
 
-        if (pattern1Push == false && fin == false){
-            eMoveRight = true;
-            pushPattern1();
-            setTimeout(() => {
-                eMoveRight = false;
-            }, 1000);
-            pattern1Push = true;
-            
-        }
+        setTimeout(() => {
+            if (pattern1Push == false && fin == false){
+                eMoveRight = true;
+                pushPattern1();
+                setTimeout(() => {
+                    eMoveRight = false;
+                }, 1000);
+                pattern1Push = true;   
+            }
+        }, 500);
         setTimeout(() => {
             if (pattern2Push == false && fin == false){
                 eMoveLeft = true;
@@ -152,7 +171,7 @@ function startGame()
                 }, 600);
                 pattern2Push = true;
             }
-        }, 2500);
+        }, 3000);
 
         bulletPattern1();
 
@@ -376,7 +395,7 @@ function startGame()
             {   
                 pbx: px + pHitbox - pbHitbox,
                 pby: py,
-                pbvy: 4
+                pbvy: pbspeedy
             }
 
         );
@@ -413,24 +432,24 @@ function startGame()
                             {   
                                 x: ex + eHitbox,
                                 y: ey + eHitbox,
-                                vx: 0.5,
-                                vy: 2
+                                vx: ebspeedx,
+                                vy: ebspeedy
                             }
                         ],
                         [
                             {   
                                 x: ex + eHitbox,
                                 y: ey + eHitbox,
-                                vx: 0.5,
-                                vy: 2
+                                vx: ebspeedx,
+                                vy: ebspeedy
                             }
                         ],
                         [
                             {   
                                 x: ex + eHitbox,
                                 y: ey + eHitbox,
-                                vx: 0.5,
-                                vy: 2
+                                vx: ebspeedx,
+                                vy: ebspeedy
                             }
                         ]
                     ]
@@ -451,8 +470,8 @@ function startGame()
                             {   
                                 x: ex + eHitbox,
                                 y: ey + eHitbox,
-                                vx: 0,
-                                vy: 2
+                                vx: ebspeedx,
+                                vy: ebspeedy
                             }
                         ]
                     ]
