@@ -142,84 +142,86 @@ function startGame()
         ebspeedx = 10/sec;
         ebspeedy = 30/sec;
 
-        if (countDown == -1)
-        {
-            countDown = setInterval(countDownTimer, 1000);
-            countDownTimer();
-        }
-
-        bg.fillStyle = "skyblue";
-        bg.fillRect(0, 0, W, H);
-        boss.clearRect(0, 0, W, H);
-        bul.clearRect(0, 0, W, H);
-        play.clearRect(0, 0, W, H)
-
         setTimeout(() => {
-            if (pattern1Push == false && fin == false){
-                eMoveRight = true;
-                pushPattern1();
-                setTimeout(() => {
-                    eMoveRight = false;
-                }, 1000);
-                pattern1Push = true;   
+            if (countDown == -1)
+            {
+                countDown = setInterval(countDownTimer, 1000);
+                countDownTimer();
             }
-        }, 500);
-        setTimeout(() => {
-            if (pattern2Push == false && fin == false){
-                eMoveLeft = true;
-                pushPattern2();
-                setTimeout(() => {
-                    eMoveLeft = false;
-                }, 600);
-                pattern2Push = true;
+        
+            bg.fillStyle = "skyblue";
+            bg.fillRect(0, 0, W, H);
+            boss.clearRect(0, 0, W, H);
+            bul.clearRect(0, 0, W, H);
+            play.clearRect(0, 0, W, H)
+        
+            setTimeout(() => {
+                if (pattern1Push == false && fin == false){
+                    eMoveRight = true;
+                    pushPattern1();
+                    setTimeout(() => {
+                        eMoveRight = false;
+                    }, 1000);
+                    pattern1Push = true;   
+                }
+            }, 500);
+            setTimeout(() => {
+                if (pattern2Push == false && fin == false){
+                    eMoveLeft = true;
+                    pushPattern2();
+                    setTimeout(() => {
+                        eMoveLeft = false;
+                    }, 600);
+                    pattern2Push = true;
+                }
+            }, 3000);
+        
+            bulletPattern1();
+        
+            bulletPattern2();
+        
+            playerMovement();
+        
+            wallCollision();
+        
+            ennemyPlayerCollision();
+        
+            // affichage joueur
+            play.fillRect((px), (py), pHitbox*2, pHitbox*2);
+        
+            // mouvement ennemy
+            ennemyMovement();
+        
+            //affichage ennemy
+            boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
+        
+            if (ptimer == -1)
+            {
+                ptimer = setInterval(playerBullets, fRate)
+                playerBullets();
             }
-        }, 3000);
-
-        bulletPattern1();
-
-        bulletPattern2();
-
-        playerMovement();
-
-        wallCollision();
-
-        ennemyPlayerCollision();
-
-        // affichage joueur
-        play.fillRect((px), (py), pHitbox*2, pHitbox*2);
-
-        // mouvement ennemy
-        ennemyMovement();
-
-        //affichage ennemy
-        boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
-
-        if (ptimer == -1)
-        {
-            ptimer = setInterval(playerBullets, fRate)
-            playerBullets();
-        }
-
-        playerShoot();
-
-        // timer and score
-        ctxScore.clearRect(0, 0, W, H)
-        ctxScore.font = "20px Arial";
-        ctxScore.fillText(cdTimer, (W - 40), 30);
-        ctxScore.font = "20px Arial";
-        ctxScore.fillText(`Score : ${score}`, 10, 30);
-
-        if (fin == true){
-            gainNode.gain.value = 0;
-            window.cancelAnimationFrame(afficher);
-            clearGame();
-            if (win == true)
-                winScreen();
+        
+            playerShoot();
+        
+            // timer and score
+            ctxScore.clearRect(0, 0, W, H)
+            ctxScore.font = "20px Arial";
+            ctxScore.fillText(cdTimer, (W - 40), 30);
+            ctxScore.font = "20px Arial";
+            ctxScore.fillText(`Score : ${score}`, 10, 30);
+        
+            if (fin == true){
+                gainNode.gain.value = 0;
+                window.cancelAnimationFrame(afficher);
+                clearGame();
+                if (win == true)
+                    winScreen();
+                else
+                    loseScreen();
+            }
             else
-                loseScreen();
-        }
-        else
-            window.requestAnimationFrame(afficher);
+                window.requestAnimationFrame(afficher);
+        }, 10);
     }
     window.addEventListener("deviceorientation", playerControl, true);
     afficher();
