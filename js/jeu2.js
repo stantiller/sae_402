@@ -65,11 +65,15 @@ function startGame()
     // player
     const pSprite = new Image();
     pSprite.src = "../img/game2/sprite.png";
+    let pSpriteHitbox = 40/2;
+    let pSpritex = 0;
+    let pSpritey = 0;
+    let pSpriteSize = 105;
     let moveRight = false;
     let moveLeft = false;
     let moveForward = false;
     let moveBack = false;
-    let pHitbox = 20/2;
+    let pHitbox = 12/2;
     let px = W/2 - pHitbox;
     let py = H-200;
     let pvx = 2;
@@ -189,8 +193,10 @@ function startGame()
         ennemyPlayerCollision();
     
         // affichage joueur
+        play.drawImage(pSprite, pSpritex, pSpritey, pSpriteSize, pSpriteSize, (px - (pSpriteHitbox - pHitbox)), (py - (pSpriteHitbox - pHitbox)), pSpriteHitbox*2, pSpriteHitbox*2);
+        play.fillStyle = "white";
         play.fillRect((px), (py), pHitbox*2, pHitbox*2);
-    
+        
         // mouvement ennemy
         ennemyMovement();
     
