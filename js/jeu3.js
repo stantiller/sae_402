@@ -56,13 +56,10 @@ function playerControl(event) {
     deplacementX = 0;
     deplacementY = 0;
   } else {
-    deplacementX = 0.7 * Math.cos(infoPlayer.angle);
-    deplacementY = 0.7 * Math.sin(infoPlayer.angle);
+    deplacementX = 0.4 * Math.cos(infoPlayer.angle);
+    deplacementY = 0.4 * Math.sin(infoPlayer.angle);
   }
 }
-
-const pixel = ctxColission.getImageData(infoPlayer.x, infoPlayer.y, 1, 1);
-const data = pixel.data;
 
 window.addEventListener("touchstart", playerControl);
 window.addEventListener("touchmove", playerControl);
@@ -79,6 +76,29 @@ function afficher() {
 
   // affichage du modele de collision du jeu
   ctxColission.drawImage(colissionImage, 0, 0, taille, hauteur);
+   const nextX = infoPlayer.x + deplacementX;
+  const nextY = infoPlayer.y + deplacementY;
+
+  const pixelX = ctxColission.getImageData(nextX, infoPlayer.y, 1, 1).data;
+  const isBlackX = pixelX[0] === 0 && pixelX[1] === 0 && pixelX[2] === 0 && pixelX[3] === 255;
+
+  const pixelY = ctxColission.getImageData(infoPlayer.x, nextY, 1, 1).data;
+  const isBlackY = pixelY[0] === 0 && pixelY[1] === 0 && pixelY[2] === 0 && pixelY[3] === 255;
+
+  // Empêcher le déplacement dans les zones noires
+  if (!isBlackX && nextX > 0 && nextX < taille) {
+    infoPlayer.x = nextX;
+  }
+
+  if (!isBlackY && nextY > 0 && nextY < hauteur) {
+    infoPlayer.y = nextY; 
+  }
+
+  else{
+  
+    deplacementX = 0;
+    deplacementY = 0;
+  }
   // affichage du background du jeu
   ctxBackground.drawImage(backgroundImage, 0, 0, taille, hauteur);
 
@@ -90,7 +110,7 @@ function afficher() {
 
   // fonctionement de la lumiere
   ctxLumiere.save();
-  ctxLumiere.translate(infoPlayer.x + 20, infoPlayer.y);
+  ctxLumiere.translate(infoPlayer.x, infoPlayer.y);
   ctxLumiere.rotate(infoPlayer.angle + angleCorrection);
   ctxLumiere.fillStyle = "yellow";
   ctxLumiere.globalCompositeOperation = "destination-out";
@@ -118,7 +138,7 @@ function afficher() {
     infoPlayer.y += deplacementY;
   }
 
-  ctxPlayer.translate(infoPlayer.x + hitbox, infoPlayer.y + hitbox);
+  ctxPlayer.translate(infoPlayer.x, infoPlayer.y); // Centrer sur la position du joueur // Dessiner le sprite centré
   ctxPlayer.rotate(infoPlayer.angle);
   ctxPlayer.drawImage(sprite, -hitbox, -hitbox, hitbox * 2.3, hitbox * 2.3);
   ctxPlayer.restore();
