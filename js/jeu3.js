@@ -24,9 +24,6 @@ let ctxLumiere = lumiere.getContext("2d");
 let ctxPlayer = player.getContext("2d");
 let ctxTableau = tableau.getContext("2d");
 
-let rayonRectT = 60;
-let rayonRectH = 40;
-
 let hitbox = 40 / 2;
 let infoPlayer = { x: taille / 2, y: hauteur / 2, angle: 0 };
 let deplacementX = 0;
@@ -40,6 +37,9 @@ backgroundImage.src = "../img/game3/background.jpg";
 
 const colissionImage = new Image();
 colissionImage.src = "../img/game3/collision.jpg";
+
+const tableauxImage = new Image();
+tableauxImage.src = "../img/game3/tableaux.png";
 
 const sprite = new Image();
 sprite.src = "../img/game3/spirte/sprite.png";
@@ -76,14 +76,16 @@ function afficher() {
 
   // affichage du modele de collision du jeu
   ctxColission.drawImage(colissionImage, 0, 0, taille, hauteur);
-   const nextX = infoPlayer.x + deplacementX;
+  const nextX = infoPlayer.x + deplacementX;
   const nextY = infoPlayer.y + deplacementY;
 
   const pixelX = ctxColission.getImageData(nextX, infoPlayer.y, 1, 1).data;
-  const isBlackX = pixelX[0] === 0 && pixelX[1] === 0 && pixelX[2] === 0 && pixelX[3] === 255;
+  const isBlackX =
+    pixelX[0] === 0 && pixelX[1] === 0 && pixelX[2] === 0 && pixelX[3] === 255;
 
   const pixelY = ctxColission.getImageData(infoPlayer.x, nextY, 1, 1).data;
-  const isBlackY = pixelY[0] === 0 && pixelY[1] === 0 && pixelY[2] === 0 && pixelY[3] === 255;
+  const isBlackY =
+    pixelY[0] === 0 && pixelY[1] === 0 && pixelY[2] === 0 && pixelY[3] === 255;
 
   // Empêcher le déplacement dans les zones noires
   if (!isBlackX && nextX > 0 && nextX < taille) {
@@ -91,16 +93,59 @@ function afficher() {
   }
 
   if (!isBlackY && nextY > 0 && nextY < hauteur) {
-    infoPlayer.y = nextY; 
-  }
-
-  else{
-  
+    infoPlayer.y = nextY;
+  } else {
     deplacementX = 0;
     deplacementY = 0;
   }
   // affichage du background du jeu
   ctxBackground.drawImage(backgroundImage, 0, 0, taille, hauteur);
+
+  // affichage du dépôt des tableaux
+  ctxTableau.drawImage(
+    tableauxImage,
+    taille / 1.6,
+    hauteur / 1.3,
+    hitbox * 3.5,
+    hitbox * 3.5
+  );
+
+  // affichage des 4 emplacements de tableaux
+  ctxTableau.strokeStyle = "blue";
+  ctxTableau.lineWidth = 5;
+  ctxTableau.strokeRect(
+    taille / 1.4,
+    hauteur / 2.4,
+    hitbox * 3,
+    hitbox * 3.8
+  );
+
+  ctxTableau.strokeStyle = "red";
+  ctxTableau.lineWidth = 5;
+  ctxTableau.strokeRect(
+    taille / 2.4,
+    hauteur / 6.7,
+    hitbox * 3.8,
+    hitbox * 3
+  );
+
+  ctxTableau.strokeStyle = "green";
+  ctxTableau.lineWidth = 5;
+  ctxTableau.strokeRect(
+    taille / 7.8,
+    hauteur / 2.4,
+    hitbox * 3,
+    hitbox * 3.8
+  );
+
+  ctxTableau.strokeStyle = "violet";
+  ctxTableau.lineWidth = 5;
+  ctxTableau.strokeRect(
+    taille / 7.8,
+    hauteur / 1.4,
+    hitbox * 3,
+    hitbox * 3.8
+  );
 
   // affichage du fond noir opaque
   ctxLumiere.fillStyle = "black";
@@ -116,8 +161,8 @@ function afficher() {
   ctxLumiere.globalCompositeOperation = "destination-out";
   ctxLumiere.beginPath();
   ctxLumiere.moveTo(0, 0);
-  ctxLumiere.lineTo(-70, 200);
-  ctxLumiere.lineTo(70, 200);
+  ctxLumiere.lineTo(-70, 210);
+  ctxLumiere.lineTo(70, 210);
   ctxLumiere.fill();
   ctxLumiere.globalCompositeOperation = "source-over";
   ctxLumiere.restore();

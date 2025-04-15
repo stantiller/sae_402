@@ -6,11 +6,23 @@
     <title>Jeu 3</title>
     <!-- <link rel="stylesheet" media="screen" href="../styles/styleJeu2.css"> -->
     <style>
-      /* Le style directement inline pour voir au plus tôt la zone du premier affichage */
       body {
         top: 0;
         left: 0;
         margin: 0;
+      }
+
+      #tableau {
+        z-index: 0;
+      }
+
+      #noir {
+        z-index: 1;
+        display: none;
+      }
+
+      #player {
+        z-index: 2;
       }
 
       #background {
@@ -35,7 +47,7 @@
       }
 
       #noir {
-        opacity: 0.9;
+        opacity: 0.96;
       }
     </style>
   </head>
