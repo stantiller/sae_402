@@ -31,6 +31,26 @@ let deplacementY = 0;
 let posiX = 0;
 let posiY = 0;
 let differenceXY = 0;
+let inventory = [];
+
+let TailleTableau = hitbox * 3.6;
+let HauteurTableau = hitbox * 3.6;
+let Xdepot = taille / 1.6;
+let ydepot = hauteur / 1.3;
+let XTableau1 = taille / 1.4;
+let yTableau1 = hauteur / 2.4;
+let XTableau2 = taille / 2.4;
+let yTableau2 = hauteur / 6.7;
+let XTableau3 = taille / 7.8;
+let yTableau3 = hauteur / 2.4;
+let XTableau4 = taille / 7.8;
+let yTableau4 = hauteur / 1.4;
+
+let depotTableau = ["blue", "red", "green", "violet"];
+let tableau1 = [];
+let tableau2 = [];
+let tableau3 = [];
+let tableau4 = [];
 
 const backgroundImage = new Image();
 backgroundImage.src = "../img/game3/background.jpg";
@@ -59,6 +79,30 @@ function playerControl(event) {
     deplacementX = 0.4 * Math.cos(infoPlayer.angle);
     deplacementY = 0.4 * Math.sin(infoPlayer.angle);
   }
+}
+
+console.log(inventory);
+console.log(depotTableau);
+
+function fonctionementTableau() {
+  // depot tableau fonctionement
+  if (
+    infoPlayer.x > Xdepot - hitbox &&
+    infoPlayer.x < Xdepot + hitbox * 3.3 &&
+    infoPlayer.y > ydepot - hitbox &&
+    infoPlayer.y < ydepot + hitbox * 3.3
+  ) {
+    if (depotTableau.length > 0) {
+      if ((inventory.length === 0)) {
+        inventory.push(depotTableau.shift());
+        console.log(inventory);
+        console.log(depotTableau);
+      }
+    }
+  }
+
+  // tableau 1 fonctionement
+  
 }
 
 window.addEventListener("touchstart", playerControl);
@@ -104,48 +148,29 @@ function afficher() {
   // affichage du dépôt des tableaux
   ctxTableau.drawImage(
     tableauxImage,
-    taille / 1.6,
-    hauteur / 1.3,
-    hitbox * 3.5,
-    hitbox * 3.5
+    Xdepot,
+    ydepot,
+    hitbox * 3.3,
+    hitbox * 3.3
   );
+  fonctionementTableau();
 
   // affichage des 4 emplacements de tableaux
   ctxTableau.strokeStyle = "blue";
   ctxTableau.lineWidth = 5;
-  ctxTableau.strokeRect(
-    taille / 1.4,
-    hauteur / 2.4,
-    hitbox * 3,
-    hitbox * 3.8
-  );
+  ctxTableau.strokeRect(XTableau1, yTableau1, TailleTableau, HauteurTableau);
 
   ctxTableau.strokeStyle = "red";
   ctxTableau.lineWidth = 5;
-  ctxTableau.strokeRect(
-    taille / 2.4,
-    hauteur / 6.7,
-    hitbox * 3.8,
-    hitbox * 3
-  );
+  ctxTableau.strokeRect(XTableau2, yTableau2, TailleTableau, HauteurTableau);
 
   ctxTableau.strokeStyle = "green";
   ctxTableau.lineWidth = 5;
-  ctxTableau.strokeRect(
-    taille / 7.8,
-    hauteur / 2.4,
-    hitbox * 3,
-    hitbox * 3.8
-  );
+  ctxTableau.strokeRect(XTableau3, yTableau3, TailleTableau, HauteurTableau);
 
   ctxTableau.strokeStyle = "violet";
   ctxTableau.lineWidth = 5;
-  ctxTableau.strokeRect(
-    taille / 7.8,
-    hauteur / 1.4,
-    hitbox * 3,
-    hitbox * 3.8
-  );
+  ctxTableau.strokeRect(XTableau4, yTableau4, TailleTableau, HauteurTableau);
 
   // affichage du fond noir opaque
   ctxLumiere.fillStyle = "black";
@@ -172,7 +197,6 @@ function afficher() {
   let dy = posiY - infoPlayer.y;
 
   differenceXY = Math.sqrt(dx * dx + dy * dy);
-  console.log(differenceXY);
 
   ctxPlayer.save();
   if (differenceXY < hitbox * 1.5) {
