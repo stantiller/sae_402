@@ -53,7 +53,7 @@ function startGame()
     // score et timer du jeu
     let score = 0;
     let countDown = -1;
-    let cdTimer = 60;
+    let cdTimer = 45;
     let t0 = performance.now();
     let tnow = 0;
     let sec = 0;
@@ -84,8 +84,6 @@ function startGame()
     let betaBackMove = 35;
 
     // ennemy
-    let eMoveRight = false;
-    let eMoveLeft = false;
     let eHitbox = 25/2;
     let ex = W/2 - eHitbox;
     let ey = 80;
@@ -128,15 +126,24 @@ function startGame()
     const nbrPattern2 = 5;
     const nbrPattern3 = 1;
     const nbrPattern4 = 2;
+    const nbrPattern5 = 1;
+    const nbrPattern6 = 1;
+    const nbrPattern7 = 1;
     let bHitbox = 14/2;
     let pattern1Push = false;
     let pattern2Push = false;
     let pattern3Push = false;
     let pattern4Push = false;
+    let pattern5Push = false;
+    let pattern6Push = false;
+    let pattern7Push = false;
     let pattern1 = [];
     let pattern2 = [];
     let pattern3 = [];
     let pattern4 = [];
+    let pattern5 = [];
+    let pattern6 = [];
+    let pattern7 = [];
     let ebspeedx = 0.5;
     let ebspeedy = 2;
     // let xValue = 200;
@@ -146,7 +153,7 @@ function startGame()
 
     function afficher()
     {
-        // redéfinition de la vitesse en pixels/sec
+        // redéfinition de la vitesse en pixels/sec sur les 10 premiere frames pour une vitesse constante
         if (defineTime < 10) {
             tnow = performance.now();
             sec = (tnow - t0) / 1000;
@@ -161,13 +168,14 @@ function startGame()
             defineTime += 1;
         }
         
-
+        // début du timer
         if (countDown == -1)
         {
             countDown = setInterval(countDownTimer, 1000);
             countDownTimer();
         }
-    
+
+        // fond et clear de toutes les zones
         bg.fillStyle = "skyblue";
         bg.fillRect(0, 0, W, H);
         boss.clearRect(0, 0, W, H);
@@ -177,21 +185,22 @@ function startGame()
         // push des patternes ennemy
         setTimeout(() => {
             if (pattern1Push == false && fin == false){
-                eTargetx = W - 50;
+                eTargetx = W - 20;
                 pushPattern1();
                 pattern1Push = true;   
             }
         }, 500);
         setTimeout(() => {
             if (pattern2Push == false && fin == false){
-                eTargetx = 80;
                 evx = 140*sec;
+                eTargetx = 80;
                 pushPattern2();
                 pattern2Push = true;
             }
         }, 3000);
         setTimeout(() => {
             if (pattern3Push == false && fin == false){
+                evx = 120*sec;
                 pushPattern3();
                 pattern3Push = true;
             }
@@ -203,6 +212,34 @@ function startGame()
                 pattern4Push = true;
             }
         }, 7000);
+        setTimeout(() => {
+            if (pattern5Push == false && fin == false){
+                eTargetx = W/2;
+                setTimeout(() => {
+                    pushPattern5();
+                }, 1000);
+                pattern5Push = true;
+            }
+        }, 8000);
+        setTimeout(() => {
+            if (pattern6Push == false && fin == false){
+                evx = 150*sec;
+                eTargetx = W/5;
+                setTimeout(() => {
+                    pushPattern6();
+                }, 800);
+                pattern6Push = true;
+            }
+        }, 10000);
+        setTimeout(() => {
+            if (pattern7Push == false && fin == false){
+                eTargetx = W/1.25;
+                setTimeout(() => {
+                    pushPattern7();
+                }, 1500);
+                pattern7Push = true;
+            }
+        }, 11000);
     
         // mouvement de patternes ennemy
         bulletPattern1();
@@ -210,8 +247,14 @@ function startGame()
         bulletPattern2();
 
         bulletPattern3();
-    // 
+
         bulletPattern4();
+
+        bulletPattern5();
+
+        bulletPattern6();
+
+        bulletPattern7();
     
         // mouvement et collisions joueur
         playerMovement();
@@ -619,6 +662,160 @@ function startGame()
         ebspeedx = 50*sec;
     }
 
+    function pushPattern5()
+    {
+        for (let i = 0; i < nbrPattern5; i++)
+        {
+            setTimeout(() => {
+                pattern5.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+    }
+
+    function pushPattern6()
+    {
+        for (let i = 0; i < nbrPattern6; i++)
+        {
+            setTimeout(() => {
+                pattern6.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+    }
+
+    function pushPattern7()
+    {
+        for (let i = 0; i < nbrPattern7; i++)
+        {
+            setTimeout(() => {
+                pattern7.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+    }
+
     // affichage des patternes
     function bulletPattern1()
     {
@@ -734,6 +931,171 @@ function startGame()
                 bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
 
                 bulletCollision(bullet);
+
+            });
+        });
+    }
+
+    function bulletPattern5()
+    {
+        pattern5.forEach(round => {
+            round[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            round[1].forEach(bullet => {
+
+                bullet.y += bullet.vy/1.5;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            round[2].forEach(bullet => {
+
+                bullet.x += bullet.vx*1.5;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[3].forEach(bullet => {
+
+                bullet.y -= bullet.vy/1.5;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[4].forEach(bullet => {
+
+                bullet.y -= bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[5].forEach(bullet => {
+
+                bullet.y -= bullet.vy/1.5;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[6].forEach(bullet => {
+
+                bullet.x -= bullet.vx*1.5;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[7].forEach(bullet => {
+
+                bullet.y += bullet.vy/1.5;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+        });
+    }
+
+    function bulletPattern6()
+    {
+        pattern6.forEach(tripleBullet => {
+            
+            tripleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[2].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+        });
+    }
+
+    function bulletPattern7()
+    {
+        pattern7.forEach(tripleBullet => {
+            
+            tripleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[2].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
 
             });
         });
