@@ -53,7 +53,7 @@ function startGame()
     // score et timer du jeu
     let score = 0;
     let countDown = -1;
-    let cdTimer = 60;
+    let cdTimer = 45;
     let t0 = performance.now();
     let tnow = 0;
     let sec = 0;
@@ -80,17 +80,17 @@ function startGame()
     let pvx = 2;
     let pvy = 2;
     let gammaMove = 5;
-    let betaForwMove = 25;
+    let betaForwMove = 10;
     let betaBackMove = 35;
 
     // ennemy
-    let eMoveRight = false;
-    let eMoveLeft = false;
     let eHitbox = 25/2;
     let ex = W/2 - eHitbox;
-    let ey = 0+80;
+    let ey = 80;
     let evx = 2.5;
     let evy = 2;
+    let eTargetx = ex;
+    let eTargety = ey;
 
     // sons
     const plDead = new Audio('../sounds/game2/pldead00.wav');
@@ -99,9 +99,9 @@ function startGame()
     plDead.volume = 0.25;
     bulletSound.volume = 0.25;
     ennemyDmg.volume = 0.15;
-    approachSoundVolume = 0.5;
-    let soundDist = 200;
-    let maxFreq = 3500;
+    approachSoundVolume = 0.35;
+    let soundDist = 250;
+    let maxFreq = 1500;
     let freq = 0;
     gainNode.gain.value = 0;
     // js audio api sine wave
@@ -124,11 +124,26 @@ function startGame()
     // bullets and patterns
     const nbrPattern1 = 2;
     const nbrPattern2 = 5;
+    const nbrPattern3 = 1;
+    const nbrPattern4 = 2;
+    const nbrPattern5 = 1;
+    const nbrPattern6 = 1;
+    const nbrPattern7 = 1;
     let bHitbox = 14/2;
     let pattern1Push = false;
     let pattern2Push = false;
+    let pattern3Push = false;
+    let pattern4Push = false;
+    let pattern5Push = false;
+    let pattern6Push = false;
+    let pattern7Push = false;
     let pattern1 = [];
     let pattern2 = [];
+    let pattern3 = [];
+    let pattern4 = [];
+    let pattern5 = [];
+    let pattern6 = [];
+    let pattern7 = [];
     let ebspeedx = 0.5;
     let ebspeedy = 2;
     // let xValue = 200;
@@ -138,59 +153,110 @@ function startGame()
 
     function afficher()
     {
-        // redéfinition de la vitesse en pixels/sec
+        // redéfinition de la vitesse en pixels/sec sur les 10 premiere frames pour une vitesse constante
         if (defineTime < 10) {
             tnow = performance.now();
             sec = (tnow - t0) / 1000;
             t0 = tnow;
             pvx = 100*sec;
             pvy = 100*sec;
-            evx = 100*sec;
-            evy = 100*sec;
+            evx = 120*sec;
+            evy = 120*sec;
             pbspeedy = 300*sec;
             ebspeedx = 50*sec;
             ebspeedy = 100*sec;
             defineTime += 1;
         }
         
-
+        // début du timer
         if (countDown == -1)
         {
             countDown = setInterval(countDownTimer, 1000);
             countDownTimer();
         }
-    
+
+        // fond et clear de toutes les zones
         bg.fillStyle = "skyblue";
         bg.fillRect(0, 0, W, H);
         boss.clearRect(0, 0, W, H);
         bul.clearRect(0, 0, W, H);
         play.clearRect(0, 0, W, H)
     
+        // push des patternes ennemy
         setTimeout(() => {
             if (pattern1Push == false && fin == false){
-                eMoveRight = true;
+                eTargetx = W - 20;
                 pushPattern1();
-                setTimeout(() => {
-                    eMoveRight = false;
-                }, 1000);
                 pattern1Push = true;   
             }
         }, 500);
         setTimeout(() => {
             if (pattern2Push == false && fin == false){
-                eMoveLeft = true;
+                evx = 140*sec;
+                eTargetx = 80;
                 pushPattern2();
-                setTimeout(() => {
-                    eMoveLeft = false;
-                }, 600);
                 pattern2Push = true;
             }
         }, 3000);
+        setTimeout(() => {
+            if (pattern3Push == false && fin == false){
+                evx = 120*sec;
+                pushPattern3();
+                pattern3Push = true;
+            }
+        }, 6000);
+        setTimeout(() => {
+            if (pattern4Push == false && fin == false){
+                eTargetx = W/1.5;
+                pushPattern4();
+                pattern4Push = true;
+            }
+        }, 7000);
+        setTimeout(() => {
+            if (pattern5Push == false && fin == false){
+                eTargetx = W/2;
+                setTimeout(() => {
+                    pushPattern5();
+                }, 1000);
+                pattern5Push = true;
+            }
+        }, 8000);
+        setTimeout(() => {
+            if (pattern6Push == false && fin == false){
+                evx = 150*sec;
+                eTargetx = W/5;
+                setTimeout(() => {
+                    pushPattern6();
+                }, 800);
+                pattern6Push = true;
+            }
+        }, 10000);
+        setTimeout(() => {
+            if (pattern7Push == false && fin == false){
+                eTargetx = W/1.25;
+                setTimeout(() => {
+                    pushPattern7();
+                }, 1500);
+                pattern7Push = true;
+            }
+        }, 11000);
     
+        // mouvement de patternes ennemy
         bulletPattern1();
     
         bulletPattern2();
+
+        bulletPattern3();
+
+        bulletPattern4();
+
+        bulletPattern5();
+
+        bulletPattern6();
+
+        bulletPattern7();
     
+        // mouvement et collisions joueur
         playerMovement();
     
         wallCollision();
@@ -263,7 +329,6 @@ function startGame()
         if (fin == false)
         {
             freq = (-1 * ((dist / soundDist) * maxFreq)) + maxFreq;
-            console.log(dist, freq);
             gainNode.gain.value = approachSoundVolume;
             oscillator.frequency.value = freq;
         }
@@ -316,10 +381,36 @@ function startGame()
     // mouvement de l'ennemi
     function ennemyMovement()
     {
-        if (eMoveRight == true)
-            ex += evx;
-        if (eMoveLeft ==true)
-            ex -= evx;
+        // if (eMoveRight == true)
+            // ex += evx;
+        // if (eMoveLeft ==true)
+            // ex -= evx;
+
+        let eDistx = ex - eTargetx;
+        let eDisty = ey - eTargety;
+
+        if (Math.abs(eDistx) > 5)
+        {
+            if (Math.sign(eDistx) == 1)
+            {
+                ex -= evx;
+            }
+            else
+            {
+                ex += evx;
+            }
+        }
+        if (Math.abs(eDisty) > 5)
+        {
+            if (Math.sign(eDisty) == 1)
+            {
+                ey -= evy;
+            }
+            else
+            {
+                ey += evy;
+            }
+        }
     }
 
     // collisions mur joueur
@@ -473,7 +564,7 @@ function startGame()
                     ]
                 );
                 playSound(bulletSound);
-            }, 600*i);
+            }, 800*i);
         }
     }
 
@@ -497,7 +588,231 @@ function startGame()
             
                 playSound(bulletSound);
     
-            }, 100*i);
+            }, 150*i);
+        }
+    }
+
+    function pushPattern3()
+    {
+        for (let i = 0; i < nbrPattern3; i++)
+        {
+            setTimeout(() => {
+                pattern3.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+    }
+
+    function pushPattern4()
+    {
+        ebspeedx = 25*sec;
+        for (let i = 0; i < nbrPattern4; i++)
+        {
+            setTimeout(() => {
+                pattern4.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+        ebspeedx = 50*sec;
+    }
+
+    function pushPattern5()
+    {
+        for (let i = 0; i < nbrPattern5; i++)
+        {
+            setTimeout(() => {
+                pattern5.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+    }
+
+    function pushPattern6()
+    {
+        for (let i = 0; i < nbrPattern6; i++)
+        {
+            setTimeout(() => {
+                pattern6.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+    }
+
+    function pushPattern7()
+    {
+        for (let i = 0; i < nbrPattern7; i++)
+        {
+            setTimeout(() => {
+                pattern7.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
         }
     }
 
@@ -554,7 +869,239 @@ function startGame()
             });
         });
     }
+
+    function bulletPattern3()
+    {
+        pattern3.forEach(tripleBullet => {
+            
+            tripleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[2].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+        });
+    }
+
+    function bulletPattern4()
+    {
+        pattern4.forEach(doubleBullet => {
+            
+            doubleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            doubleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+        });
+    }
+
+    function bulletPattern5()
+    {
+        pattern5.forEach(round => {
+            round[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            round[1].forEach(bullet => {
+
+                bullet.y += bullet.vy/1.5;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            round[2].forEach(bullet => {
+
+                bullet.x += bullet.vx*1.5;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[3].forEach(bullet => {
+
+                bullet.y -= bullet.vy/1.5;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[4].forEach(bullet => {
+
+                bullet.y -= bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[5].forEach(bullet => {
+
+                bullet.y -= bullet.vy/1.5;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[6].forEach(bullet => {
+
+                bullet.x -= bullet.vx*1.5;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[7].forEach(bullet => {
+
+                bullet.y += bullet.vy/1.5;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+        });
+    }
+
+    function bulletPattern6()
+    {
+        pattern6.forEach(tripleBullet => {
+            
+            tripleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[2].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+        });
+    }
+
+    function bulletPattern7()
+    {
+        pattern7.forEach(tripleBullet => {
+            
+            tripleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[2].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+        });
+    }
 }
+
 document.querySelectorAll(".start").forEach(e => {
     e.addEventListener("click", startGame);
 });
