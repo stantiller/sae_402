@@ -80,7 +80,7 @@ function startGame()
     let pvx = 2;
     let pvy = 2;
     let gammaMove = 5;
-    let betaForwMove = 25;
+    let betaForwMove = 10;
     let betaBackMove = 35;
 
     // ennemy
