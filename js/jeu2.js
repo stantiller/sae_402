@@ -52,6 +52,7 @@ function startGame()
 
     // score et timer du jeu
     let score = 0;
+    let gainScore = 100
     let countDown = -1;
     let cdTimer = 45;
     let t0 = performance.now();
@@ -129,6 +130,9 @@ function startGame()
     const nbrPattern5 = 1;
     const nbrPattern6 = 1;
     const nbrPattern7 = 1;
+    const nbrPattern8 = 8;
+    const nbrPattern9 = 1;
+    const nbrPattern10 = 1;
     let bHitbox = 14/2;
     let pattern1Push = false;
     let pattern2Push = false;
@@ -137,6 +141,9 @@ function startGame()
     let pattern5Push = false;
     let pattern6Push = false;
     let pattern7Push = false;
+    let pattern8Push = false;
+    let pattern9Push = false;
+    let pattern10Push = false;
     let pattern1 = [];
     let pattern2 = [];
     let pattern3 = [];
@@ -144,6 +151,9 @@ function startGame()
     let pattern5 = [];
     let pattern6 = [];
     let pattern7 = [];
+    let pattern8 = [];
+    let pattern9 = [];
+    let pattern10 = [];
     let ebspeedx = 0.5;
     let ebspeedy = 2;
     // let xValue = 200;
@@ -182,79 +192,8 @@ function startGame()
         bul.clearRect(0, 0, W, H);
         play.clearRect(0, 0, W, H)
     
-        // push des patternes ennemy
-        setTimeout(() => {
-            if (pattern1Push == false && fin == false){
-                eTargetx = W - 20;
-                pushPattern1();
-                pattern1Push = true;   
-            }
-        }, 500);
-        setTimeout(() => {
-            if (pattern2Push == false && fin == false){
-                evx = 140*sec;
-                eTargetx = 80;
-                pushPattern2();
-                pattern2Push = true;
-            }
-        }, 3000);
-        setTimeout(() => {
-            if (pattern3Push == false && fin == false){
-                evx = 120*sec;
-                pushPattern3();
-                pattern3Push = true;
-            }
-        }, 6000);
-        setTimeout(() => {
-            if (pattern4Push == false && fin == false){
-                eTargetx = W/1.5;
-                pushPattern4();
-                pattern4Push = true;
-            }
-        }, 7000);
-        setTimeout(() => {
-            if (pattern5Push == false && fin == false){
-                eTargetx = W/2;
-                setTimeout(() => {
-                    pushPattern5();
-                }, 1000);
-                pattern5Push = true;
-            }
-        }, 8000);
-        setTimeout(() => {
-            if (pattern6Push == false && fin == false){
-                evx = 150*sec;
-                eTargetx = W/5;
-                setTimeout(() => {
-                    pushPattern6();
-                }, 800);
-                pattern6Push = true;
-            }
-        }, 10000);
-        setTimeout(() => {
-            if (pattern7Push == false && fin == false){
-                eTargetx = W/1.25;
-                setTimeout(() => {
-                    pushPattern7();
-                }, 1500);
-                pattern7Push = true;
-            }
-        }, 11000);
-    
-        // mouvement de patternes ennemy
-        bulletPattern1();
-    
-        bulletPattern2();
-
-        bulletPattern3();
-
-        bulletPattern4();
-
-        bulletPattern5();
-
-        bulletPattern6();
-
-        bulletPattern7();
+        // gestion des patternes
+        gestionPatternes();
     
         // mouvement et collisions joueur
         playerMovement();
@@ -458,8 +397,8 @@ function startGame()
     // verification de collision ennemy
     function ennemyCollision(pBullet)
     {
-        let distx = Math.abs((ex + pHitbox) - (pBullet.pbx + pbHitbox));
-        let disty = Math.abs((ey + pHitbox) - (pBullet.pby + pbHitbox));
+        let distx = Math.abs((ex + eHitbox) - (pBullet.pbx + pbHitbox));
+        let disty = Math.abs((ey + eHitbox) - (pBullet.pby + pbHitbox));
 
         if (distx < (eHitbox + pbHitbox) && disty < (eHitbox + pbHitbox)) {
             let index = pBullets.indexOf(pBullet);
@@ -472,7 +411,7 @@ function startGame()
     function ennemyHit()
     {
         bg.fillRect(0, 0, W, H);
-        score += 10;
+        score += gainScore;
         playSound(ennemyDmg)
     }
 
@@ -527,6 +466,92 @@ function startGame()
             }
 
         });
+    }
+
+    function gestionPatternes()
+    {
+        // push des patternes ennemy
+        setTimeout(() => {
+            if (pattern1Push == false && fin == false){
+                eTargetx = W - 20;
+                pushPattern1();
+                pattern1Push = true;   
+            }
+        }, 500);
+        setTimeout(() => {
+            if (pattern2Push == false && fin == false){
+                evx = 140*sec;
+                eTargetx = 80;
+                pushPattern2();
+                pattern2Push = true;
+            }
+        }, 3000);
+        setTimeout(() => {
+            if (pattern3Push == false && fin == false){
+                evx = 120*sec;
+                pushPattern3();
+                pattern3Push = true;
+            }
+        }, 6000);
+        setTimeout(() => {
+            if (pattern4Push == false && fin == false){
+                eTargetx = W/2;
+                pushPattern4();
+                pattern4Push = true;
+            }
+        }, 7000);
+        setTimeout(() => {
+            if (pattern5Push == false && fin == false){
+                setTimeout(() => {
+                    pushPattern5();
+                }, 1000);
+                pattern5Push = true;
+            }
+        }, 8000);
+        setTimeout(() => {
+            if (pattern6Push == false && fin == false){
+                evx = 150*sec;
+                eTargetx = W/5;
+                setTimeout(() => {
+                    pushPattern6();
+                }, 800);
+                pattern6Push = true;
+            }
+        }, 10000);
+        setTimeout(() => {
+            if (pattern7Push == false && fin == false){
+                eTargetx = W/1.25;
+                setTimeout(() => {
+                    pushPattern7();
+                }, 1500);
+                pattern7Push = true;
+            }
+        }, 11000);
+        setTimeout(() => {
+            if (pattern8Push == false && fin == false){
+                evx = 120*sec;
+                eTargetx = W/3;
+                pushPattern8();
+                pattern8Push = true;
+            }
+        }, 13500);
+    
+        // mouvement de patternes ennemy
+        bulletPattern1();
+    
+        bulletPattern2();
+
+        bulletPattern3();
+
+        bulletPattern4();
+
+        bulletPattern5();
+
+        bulletPattern6();
+
+        bulletPattern7();
+
+        bulletPattern8();
     }
 
     // push des patternes
@@ -816,6 +841,30 @@ function startGame()
         }
     }
 
+    function pushPattern8()
+    {
+        for (let i = 0; i < nbrPattern8; i++)
+        {
+            setTimeout(() => {
+                pattern8.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+            
+                playSound(bulletSound);
+    
+            }, 180*i);
+        }
+    }
+
     // affichage des patternes
     function bulletPattern1()
     {
@@ -1096,6 +1145,21 @@ function startGame()
                 bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
 
                 bulletCollision(bullet); 
+
+            });
+        });
+    }
+
+    function bulletPattern8()
+    {
+        pattern8.forEach(straightBullet => {
+            straightBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);     
 
             });
         });
