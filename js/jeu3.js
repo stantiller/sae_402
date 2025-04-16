@@ -93,7 +93,7 @@ function fonctionementTableau() {
     infoPlayer.y < ydepot + hitbox * 3.3
   ) {
     if (depotTableau.length > 0) {
-      if ((inventory.length === 0)) {
+      if (inventory.length === 0) {
         inventory.push(depotTableau.shift());
         console.log(inventory);
         console.log(depotTableau);
@@ -102,7 +102,95 @@ function fonctionementTableau() {
   }
 
   // tableau 1 fonctionement
-  
+  if (
+    infoPlayer.x > XTableau1 &&
+    infoPlayer.x < XTableau1 + TailleTableau &&
+    infoPlayer.y > yTableau1 &&
+    infoPlayer.y < yTableau1 + HauteurTableau
+  ) {
+    if (inventory.length === 1) {
+      if (tableau1.length === 0) {
+        if (inventory[0] === "blue") {
+          tableau1.push(inventory.shift());
+          console.log(inventory);
+          console.log(tableau1);
+          alert("tableau bleu déposé !");
+        } else {
+          depotTableau.push(inventory.shift());
+          console.log(inventory);
+          console.log(depotTableau);
+        }
+      }
+    }
+  }
+  // Tableau 2 fonctionnement
+  if (
+    infoPlayer.x > XTableau2 &&
+    infoPlayer.x < XTableau2 + TailleTableau &&
+    infoPlayer.y > yTableau2 &&
+    infoPlayer.y < yTableau2 + HauteurTableau
+  ) {
+    if (inventory.length === 1) {
+      if (tableau2.length === 0) {
+        if (inventory[0] === "red") {
+          tableau2.push(inventory.shift());
+          console.log("Inventory:", inventory);
+          console.log("Tableau 2:", tableau2);
+          alert("Tableau rouge déposé !");
+        } else {
+          depotTableau.push(inventory.shift());
+          console.log(inventory);
+          console.log(depotTableau);
+        }
+      }
+    }
+  }
+
+  // Tableau 3 fonctionnement
+  if (
+    infoPlayer.x > XTableau3 &&
+    infoPlayer.x < XTableau3 + TailleTableau &&
+    infoPlayer.y > yTableau3 &&
+    infoPlayer.y < yTableau3 + HauteurTableau
+  ) {
+    if (inventory.length === 1) {
+      if (tableau3.length === 0) {
+        if (inventory[0] === "green") {
+          tableau3.push(inventory.shift());
+          console.log("Inventory:", inventory);
+          console.log("Tableau 3:", tableau3);
+          alert("Tableau vert déposé !");
+        } else {
+          depotTableau.push(inventory.shift());
+          console.log(inventory);
+          console.log(depotTableau);
+        }
+      }
+    }
+  }
+
+  // Tableau 4 fonctionnement
+  if (
+    infoPlayer.x > XTableau4 &&
+    infoPlayer.x < XTableau4 + TailleTableau &&
+    infoPlayer.y > yTableau4 &&
+    infoPlayer.y < yTableau4 + HauteurTableau
+  ) {
+    if (inventory.length === 1) {
+      if (tableau4.length === 0) {
+        if (inventory[0] === "violet") {
+          tableau4.push(inventory.shift());
+          console.log("Inventory:", inventory);
+          console.log("Tableau 4:", tableau4);
+          alert("Tableau violet déposé !");
+        } else {
+          depotTableau.push(inventory.shift());
+          console.log(inventory);
+          console.log(depotTableau);
+        }
+      }
+    }
+  }
 }
 
 window.addEventListener("touchstart", playerControl);
