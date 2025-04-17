@@ -1,0 +1,38 @@
+.tableauCommun {
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: sandybrown;
+  margin: auto;
+}
+
+.tableauCommun > div > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.tableauCommun > div {
+  width: 400px;
+  height: 400px;
+}
+
+.tableaublue{
+    display:none;
+}
+.tableaured{
+    display: none;
+}
+.tableaugreen{
+    display: none;
+}
+.tableauviolet{
+    display: none;
+}
+

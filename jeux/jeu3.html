@@ -4,12 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>Jeu 3</title>
-    <!-- <link rel="stylesheet" media="screen" href="../styles/styleJeu2.css"> -->
+    <link rel="stylesheet" media="screen" href="../styles/styleJeu3.css">
     <style>
       body {
         top: 0;
         left: 0;
         margin: 0;
+      }
+
+      #timer {
+        z-index: 42;
+        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+        color: white;
+        font-size: 30px;
+        position: absolute;
+        top: 10px;
+        left: 10px;
       }
 
       #tableau {
@@ -32,10 +42,6 @@
         z-index: -2;
       }
 
-      #canvas {
-        display: none;
-      }
-
       canvas {
         display: block; /* Supprime les espaces blancs autour des canvas */
         position: absolute;
@@ -51,6 +57,31 @@
     </style>
   </head>
   <body>
+    <!-- div pour afficher le timer -->
+    <div id="timer">0</div>
+    <!-- div pour chaque tableau -->
+    <div  class="tableaublue tableauCommun">
+      <div>
+        <img src="/img/game3/tableau1.jpg" alt="image du 1ere tableau" loading="lazy" />
+      </div>
+    </div>
+    <div class="tableaured tableauCommun">
+      <div>
+        <img src="/img/game3/tableau2.jpg" alt="image du 2eme tableau" loading="lazy"/>
+      </div>
+    </div>
+    <div class="tableaugreen tableauCommun">
+      <div>
+        <img src="/img/game3/tableau3.jpg" alt="image du 3eme tableau" loading="lazy"/>
+      </div>
+    </div>
+    <div class="tableauviolet tableauCommun">
+      <div>
+        <img src="/img/game3/tableau4.jpg" alt="image du 4eme tableau" loading="lazy" />
+      </div>
+    </div>
+
+    <!-- tous les canvas pour le jeu -->
     <canvas id="colission"></canvas>
     <canvas id="background"></canvas>
     <canvas id="tableau"> </canvas>

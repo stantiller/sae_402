@@ -1,12 +1,17 @@
+// Fichier JavaScript pour le jeu 3
+
+// variables de la taille de l'écran et de la hauteur de l'écran
 var taille = window.innerWidth;
 var hauteur = window.innerHeight;
 
+// selection des canvas
 const colission = document.getElementById("colission");
 const background = document.getElementById("background");
 const lumiere = document.getElementById("noir");
 const player = document.getElementById("player");
 const tableau = document.getElementById("tableau");
 
+// ajustement de la taille des canvas
 colission.width = taille;
 colission.height = hauteur;
 background.width = taille;
@@ -18,12 +23,19 @@ lumiere.height = hauteur;
 tableau.width = taille;
 tableau.height = hauteur;
 
+// selection des contextes des canvas
 let ctxBackground = background.getContext("2d");
 let ctxColission = colission.getContext("2d");
 let ctxLumiere = lumiere.getContext("2d");
 let ctxPlayer = player.getContext("2d");
 let ctxTableau = tableau.getContext("2d");
 
+// variable pour le chrono
+let secondes = 0;
+let para = document.getElementById("timer");
+let chrono = window.setInterval(Timer, 1000);
+
+// variables pour le joueur
 let hitbox = 40 / 2;
 let infoPlayer = { x: taille / 2, y: hauteur / 2, angle: 0 };
 let deplacementX = 0;
@@ -33,6 +45,7 @@ let posiY = 0;
 let differenceXY = 0;
 let inventory = [];
 
+// variables pour les tableaux
 let TailleTableau = hitbox * 3.6;
 let HauteurTableau = hitbox * 3.6;
 let Xdepot = taille / 1.6;
@@ -46,24 +59,35 @@ let yTableau3 = hauteur / 2.4;
 let XTableau4 = taille / 7.8;
 let yTableau4 = hauteur / 1.4;
 
+// variables pour le depot de tableau
 let depotTableau = ["blue", "red", "green", "violet"];
 let tableau1 = [];
 let tableau2 = [];
 let tableau3 = [];
 let tableau4 = [];
 
+// constantes pour appeler les images
 const backgroundImage = new Image();
 backgroundImage.src = "../img/game3/background.jpg";
-
 const colissionImage = new Image();
 colissionImage.src = "../img/game3/collision.jpg";
-
 const tableauxImage = new Image();
 tableauxImage.src = "../img/game3/tableaux.png";
-
 const sprite = new Image();
 sprite.src = "../img/game3/spirte/sprite.png";
 
+
+// fonction pour le chrono
+function Timer() {
+  secondes++;
+  para.innerHTML = secondes;
+  if (secondes == 1000) {
+    // arrête l'exécution lancée par setInterval()
+    window.clearTimeout(chrono);
+  }
+}
+
+// fonction pour le controleur de mouvement pour le joueur
 function playerControl(event) {
   posiX = event.pageX || event.changedTouches[0].pageX;
   posiY = event.pageY || event.changedTouches[0].pageY;
@@ -84,6 +108,7 @@ function playerControl(event) {
 console.log(inventory);
 console.log(depotTableau);
 
+// fonction pour le fonctionement des tableaux et du depot de tableau
 function fonctionementTableau() {
   // depot tableau fonctionement
   if (
@@ -94,7 +119,17 @@ function fonctionementTableau() {
   ) {
     if (depotTableau.length > 0) {
       if (inventory.length === 0) {
-        inventory.push(depotTableau.shift());
+        const CouleurTableau = depotTableau.shift();
+        inventory.push(CouleurTableau);
+
+        const afficherTableau = document.querySelector(`.tableau${CouleurTableau}`);
+        if (afficherTableau) {
+          afficherTableau.classList.toggle(`tableau${CouleurTableau}`); 
+
+          setTimeout(() => {
+            afficherTableau.classList.add(`tableau${CouleurTableau}`);
+          }, 2500);
+        }
         console.log(inventory);
         console.log(depotTableau);
       }
@@ -193,6 +228,7 @@ function fonctionementTableau() {
   }
 }
 
+// addEventListener pour le controleur de mouvement pour le mobile et le pc
 window.addEventListener("touchstart", playerControl);
 window.addEventListener("touchmove", playerControl);
 window.addEventListener("touchend", playerControl);
@@ -200,6 +236,7 @@ window.addEventListener("mousedown", playerControl);
 window.addEventListener("mousemove", playerControl);
 window.addEventListener("mouseup", playerControl);
 
+// fonction pour l'affichage du jeu
 function afficher() {
   ctxColission.clearRect(0, 0, taille, hauteur);
   ctxBackground.clearRect(0, 0, taille, hauteur);
