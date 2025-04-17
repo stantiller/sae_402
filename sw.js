@@ -12,9 +12,23 @@ self.addEventListener("install", function(event) {
         return cache.addAll([
           '/',
           'index.html',
+		  'jeux/jeu2.html',
+		  'jeux/jeu3.html',
           'manifest.json',
 		  'js/main.js',
-		  'styles/style.css'
+		  'js/jeu2.js',
+		  'js/jeu3.js',
+		  'styles/style.css',
+		  'styles/styleJeu2.css',
+		  'img/game2/bullet_sprite_sheet.png',
+		  'img/sprite.png',
+		  'img/game3/spirte/sprite.png',
+		  'img/game3/background.jpg',
+		  'img/game3/collision.jpg',
+		  'img/game3/tableaux.png',
+		  'sounds/game2/damage00.wav',
+		  'sounds/pldead00.wav',
+		  'sounds/game2/tan02.wav'
         ]);
       })
 	);
