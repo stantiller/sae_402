@@ -132,7 +132,7 @@ function startGame()
     const nbrPattern7 = 1;
     const nbrPattern8 = 8;
     const nbrPattern9 = 1;
-    const nbrPattern10 = 1;
+    const nbrPattern10 = 4;
     let bHitbox = 14/2;
     let pattern1Push = false;
     let pattern2Push = false;
@@ -156,10 +156,12 @@ function startGame()
     let pattern10 = [];
     let ebspeedx = 0.5;
     let ebspeedy = 2;
-    // let xValue = 200;
+    // variables pour les balles qui tirent vers le joueur
+    let homingBulAccel = 1.6;
+    let bDistx = 0;
+    let bDisty = 0;
+    let bDist = 0;
     
-
-    // Xvalue = W/2-50;
 
     function afficher()
     {
@@ -320,35 +322,22 @@ function startGame()
     // mouvement de l'ennemi
     function ennemyMovement()
     {
-        // if (eMoveRight == true)
-            // ex += evx;
-        // if (eMoveLeft ==true)
-            // ex -= evx;
-
         let eDistx = ex - eTargetx;
         let eDisty = ey - eTargety;
 
         if (Math.abs(eDistx) > 5)
         {
             if (Math.sign(eDistx) == 1)
-            {
                 ex -= evx;
-            }
             else
-            {
                 ex += evx;
-            }
         }
         if (Math.abs(eDisty) > 5)
         {
             if (Math.sign(eDisty) == 1)
-            {
                 ey -= evy;
-            }
             else
-            {
                 ey += evy;
-            }
         }
     }
 
@@ -372,15 +361,14 @@ function startGame()
         let disty = Math.abs((py + pHitbox) - (bullet.y));
         let dist = Math.sqrt((distx * distx) + (disty * disty));
 
-        if (dist < soundDist) {
+        if (dist < soundDist)
             soundDistance(dist);
-        }
-        else if (dist < soundDist) {
+
+        else if (dist < soundDist)
             gainNode.gain.value = 0;
-        }
-        if (distx < (pHitbox + pHitbox) && disty < (pHitbox + pHitbox)) {
+        
+        if (distx < (pHitbox + pHitbox) && disty < (pHitbox + pHitbox))
             playerHit();
-        }
     }
 
     // collision avec le boss
@@ -389,9 +377,8 @@ function startGame()
         let distx = Math.abs((px + pHitbox) - (ex + eHitbox));
         let disty = Math.abs((py + pHitbox) - (ey + eHitbox));
 
-        if (distx < (pHitbox + eHitbox) && disty < (pHitbox + eHitbox)) {
+        if (distx < (pHitbox + eHitbox) && disty < (pHitbox + eHitbox))
             playerHit();
-        }
     }
 
     // verification de collision ennemy
@@ -402,9 +389,8 @@ function startGame()
 
         if (distx < (eHitbox + pbHitbox) && disty < (eHitbox + pbHitbox)) {
             let index = pBullets.indexOf(pBullet);
-            if (index !== -1) {
+            if (index !== -1)
                 pBullets.splice(index, 1);
-            }
             ennemyHit();
         }
     }
@@ -460,11 +446,9 @@ function startGame()
 
             if (pBullet.pby < 0) {
                 let index = pBullets.indexOf(pBullet);
-                if (index !== -1) {
+                if (index !== -1)
                     pBullets.splice(index, 1);
-                }
             }
-
         });
     }
 
@@ -474,7 +458,7 @@ function startGame()
         setTimeout(() => {
             if (pattern1Push == false && fin == false){
                 eTargetx = W - 20;
-                pushPattern1();
+                pushPattern1(); // double triple
                 pattern1Push = true;   
             }
         }, 500);
@@ -482,28 +466,28 @@ function startGame()
             if (pattern2Push == false && fin == false){
                 evx = 140*sec;
                 eTargetx = 80;
-                pushPattern2();
+                pushPattern2(); // spray
                 pattern2Push = true;
             }
         }, 3000);
         setTimeout(() => {
             if (pattern3Push == false && fin == false){
                 evx = 120*sec;
-                pushPattern3();
+                pushPattern3(); // triple
                 pattern3Push = true;
             }
         }, 6000);
         setTimeout(() => {
             if (pattern4Push == false && fin == false){
                 eTargetx = W/2;
-                pushPattern4();
+                pushPattern4(); // doule double
                 pattern4Push = true;
             }
         }, 7000);
         setTimeout(() => {
             if (pattern5Push == false && fin == false){
                 setTimeout(() => {
-                    pushPattern5();
+                    pushPattern5(); // rond
                 }, 1000);
                 pattern5Push = true;
             }
@@ -513,7 +497,7 @@ function startGame()
                 evx = 150*sec;
                 eTargetx = W/5;
                 setTimeout(() => {
-                    pushPattern6();
+                    pushPattern6(); // triple gauche
                 }, 800);
                 pattern6Push = true;
             }
@@ -522,7 +506,7 @@ function startGame()
             if (pattern7Push == false && fin == false){
                 eTargetx = W/1.25;
                 setTimeout(() => {
-                    pushPattern7();
+                    pushPattern7(); // triple droite
                 }, 1500);
                 pattern7Push = true;
             }
@@ -531,10 +515,25 @@ function startGame()
             if (pattern8Push == false && fin == false){
                 evx = 120*sec;
                 eTargetx = W/3;
-                pushPattern8();
+                pushPattern8(); // spray
                 pattern8Push = true;
             }
         }, 13500);
+        setTimeout(() => {
+            if (pattern9Push == false && fin == false){
+                eTargetx = W/4.5;
+                setTimeout(() => {
+                    pushPattern9(); // triple moins large
+                }, 1500);
+                pattern9Push = true;
+            }
+        }, 15000);
+        setTimeout(() => {
+            if (pattern10Push == false && fin == false){
+                pushPattern10(); // homing
+                pattern10Push = true;
+            }
+        }, 19500);
     
         // mouvement de patternes ennemy
         bulletPattern1();
@@ -552,6 +551,16 @@ function startGame()
         bulletPattern7();
 
         bulletPattern8();
+
+        bulletPattern9();
+
+        bulletPattern10();
+    }
+
+    function homingBullet(bullet)
+    {
+        bullet.x -= bullet.vx;
+        bullet.y -= bullet.vy;
     }
 
     // push des patternes
@@ -865,6 +874,71 @@ function startGame()
         }
     }
 
+    function pushPattern9()
+    {
+        for (let i = 0; i < nbrPattern9; i++)
+        {
+            setTimeout(() => {
+                pattern9.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+    }
+
+    function pushPattern10()
+    {
+        for (let i = 0; i < nbrPattern10; i++)
+        {
+            setTimeout(() => {
+                bDistx = ex + eHitbox - (px + pHitbox);
+                bDisty = ey + eHitbox - (py + pHitbox);
+                bDist = Math.sqrt((bDistx * bDistx) + (bDisty * bDisty));
+                pattern10.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: (((bDistx / bDist) * ebspeedx) * homingBulAccel) * 2,
+                                vy: ((bDisty / bDist) * ebspeedy) * homingBulAccel
+                            }
+                        ]
+                    ]
+                );
+            
+                playSound(bulletSound);
+    
+            }, 400*i);
+        }
+    }
+
     // affichage des patternes
     function bulletPattern1()
     {
@@ -1156,6 +1230,59 @@ function startGame()
             straightBullet[0].forEach(bullet => {
 
                 bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);     
+
+            });
+        });
+    }
+
+    function bulletPattern9()
+    {
+        pattern9.forEach(tripleBullet => {
+            
+            tripleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx/2.5;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[2].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx/2.5;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+        });
+    }
+
+    function bulletPattern10()
+    {
+        pattern10.forEach(straightBullet => {
+            straightBullet[0].forEach(bullet => {
+
+                homingBullet(bullet);
 
                 bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
 
