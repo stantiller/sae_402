@@ -23,6 +23,36 @@ lumiere.height = hauteur;
 tableau.width = taille;
 tableau.height = hauteur;
 
+// fonction pour lancer le jeu
+function startGame() {
+  document.querySelector(".start").addEventListener("click", function () {
+    document.querySelector("#start").classList.add("invisible");
+    document.querySelector(".game").classList.remove("invisible");
+    orientationLock();
+    afficher();
+    chrono = window.setInterval(Timer, 1000);
+  });
+}
+
+function orientationLock() {
+  const element = document.documentElement; // tu peux aussi cibler un élément précis
+
+  if (element.requestFullscreen) {
+    element.requestFullscreen().then(() => {
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock("portrait").catch((error) => {
+          console.error(
+            "Erreur lors du verrouillage de l'orientation :",
+            error
+          );
+        });
+      }
+    });
+  }
+}
+
+let isPaused = false;
+
 // selection des contextes des canvas
 let ctxBackground = background.getContext("2d");
 let ctxColission = colission.getContext("2d");
@@ -33,7 +63,6 @@ let ctxTableau = tableau.getContext("2d");
 // variable pour le chrono
 let secondes = 0;
 let para = document.getElementById("timer");
-let chrono = window.setInterval(Timer, 1000);
 
 // variables pour le joueur
 let hitbox = 40 / 2;
@@ -76,9 +105,9 @@ tableauxImage.src = "../img/game3/tableaux.png";
 const sprite = new Image();
 sprite.src = "../img/game3/spirte/sprite.png";
 
-
 // fonction pour le chrono
 function Timer() {
+  if (isPaused) return;
   secondes++;
   para.innerHTML = secondes;
   if (secondes == 1000) {
@@ -89,6 +118,7 @@ function Timer() {
 
 // fonction pour le controleur de mouvement pour le joueur
 function playerControl(event) {
+  if (isPaused) return;
   posiX = event.pageX || event.changedTouches[0].pageX;
   posiY = event.pageY || event.changedTouches[0].pageY;
 
@@ -105,9 +135,6 @@ function playerControl(event) {
   }
 }
 
-console.log(inventory);
-console.log(depotTableau);
-
 // fonction pour le fonctionement des tableaux et du depot de tableau
 function fonctionementTableau() {
   // depot tableau fonctionement
@@ -121,17 +148,19 @@ function fonctionementTableau() {
       if (inventory.length === 0) {
         const CouleurTableau = depotTableau.shift();
         inventory.push(CouleurTableau);
+        isPaused = true;
 
-        const afficherTableau = document.querySelector(`.tableau${CouleurTableau}`);
+        const afficherTableau = document.querySelector(
+          `.tableau${CouleurTableau}`
+        );
         if (afficherTableau) {
-          afficherTableau.classList.toggle(`tableau${CouleurTableau}`); 
+          afficherTableau.classList.toggle(`tableau${CouleurTableau}`);
 
           setTimeout(() => {
             afficherTableau.classList.add(`tableau${CouleurTableau}`);
+            isPaused = false;
           }, 2500);
         }
-        console.log(inventory);
-        console.log(depotTableau);
       }
     }
   }
@@ -147,13 +176,29 @@ function fonctionementTableau() {
       if (tableau1.length === 0) {
         if (inventory[0] === "blue") {
           tableau1.push(inventory.shift());
-          console.log(inventory);
-          console.log(tableau1);
-          alert("tableau bleu déposé !");
+          isPaused = true;
+          // affichage si le tableau est bien placé
+          const goodElement = document.querySelector("#good");
+          if (goodElement) {
+            goodElement.classList.remove("invisible");
+            setTimeout(() => {
+              goodElement.classList.add("invisible");
+              isPaused = false;
+              checkWinCondition();
+            }, 2000);
+          }
         } else {
           depotTableau.push(inventory.shift());
-          console.log(inventory);
-          console.log(depotTableau);
+          isPaused = true;
+          // affichage si le tableau est mal placé
+          const wrongElement = document.querySelector("#wrong");
+          if (wrongElement) {
+            wrongElement.classList.remove("invisible");
+            setTimeout(() => {
+              wrongElement.classList.add("invisible");
+              isPaused = false;
+            }, 2000);
+          }
         }
       }
     }
@@ -169,13 +214,29 @@ function fonctionementTableau() {
       if (tableau2.length === 0) {
         if (inventory[0] === "red") {
           tableau2.push(inventory.shift());
-          console.log("Inventory:", inventory);
-          console.log("Tableau 2:", tableau2);
-          alert("Tableau rouge déposé !");
+          isPaused = true;
+          // affichage si le tableau est bien placé
+          const goodElement = document.querySelector("#good");
+          if (goodElement) {
+            goodElement.classList.remove("invisible");
+            setTimeout(() => {
+              goodElement.classList.add("invisible");
+              isPaused = false;
+              checkWinCondition();
+            }, 2000);
+          }
         } else {
           depotTableau.push(inventory.shift());
-          console.log(inventory);
-          console.log(depotTableau);
+          isPaused = true;
+          // affichage si le tableau est mal placé
+          const wrongElement = document.querySelector("#wrong");
+          if (wrongElement) {
+            wrongElement.classList.remove("invisible");
+            setTimeout(() => {
+              wrongElement.classList.add("invisible");
+              isPaused = false;
+            }, 2000);
+          }
         }
       }
     }
@@ -192,13 +253,29 @@ function fonctionementTableau() {
       if (tableau3.length === 0) {
         if (inventory[0] === "green") {
           tableau3.push(inventory.shift());
-          console.log("Inventory:", inventory);
-          console.log("Tableau 3:", tableau3);
-          alert("Tableau vert déposé !");
+          isPaused = true;
+          // affichage si le tableau est bien placé
+          const goodElement = document.querySelector("#good");
+          if (goodElement) {
+            goodElement.classList.remove("invisible");
+            setTimeout(() => {
+              goodElement.classList.add("invisible");
+              isPaused = false;
+              checkWinCondition();
+            }, 2000);
+          }
         } else {
           depotTableau.push(inventory.shift());
-          console.log(inventory);
-          console.log(depotTableau);
+          isPaused = true;
+          // affichage si le tableau est mal placé
+          const wrongElement = document.querySelector("#wrong");
+          if (wrongElement) {
+            wrongElement.classList.remove("invisible");
+            setTimeout(() => {
+              wrongElement.classList.add("invisible");
+              isPaused = false;
+            }, 2000);
+          }
         }
       }
     }
@@ -215,13 +292,29 @@ function fonctionementTableau() {
       if (tableau4.length === 0) {
         if (inventory[0] === "violet") {
           tableau4.push(inventory.shift());
-          console.log("Inventory:", inventory);
-          console.log("Tableau 4:", tableau4);
-          alert("Tableau violet déposé !");
+          isPaused = true;
+          // affichage si le tableau est bien placé
+          const goodElement = document.querySelector("#good");
+          if (goodElement) {
+            goodElement.classList.remove("invisible");
+            setTimeout(() => {
+              goodElement.classList.add("invisible");
+              isPaused = false;
+              checkWinCondition();
+            }, 2000);
+          }
         } else {
           depotTableau.push(inventory.shift());
-          console.log(inventory);
-          console.log(depotTableau);
+          isPaused = true;
+          // affichage si le tableau est mal placé
+          const wrongElement = document.querySelector("#wrong");
+          if (wrongElement) {
+            wrongElement.classList.remove("invisible");
+            setTimeout(() => {
+              wrongElement.classList.add("invisible");
+              isPaused = false;
+            }, 2000);
+          }
         }
       }
     }
@@ -340,4 +433,17 @@ function afficher() {
   window.requestAnimationFrame(afficher);
 }
 
-afficher();
+startGame();
+
+function checkWinCondition() {
+  if (
+    tableau1.length === 1 &&
+    tableau2.length === 1 &&
+    tableau3.length === 1 &&
+    tableau4.length === 1
+  ) {
+    isPaused = true;
+    clearInterval(chrono); 
+    alert(`Félicitations ! Vous avez terminé le jeu en ${secondes} secondes.`);
+  }
+}

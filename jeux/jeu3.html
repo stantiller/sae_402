@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>Jeu 3</title>
-    <link rel="stylesheet" media="screen" href="../styles/styleJeu3.css">
+    <link rel="stylesheet" media="screen" href="../styles/styleJeu3.css" />
     <style>
       body {
         top: 0;
@@ -12,9 +12,53 @@
         margin: 0;
       }
 
+      .noir {
+        background-color: black;
+      }
+
+      .start {
+        background-color: white;
+        margin-top: 4px;
+        color: black;
+        font-size: 30px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        padding: 5px;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .start:hover {
+        background-color: #999494;
+      }
+
+      .flex {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+      }
+
+      .texte {
+        color: white;
+        font-size: 23px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        background-color: sienna;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        z-index: 5000;
+      }
+
+      .invisible {
+        display: none;
+      }
+
       #timer {
         z-index: 42;
-        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: white;
         font-size: 30px;
         position: absolute;
@@ -57,36 +101,72 @@
     </style>
   </head>
   <body>
-    <!-- div pour afficher le timer -->
-    <div id="timer">0</div>
+    <div class="flex noir" id="start">
+      <div class="texte">
+        Game N°3
+        <div class="start">Start</div>
+      </div>
+    </div>
+
+    <!-- div pour quand on a posé le bon tableau ou non -->
+    <div class="flex invisible" id="good">
+      <div class="texte">Right picture !</div>
+    </div>
+    <div class="flex invisible" id="wrong">
+      <div class="texte">
+        Wrong picture ! <br />
+        Return to art piece depot
+      </div>
+    </div>
     <!-- div pour chaque tableau -->
-    <div  class="tableaublue tableauCommun">
+    <div class="tableaublue tableauCommun">
       <div>
-        <img src="/img/game3/tableau1.jpg" alt="image du 1ere tableau" loading="lazy" />
+        <img
+          src="/img/game3/tableau1.jpg"
+          alt="image du 1ere tableau"
+          loading="lazy"
+        />
       </div>
     </div>
     <div class="tableaured tableauCommun">
       <div>
-        <img src="/img/game3/tableau2.jpg" alt="image du 2eme tableau" loading="lazy"/>
+        <img
+          src="/img/game3/tableau2.jpg"
+          alt="image du 2eme tableau"
+          loading="lazy"
+        />
       </div>
     </div>
     <div class="tableaugreen tableauCommun">
       <div>
-        <img src="/img/game3/tableau3.jpg" alt="image du 3eme tableau" loading="lazy"/>
+        <img
+          src="/img/game3/tableau3.jpg"
+          alt="image du 3eme tableau"
+          loading="lazy"
+        />
       </div>
     </div>
     <div class="tableauviolet tableauCommun">
       <div>
-        <img src="/img/game3/tableau4.jpg" alt="image du 4eme tableau" loading="lazy" />
+        <img
+          src="/img/game3/tableau4.jpg"
+          alt="image du 4eme tableau"
+          loading="lazy"
+        />
       </div>
     </div>
 
-    <!-- tous les canvas pour le jeu -->
-    <canvas id="colission"></canvas>
-    <canvas id="background"></canvas>
-    <canvas id="tableau"> </canvas>
-    <canvas id="noir"></canvas>
-    <canvas id="player"> </canvas>
+    
+    <div class="game invisible"> 
+      <!-- tous les canvas pour le jeu -->
+      <canvas id="colission"></canvas>
+      <canvas id="background"></canvas>
+      <canvas id="tableau"> </canvas>
+      <canvas id="noir"></canvas>
+      <canvas id="player"></canvas>
+      <!-- div pour afficher le timer -->
+    <div id="timer">0</div>
+    </div>
 
     <script src="/js/jeu3.js"></script>
   </body>
