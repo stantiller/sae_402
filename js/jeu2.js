@@ -139,7 +139,6 @@ function startGame()
     const nbrPattern14 = 1;
     const nbrPattern15 = 2;
     const nbrPattern16 = 2;
-    let bHitbox = 14/2;
     let pattern1Push = false;
     let pattern2Push = false;
     let pattern3Push = false;
@@ -172,8 +171,9 @@ function startGame()
     let pattern14 = [];
     let pattern15 = [];
     let pattern16 = [];
-    let ebspeedx = 0;
-    let ebspeedy = 0;
+    let bHitbox = 14/2;
+    let ebspeedx = 0.5;
+    let ebspeedy = 2;
     // variables pour les balles qui tirent vers le joueur
     let homingBulAccel = 1.6;
     let bDistx = 0;
