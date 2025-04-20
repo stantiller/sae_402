@@ -100,7 +100,7 @@ function startGame()
     plDead.volume = 0.25;
     bulletSound.volume = 0.25;
     ennemyDmg.volume = 0.15;
-    approachSoundVolume = 0.35;
+    let approachSoundVolume = 0.35;
     let soundDist = 250;
     let maxFreq = 1500;
     let freq = 0;
