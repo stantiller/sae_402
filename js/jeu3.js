@@ -23,6 +23,9 @@ lumiere.height = hauteur;
 tableau.width = taille;
 tableau.height = hauteur;
 
+// Indique si le jeu est terminé
+let isGameOver = false;
+
 // fonction pour lancer le jeu
 function startGame() {
   document.querySelector(".start").addEventListener("click", function () {
@@ -95,6 +98,17 @@ let tableau2 = [];
 let tableau3 = [];
 let tableau4 = [];
 
+// constantes pour les sons
+const sonColission = new Audio("../sounds/game3/colission.mp3");
+const sonTableaublue = new Audio("../sounds/game3/tableau1.mp3");
+const sonTableaured = new Audio("../sounds/game3/tableau2.mp3");
+const sonTableaugreen = new Audio("../sounds/game3/tableau3.mp3");
+const sonTableauviolet = new Audio("../sounds/game3/tableau4.mp3");
+const sonDepot = new Audio("../sounds/game3/depot.mp3");
+// let soundDist = 250;
+// let maxFreq = 1500;
+// let freq = 0;
+
 // constantes pour appeler les images
 const backgroundImage = new Image();
 backgroundImage.src = "../img/game3/background.jpg";
@@ -104,6 +118,174 @@ const tableauxImage = new Image();
 tableauxImage.src = "../img/game3/tableaux.png";
 const sprite = new Image();
 sprite.src = "../img/game3/spirte/sprite.png";
+
+// fonction pour jouer les sons
+function SoundPlay(sound) {
+  sound.play();
+}
+
+// fonction pour jouer le son du dépôt
+function DepotSon() {
+  if (isGameOver || inventory.length === 1) {
+    return;
+  }
+
+  const tailleDepot = hitbox * 3.3;
+  const hauteurDepot = hitbox * 3.3;
+
+  const depotCentreX = Xdepot + tailleDepot / 2;
+  const depotCentreY = ydepot + hauteurDepot / 2;
+
+  const dx = depotCentreX - infoPlayer.x;
+  const dy = depotCentreY - infoPlayer.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  const maxDistance =
+    Math.sqrt(tailleDepot * tailleDepot + hauteurDepot * hauteurDepot) / 2;
+
+  const angleDepot = Math.atan2(dy, dx);
+  const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
+
+  if (angleDifference < 0.2) {
+    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
+
+    if (!sonDepot.isPlaying) {
+      sonDepot.isPlaying = true;
+      sonDepot.play();
+      setTimeout(() => {
+        sonDepot.isPlaying = false;
+      }, frequence);
+    }
+  }
+}
+
+function SonTableau1() {
+  if (isGameOver || inventory.length === 0 || inventory[0] !== "blue") {
+    return;
+  }
+
+  const centreX = XTableau1 + TailleTableau / 2;
+  const centreY = yTableau1 + HauteurTableau / 2;
+
+  const dx = centreX - infoPlayer.x;
+  const dy = centreY - infoPlayer.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  const maxDistance =
+    Math.sqrt(TailleTableau * TailleTableau + HauteurTableau * HauteurTableau) /
+    2;
+
+  const angleDepot = Math.atan2(dy, dx);
+  const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
+
+  if (angleDifference < 0.2) {
+    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
+
+    if (!sonTableaublue.isPlaying) {
+      sonTableaublue.isPlaying = true;
+      sonTableaublue.play();
+      setTimeout(() => {
+        sonTableaublue.isPlaying = false;
+      }, frequence);
+    }
+  }
+}
+
+function SonTableau2() {
+  if (isGameOver || inventory.length === 0 || inventory[0] !== "red") {
+    return; 
+  }
+
+  const centreX = XTableau2 + TailleTableau / 2;
+  const centreY = yTableau2 + HauteurTableau / 2;
+
+  const dx = centreX - infoPlayer.x;
+  const dy = centreY - infoPlayer.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  const maxDistance =
+    Math.sqrt(TailleTableau * TailleTableau + HauteurTableau * HauteurTableau) /
+    2;
+
+  const angleDepot = Math.atan2(dy, dx);
+  const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
+
+  if (angleDifference < 0.2) {
+    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
+
+    if (!sonTableaured.isPlaying) {
+      sonTableaured.isPlaying = true;
+      sonTableaured.play();
+      setTimeout(() => {
+        sonTableaured.isPlaying = false;
+      }, frequence);
+    }
+  }
+}
+
+function SonTableau3() {
+  if (isGameOver || inventory.length === 0 || inventory[0] !== "green") {
+    return; 
+  }
+
+  const centreX = XTableau3 + TailleTableau / 2;
+  const centreY = yTableau3 + HauteurTableau / 2;
+
+  const dx = centreX - infoPlayer.x;
+  const dy = centreY - infoPlayer.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  const maxDistance =
+    Math.sqrt(TailleTableau * TailleTableau + HauteurTableau * HauteurTableau) /
+    2;
+
+  const angleDepot = Math.atan2(dy, dx);
+  const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
+
+  if (angleDifference < 0.2) {
+    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
+
+    if (!sonTableaugreen.isPlaying) {
+      sonTableaugreen.isPlaying = true;
+      sonTableaugreen.play();
+      setTimeout(() => {
+        sonTableaugreen.isPlaying = false;
+      }, frequence);
+    }
+  }
+}
+
+function SonTableau4() {
+  if (isGameOver || inventory.length === 0 || inventory[0] !== "violet") {
+    return; 
+  }
+
+  const centreX = XTableau4 + TailleTableau / 2;
+  const centreY = yTableau4 + HauteurTableau / 2;
+
+  const dx = centreX - infoPlayer.x;
+  const dy = centreY - infoPlayer.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  const maxDistance =
+    Math.sqrt(TailleTableau * TailleTableau + HauteurTableau * HauteurTableau) /
+    2;
+
+  const angleDepot = Math.atan2(dy, dx);
+  const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
+
+  if (angleDifference < 0.2) {
+    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
+
+    if (!sonTableauviolet.isPlaying) {
+      sonTableauviolet.isPlaying = true;
+      sonTableauviolet.play();
+      setTimeout(() => {
+        sonTableauviolet.isPlaying = false;
+      }, frequence);
+    }
+  }
+}
 
 // fonction pour le chrono
 function Timer() {
@@ -331,6 +513,8 @@ window.addEventListener("mouseup", playerControl);
 
 // fonction pour l'affichage du jeu
 function afficher() {
+  if (isGameOver) return;
+
   ctxColission.clearRect(0, 0, taille, hauteur);
   ctxBackground.clearRect(0, 0, taille, hauteur);
   ctxPlayer.clearRect(0, 0, taille, hauteur);
@@ -357,6 +541,7 @@ function afficher() {
   if (!isBlackY && nextY > 0 && nextY < hauteur) {
     infoPlayer.y = nextY;
   } else {
+    SoundPlay(sonColission);
     deplacementX = 0;
     deplacementY = 0;
   }
@@ -371,7 +556,14 @@ function afficher() {
     hitbox * 3.3,
     hitbox * 3.3
   );
+
+  // lancement des fonctions pour les tableaux
+  DepotSon();
   fonctionementTableau();
+  SonTableau1();
+  SonTableau2();
+  SonTableau3();
+  SonTableau4();
 
   // affichage des 4 emplacements de tableaux
   ctxTableau.strokeStyle = "blue";
@@ -386,7 +578,7 @@ function afficher() {
   ctxTableau.lineWidth = 5;
   ctxTableau.strokeRect(XTableau3, yTableau3, TailleTableau, HauteurTableau);
 
-  ctxTableau.strokeStyle = "violet";
+  ctxTableau.strokeStyle = "magenta";
   ctxTableau.lineWidth = 5;
   ctxTableau.strokeRect(XTableau4, yTableau4, TailleTableau, HauteurTableau);
 
@@ -435,15 +627,20 @@ function afficher() {
 
 startGame();
 
-function checkWinCondition() {
+function WinCondition() {
   if (
     tableau1.length === 1 &&
     tableau2.length === 1 &&
     tableau3.length === 1 &&
     tableau4.length === 1
   ) {
-    isPaused = true;
-    clearInterval(chrono); 
-    alert(`Félicitations ! Vous avez terminé le jeu en ${secondes} secondes.`);
+    if (!isGameOver) {
+      isGameOver = true; // Marque le jeu comme terminé
+      isPaused = true; // Met le jeu en pause
+      clearInterval(chrono); // Arrête le timer
+      alert(
+        `Félicitations ! Vous avez terminé le jeu en ${secondes} secondes.`
+      );
+    }
   }
 }
