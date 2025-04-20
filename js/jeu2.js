@@ -54,7 +54,7 @@ function startGame()
     let score = 0;
     let gainScore = 100
     let countDown = -1;
-    let cdTimer = 45;
+    let cdTimer = 40;
     let t0 = performance.now();
     let tnow = 0;
     let sec = 0;
@@ -132,7 +132,13 @@ function startGame()
     const nbrPattern7 = 1;
     const nbrPattern8 = 8;
     const nbrPattern9 = 1;
-    const nbrPattern10 = 4;
+    const nbrPattern10 = 5;
+    const nbrPattern11 = 1;
+    const nbrPattern12 = 10;
+    const nbrPattern13 = 1;
+    const nbrPattern14 = 1;
+    const nbrPattern15 = 2;
+    const nbrPattern16 = 2;
     let bHitbox = 14/2;
     let pattern1Push = false;
     let pattern2Push = false;
@@ -144,6 +150,12 @@ function startGame()
     let pattern8Push = false;
     let pattern9Push = false;
     let pattern10Push = false;
+    let pattern11Push = false;
+    let pattern12Push = false;
+    let pattern13Push = false;
+    let pattern14Push = false;
+    let pattern15Push = false;
+    let pattern16Push = false;
     let pattern1 = [];
     let pattern2 = [];
     let pattern3 = [];
@@ -154,8 +166,14 @@ function startGame()
     let pattern8 = [];
     let pattern9 = [];
     let pattern10 = [];
-    let ebspeedx = 0.5;
-    let ebspeedy = 2;
+    let pattern11 = [];
+    let pattern12 = [];
+    let pattern13 = [];
+    let pattern14 = [];
+    let pattern15 = [];
+    let pattern16 = [];
+    let ebspeedx = 0;
+    let ebspeedy = 0;
     // variables pour les balles qui tirent vers le joueur
     let homingBulAccel = 1.6;
     let bDistx = 0;
@@ -530,10 +548,60 @@ function startGame()
         }, 15000);
         setTimeout(() => {
             if (pattern10Push == false && fin == false){
+                eTargetx = W/2;
                 pushPattern10(); // homing
                 pattern10Push = true;
             }
         }, 19500);
+        setTimeout(() => {
+            if (pattern11Push == false && fin == false){
+                pushPattern11(); // rond
+                pattern11Push = true;
+            }
+        }, 21500);
+        setTimeout(() => {
+            if (pattern12Push == false && fin == false){
+                pushPattern12(); // homing
+                pattern12Push = true;
+            }
+        }, 23000);
+        setTimeout(() => {
+            if (pattern13Push == false && fin == false){
+                evx = 140*sec;
+                eTargetx = W/1.25;
+                setTimeout(() => {
+                    pushPattern13(); // triple droite
+                }, 800);
+                pattern13Push = true;
+            }
+        }, 25000);
+        setTimeout(() => {
+            if (pattern14Push == false && fin == false){
+                eTargetx = W/5;
+                setTimeout(() => {
+                    pushPattern14(); // triple gauche
+                }, 1500);
+                pattern14Push = true;
+            }
+        }, 27500);
+        setTimeout(() => {
+            if (pattern15Push == false && fin == false){
+                eTargetx = W/2;
+                setTimeout(() => {
+                    pushPattern15(); // doule double
+                }, 800);
+                pattern15Push = true;
+            }
+        }, 30000);
+        setTimeout(() => {
+            if (pattern16Push == false && fin == false){
+                evx = 120*sec
+                setTimeout(() => {
+                    pushPattern16(); // triples moins large
+                }, 800);
+                pattern16Push = true;
+            }
+        }, 31500);
     
         // mouvement de patternes ennemy
         bulletPattern1();
@@ -555,6 +623,18 @@ function startGame()
         bulletPattern9();
 
         bulletPattern10();
+
+        bulletPattern11();
+
+        bulletPattern12();
+
+        bulletPattern13();
+
+        bulletPattern14();
+
+        bulletPattern15();
+
+        bulletPattern16();
     }
 
     function homingBullet(bullet)
@@ -666,7 +746,6 @@ function startGame()
 
     function pushPattern4()
     {
-        ebspeedx = 25*sec;
         for (let i = 0; i < nbrPattern4; i++)
         {
             setTimeout(() => {
@@ -676,7 +755,7 @@ function startGame()
                             {   
                                 x: ex + eHitbox,
                                 y: ey + eHitbox,
-                                vx: ebspeedx,
+                                vx: ebspeedx/2,
                                 vy: ebspeedy
                             }
                         ],
@@ -684,7 +763,7 @@ function startGame()
                             {   
                                 x: ex + eHitbox,
                                 y: ey + eHitbox,
-                                vx: ebspeedx,
+                                vx: ebspeedx/2,
                                 vy: ebspeedy
                             }
                         ]
@@ -693,7 +772,6 @@ function startGame()
                 playSound(bulletSound);
             }, 800*i);
         }
-        ebspeedx = 50*sec;
     }
 
     function pushPattern5()
@@ -936,6 +1014,255 @@ function startGame()
                 playSound(bulletSound);
     
             }, 400*i);
+        }
+    }
+
+    function pushPattern11()
+    {
+        for (let i = 0; i < nbrPattern11; i++)
+        {
+            setTimeout(() => {
+                pattern11.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+    }
+
+    function pushPattern12()
+    {
+        for (let i = 0; i < nbrPattern12; i++)
+        {
+            setTimeout(() => {
+                bDistx = ex + eHitbox - (px + pHitbox);
+                bDisty = ey + eHitbox - (py + pHitbox);
+                bDist = Math.sqrt((bDistx * bDistx) + (bDisty * bDisty));
+                pattern10.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: (((bDistx / bDist) * ebspeedx) * homingBulAccel) * 2,
+                                vy: ((bDisty / bDist) * ebspeedy) * homingBulAccel
+                            }
+                        ]
+                    ]
+                );
+            
+                playSound(bulletSound);
+    
+            }, 250*i);
+        }
+    }
+
+    function pushPattern13()
+    {
+        for (let i = 0; i < nbrPattern13; i++)
+        {
+            setTimeout(() => {
+                pattern13.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+    }
+
+    function pushPattern14()
+    {
+        for (let i = 0; i < nbrPattern14; i++)
+        {
+            setTimeout(() => {
+                pattern14.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
+        }
+    }
+
+    function pushPattern15()
+    {
+        for (let i = 0; i < nbrPattern15; i++)
+        {
+            setTimeout(() => {
+                pattern15.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx/2,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx/2,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 500*i);
+        }
+    }
+
+    function pushPattern16()
+    {
+        for (let i = 0; i < nbrPattern16; i++)
+        {
+            setTimeout(() => {
+                pattern16.push(
+                    [
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx/2,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx/2,
+                                vy: ebspeedy
+                            }
+                        ],
+                        [
+                            {   
+                                x: ex + eHitbox,
+                                y: ey + eHitbox,
+                                vx: ebspeedx/2,
+                                vy: ebspeedy
+                            }
+                        ]
+                    ]
+                );
+                playSound(bulletSound);
+            }, 800*i);
         }
     }
 
@@ -1287,6 +1614,252 @@ function startGame()
                 bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
 
                 bulletCollision(bullet);     
+
+            });
+        });
+    }
+
+    function bulletPattern11()
+    {
+        pattern11.forEach(round => {
+            round[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            round[1].forEach(bullet => {
+
+                bullet.y += bullet.vy/1.5;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            round[2].forEach(bullet => {
+
+                bullet.x += bullet.vx*1.5;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[3].forEach(bullet => {
+
+                bullet.y -= bullet.vy/1.5;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[4].forEach(bullet => {
+
+                bullet.y -= bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[5].forEach(bullet => {
+
+                bullet.y -= bullet.vy/1.5;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[6].forEach(bullet => {
+
+                bullet.x -= bullet.vx*1.5;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+
+            round[7].forEach(bullet => {
+
+                bullet.y += bullet.vy/1.5;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+        });
+    }
+
+    function bulletPattern12()
+    {
+        pattern12.forEach(straightBullet => {
+            straightBullet[0].forEach(bullet => {
+
+                homingBullet(bullet);
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);     
+
+            });
+        });
+    }
+
+    function bulletPattern13()
+    {
+        pattern13.forEach(tripleBullet => {
+            
+            tripleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[2].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+        });
+    }
+
+    function bulletPattern14()
+    {
+        pattern14.forEach(tripleBullet => {
+            
+            tripleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[2].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
+
+            });
+        });
+    }
+
+    function bulletPattern15()
+    {
+        pattern15.forEach(doubleBullet => {
+            
+            doubleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            doubleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+        });
+    }
+
+    function bulletPattern16()
+    {
+        pattern16.forEach(tripleBullet => {
+            
+            tripleBullet[0].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[1].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet);
+
+            });
+
+            tripleBullet[2].forEach(bullet => {
+
+                bullet.y += bullet.vy;
+                bullet.x -= bullet.vx;
+
+                bul.drawImage(bulletImg, bImgx, bImgy, bImgSize, bImgSize, (bullet.x - bHitbox), (bullet.y - bHitbox), bHitbox*2, bHitbox*2);
+
+                bulletCollision(bullet); 
 
             });
         });
