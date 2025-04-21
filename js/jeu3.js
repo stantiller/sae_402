@@ -26,6 +26,74 @@ tableau.height = hauteur;
 // Indique si le jeu est terminé
 let isGameOver = false;
 
+// vérification de la position
+var id, target, options;
+var map = 0;
+let routingControl = null;
+
+function success(pos) {
+    var crd = pos.coords;
+
+    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 10) {
+        console.log("Bravo, vous avez atteint la cible");
+        navigator.geolocation.clearWatch(id);
+        if (routingControl) {
+            map.removeControl(routingControl);
+            routingControl = null;
+        }
+        if (map !== 0)
+            map.remove();
+        document.querySelector(".mapContain").remove();
+        document.querySelector("#start").classList.remove("invisible");
+    }
+    else
+    {
+        if (routingControl) {
+            map.removeControl(routingControl);
+            routingControl = null;
+        }
+        if (map !== 0)
+            map.remove();
+
+        map = L.map('map').setView([crd.latitude, crd.longitude], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        routingControl = L.Routing.control({
+            waypoints: [
+                L.latLng(crd.latitude, crd.longitude),
+                L.latLng(target.latitude, target.longitude)
+            ],
+            show: false, // hides the directions panel
+            addWaypoints: false, // disables adding waypoints by clicking
+            draggableWaypoints: false,
+            fitSelectedRoutes: true,
+            routeWhileDragging: false,
+            showAlternatives: false
+        }).addTo(map);
+    }
+}
+
+function error(err) {
+    console.warn("ERROR(" + err.code + "): " + err.message);
+}
+
+target = {
+    latitude: 47.7457448375294,
+    longitude: 7.338409953170661,
+};
+
+options = {
+    enableHighAccuracy: false,
+    timeout: 1000,
+    maximumAge: 0,
+};
+
+id = navigator.geolocation.watchPosition(success, error, options);
+
 // fonction pour lancer le jeu
 function startGame() {
   document.querySelector(".start").addEventListener("click", function () {

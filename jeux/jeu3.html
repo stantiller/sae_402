@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>Jeu 3</title>
-    <link rel="stylesheet" media="screen" href="../styles/styleJeu3.css" />
     <style>
       body {
         top: 0;
@@ -98,10 +97,34 @@
       #noir {
         opacity: 0.96;
       }
+
+      #map
+        {
+            height: 100vh;
+            width: 100vw;
+        }
     </style>
+    <link rel="preload" href="../styles/styleJeu3.css" as="style" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"
+    />
+
+    <link rel="stylesheet" media="screen" href="../styles/styleJeu3.css" />
   </head>
   <body>
-    <div class="flex noir" id="start">
+    <!-- map pour s'orienter et arriver au jeu -->
+    <div class="mapContain">
+      <div id="map"></div>
+    </div>
+    <!-- div pour le début du jeu -->
+    <div class="flex noir invisible" id="start">
       <div class="texte">
         Game N°3
         <div class="start">Start</div>
@@ -156,8 +179,7 @@
       </div>
     </div>
 
-    
-    <div class="game invisible"> 
+    <div class="game invisible">
       <!-- tous les canvas pour le jeu -->
       <canvas id="colission"></canvas>
       <canvas id="background"></canvas>
@@ -165,9 +187,15 @@
       <canvas id="noir"></canvas>
       <canvas id="player"></canvas>
       <!-- div pour afficher le timer -->
-    <div id="timer">0</div>
+      <div id="timer">0</div>
     </div>
-
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
     <script src="../js/jeu3.js"></script>
+    <script src="../js/main.js"></script>
   </body>
 </html>
