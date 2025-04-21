@@ -40,7 +40,7 @@ let routingControl = null;
 function success(pos) {
     var crd = pos.coords;
 
-    if (target.latitude === crd.latitude && target.longitude === crd.longitude) {
+    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 10) {
         console.log("Bravo, vous avez atteint la cible");
         navigator.geolocation.clearWatch(id);
         if (routingControl) {
@@ -88,8 +88,8 @@ function error(err) {
 }
 
 target = {
-    latitude: 52.520007,
-    longitude: 13.404954,
+    latitude: 47.745203,
+    longitude: 7.336902,
 };
 
 options = {
@@ -100,7 +100,7 @@ options = {
 
 id = navigator.geolocation.watchPosition(success, error, options);
 
-
+// jeu
 function startGame()
 {
     // display
