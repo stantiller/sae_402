@@ -105,9 +105,6 @@ const sonTableaured = new Audio("../sounds/game3/tableau2.mp3");
 const sonTableaugreen = new Audio("../sounds/game3/tableau3.mp3");
 const sonTableauviolet = new Audio("../sounds/game3/tableau4.mp3");
 const sonDepot = new Audio("../sounds/game3/depot.mp3");
-// let soundDist = 250;
-// let maxFreq = 1500;
-// let freq = 0;
 
 // constantes pour appeler les images
 const backgroundImage = new Image();
@@ -366,7 +363,7 @@ function fonctionementTableau() {
             setTimeout(() => {
               goodElement.classList.add("invisible");
               isPaused = false;
-              checkWinCondition();
+              WinCondition();
             }, 2000);
           }
         } else {
@@ -404,7 +401,7 @@ function fonctionementTableau() {
             setTimeout(() => {
               goodElement.classList.add("invisible");
               isPaused = false;
-              checkWinCondition();
+              WinCondition();
             }, 2000);
           }
         } else {
@@ -443,7 +440,7 @@ function fonctionementTableau() {
             setTimeout(() => {
               goodElement.classList.add("invisible");
               isPaused = false;
-              checkWinCondition();
+              WinCondition();
             }, 2000);
           }
         } else {
@@ -482,7 +479,7 @@ function fonctionementTableau() {
             setTimeout(() => {
               goodElement.classList.add("invisible");
               isPaused = false;
-              checkWinCondition();
+              WinCondition();
             }, 2000);
           }
         } else {
