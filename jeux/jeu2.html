@@ -5,11 +5,58 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
     <title>Jeu 2</title>
+
+    <style>
+        body
+        {
+            margin: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .startBackground
+        {
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0.4);
+            text-align: center;
+            font-size: 30px;
+        }
+        .start
+        {
+            height: 100px;
+            width: 200px;
+            font-size: 40px;
+            margin: auto;
+            margin-top: 300px;
+            z-index: 11;
+            background-color: red;
+        }
+        .invisible
+        {
+            display: none;
+            pointer-events: none;
+        }
+        #map
+        {
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+
+    <link rel="preload" href="../styles/styleJeu2.css" as="style">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+
     <link rel="stylesheet" media="screen" href="../styles/styleJeu2.css">
 </head>
 <body>
 
-    <div class="startBackground">
+    <div class="mapContain">
+        <div id="map"></div>
+    </div>
+
+    <div class="startBackground invisible">
         <div class="start">start</div>
     </div>
 
@@ -33,6 +80,10 @@
     
     <canvas id="playerZone" class="invisible"></canvas>
     
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
     <script src="../js/jeu2.js"></script>
     <script src="../js/main.js"></script>
 
