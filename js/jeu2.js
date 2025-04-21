@@ -180,6 +180,7 @@ function startGame()
     let bDisty = 0;
     let bDist = 0;
     
+    orientationLock();
 
     function afficher()
     {
@@ -468,6 +469,23 @@ function startGame()
                     pBullets.splice(index, 1);
             }
         });
+    }
+
+    function orientationLock() {
+        const element = document.documentElement; // tu peux aussi cibler un élément précis
+        
+        if (element.requestFullscreen) {
+            element.requestFullscreen().then(() => {
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock("portrait").catch((error) => {
+                        console.error(
+                            "Erreur lors du verrouillage de l'orientation :",
+                            error
+                        );
+                    });
+                }
+            });
+        }
     }
 
     function gestionPatternes()
