@@ -11,6 +11,7 @@ const player = document.getElementById("playerZone");
 const startScreen = document.querySelector(".startBackground");
 const winningScreen = document.querySelector(".winScreen");
 const losingScreen = document.querySelector(".loseScreen");
+const affichageMap = document.querySelector(".mapContain");
 showScore.height = 400;
 showScore.width = W;
 background.height = H;
@@ -30,6 +31,75 @@ oscillator.connect(gainNode);
 gainNode.connect(approachSound.destination);
 oscillator.start();
 gainNode.gain.value = 0;
+
+// vérification de la position
+var id, target, options;
+var map = 0;
+let routingControl = null;
+
+function success(pos) {
+    var crd = pos.coords;
+
+    if (target.latitude === crd.latitude && target.longitude === crd.longitude) {
+        console.log("Bravo, vous avez atteint la cible");
+        navigator.geolocation.clearWatch(id);
+        if (routingControl) {
+            map.removeControl(routingControl);
+            routingControl = null;
+        }
+        if (map !== 0)
+            map.remove();
+        affichageMap.remove();
+        startScreen.classList.remove("invisible");
+    }
+    else
+    {
+        if (routingControl) {
+            map.removeControl(routingControl);
+            routingControl = null;
+        }
+        if (map !== 0)
+            map.remove();
+
+        map = L.map('map').setView([crd.latitude, crd.longitude], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        routingControl = L.Routing.control({
+            waypoints: [
+                L.latLng(crd.latitude, crd.longitude),
+                L.latLng(target.latitude, target.longitude)
+            ],
+            show: false, // hides the directions panel
+            addWaypoints: false, // disables adding waypoints by clicking
+            draggableWaypoints: false,
+            fitSelectedRoutes: true,
+            routeWhileDragging: false,
+            showAlternatives: false
+        }).addTo(map);
+    }
+}
+
+function error(err) {
+    console.warn("ERROR(" + err.code + "): " + err.message);
+}
+
+target = {
+    latitude: 52.520007,
+    longitude: 13.404954,
+};
+
+options = {
+    enableHighAccuracy: false,
+    timeout: 1000,
+    maximumAge: 0,
+};
+
+id = navigator.geolocation.watchPosition(success, error, options);
+
 
 function startGame()
 {
@@ -179,7 +249,6 @@ function startGame()
     let bDistx = 0;
     let bDisty = 0;
     let bDist = 0;
-    
 
     function afficher()
     {

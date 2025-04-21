@@ -1,8 +1,3 @@
-body
-{
-    margin: 0px;
-    font-family: Arial, Helvetica, sans-serif;
-}
 canvas
 {
     position: absolute;
@@ -25,13 +20,6 @@ canvas
 {
     z-index: 1;
 }
-.startBackground
-{
-    z-index: 10;
-    background-color: rgba(0, 0, 0, 0.4);
-    text-align: center;
-    font-size: 30px;
-}
 .winScreen
 {
     z-index: 10;
@@ -45,18 +33,4 @@ canvas
     background-color: rgba(255, 200, 200, 0.4);
     text-align: center;
     font-size: 30px;
-}
-.start
-{
-    height: 100px;
-    width: 200px;
-    font-size: 40px;
-    margin: auto;
-    margin-top: 300px;
-    z-index: 11;
-}
-.invisible
-{
-    display: none;
-    pointer-events: none;
 }
