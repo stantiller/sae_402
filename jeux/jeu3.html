@@ -11,24 +11,31 @@
         margin: 0;
       }
 
-      .noir {
-        background-color: black;
+      .image-fond {
+        background-image: url("../img/siteImg/fondmussée.jpg");
+        background-size: cover;
+        background-position: center;
       }
 
       .start {
-        background-color: white;
+        background: linear-gradient(to bottom, #ffffff, #d9d9d9); 
         margin-top: 4px;
         color: black;
         font-size: 30px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        padding: 5px;
+        padding: 10px;
         border-radius: 10px;
         text-align: center;
         cursor: pointer;
+        width: fit-content;
+        margin: auto;
+        box-shadow: 0 4px #b3b3b3;
+        border: 1px solid #b3b3b3;
       }
 
       .start:hover {
-        background-color: #999494;
+        background: linear-gradient(to bottom, #e6e6e6, #cccccc);
+        box-shadow: 0 2px #999999;
       }
 
       .flex {
@@ -44,11 +51,18 @@
         color: white;
         font-size: 23px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        background-color: sienna;
+        margin: auto;
+        background-color: rgb(145, 73, 40);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         padding: 15px;
         border-radius: 10px;
         text-align: center;
         z-index: 5000;
+      }
+
+      .texte > p {
+        font-size: 17px;
+        color: rgb(231, 231, 231);
       }
 
       .invisible {
@@ -98,11 +112,10 @@
         opacity: 0.96;
       }
 
-      #map
-        {
-            height: 100vh;
-            width: 100vw;
-        }
+      #map {
+        height: 100vh;
+        width: 100vw;
+      }
     </style>
     <link rel="preload" href="../styles/styleJeu3.css" as="style" />
     <link
@@ -124,9 +137,10 @@
       <div id="map"></div>
     </div> -->
     <!-- div pour le début du jeu -->
-    <div class="flex noir " id="start">
+    <div class="flex image-fond" id="start">
       <div class="texte">
-        Game N°3
+        <h3>Game N°3</h3>
+        <p>Putting art pieces in their place.</p>
         <div class="start">Start</div>
       </div>
     </div>

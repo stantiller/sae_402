@@ -1,73 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no">
-    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
     <title>Jeu 2</title>
 
     <style>
-        body
-        {
-            margin: 0px;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .startBackground
-        {
-            z-index: 10;
-            background-color: rgba(0, 0, 0, 0.4);
-            text-align: center;
-            font-size: 30px;
-        }
-        .start
-        {
-            height: 100px;
-            width: 200px;
-            font-size: 40px;
-            margin: auto;
-            margin-top: 300px;
-            z-index: 11;
-            background-color: red;
-        }
-        .invisible
-        {
-            display: none;
-            pointer-events: none;
-        }
-        #map
-        {
-            height: 100vh;
-            width: 100vw;
-        }
+      body {
+        margin: 0px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .image-fond {
+        background-image: url("../img/siteImg/fondmussée.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .start {
+        background: linear-gradient(to bottom, #ffffff, #d9d9d9);
+        margin-top: 4px;
+        color: black;
+        font-size: 30px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        width: fit-content;
+        margin: auto;
+        box-shadow: 0 4px #b3b3b3;
+        border: 1px solid #b3b3b3;
+      }
+
+      .start:hover {
+        background: linear-gradient(to bottom, #e6e6e6, #cccccc);
+        box-shadow: 0 2px #999999;
+      }
+
+      .flex {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+      }
+
+      .texte {
+        color: white;
+        font-size: 23px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: auto;
+        background-color: rgb(145, 73, 40);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        z-index: 5000;
+      }
+
+      .texte > p {
+        font-size: 17px;
+        color: rgb(231, 231, 231);
+      }
+
+      .invisible {
+        display: none;
+        pointer-events: none;
+      }
+      #map {
+        height: 100vh;
+        width: 100vw;
+      }
     </style>
 
-    <link rel="preload" href="../styles/styleJeu2.css" as="style">
+    <link rel="preload" href="../styles/styleJeu2.css" as="style" />
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"
+    />
 
-    <link rel="stylesheet" media="screen" href="../styles/styleJeu2.css">
-</head>
-<body>
+    <link rel="stylesheet" media="screen" href="../styles/styleJeu2.css" />
+  </head>
+  <body>
+    <div class="mapContain">
+      <div id="map"></div>
+    </div>
 
-    <!-- <div class="mapContain">
-        <div id="map"></div>
-    </div> -->
-
-    <div class="startBackground">
-        <div class="start">start</div>
+    <!-- div pour le début du jeu -->
+    <div class="flex image-fond" id="start">
+      <div class="texte">
+        <h3>Game N°2</h3>
+        <p>Putting art pieces in their place.</p>
+        <div class="start">Start</div>
+      </div>
     </div>
 
     <div class="winScreen invisible">
-        <div>You won !</div>
-        <div class="start">start again</div>
+      <div>You won !</div>
+      <div class="start">start again</div>
     </div>
 
     <div class="loseScreen invisible">
-        <div>You lost...</div>
-        <div class="start">restart</div>
+      <div>You lost...</div>
+      <div class="start">restart</div>
     </div>
 
     <canvas id="score" class="invisible"></canvas>
@@ -77,15 +121,16 @@
     <canvas id="ennemyZone" class="invisible"></canvas>
 
     <canvas id="bulletZone" class="invisible"></canvas>
-    
+
     <canvas id="playerZone" class="invisible"></canvas>
-    
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
     <script src="../js/jeu2.js"></script>
     <script src="../js/main.js"></script>
-
-</body>
+  </body>
 </html>
