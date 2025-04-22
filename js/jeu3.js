@@ -26,6 +26,75 @@ tableau.height = hauteur;
 // Indique si le jeu est terminé
 let isGameOver = false;
 
+// vérification de la position
+var id, target, options;
+var map = 0;
+let routingControl = null;
+
+function success(pos) {
+  var crd = pos.coords;
+
+  if (
+    L.latLng(crd.latitude, crd.longitude).distanceTo(
+      L.latLng(target.latitude, target.longitude)
+    ) <= 10
+  ) {
+    console.log("Bravo, vous avez atteint la cible");
+    navigator.geolocation.clearWatch(id);
+    if (routingControl) {
+      map.removeControl(routingControl);
+      routingControl = null;
+    }
+    if (map !== 0) map.remove();
+    document.querySelector(".mapContain").remove();
+    document.querySelector("#start").classList.remove("invisible");
+  } else {
+    if (routingControl) {
+      map.removeControl(routingControl);
+      routingControl = null;
+    }
+    if (map !== 0) map.remove();
+
+    map = L.map("map").setView([crd.latitude, crd.longitude], 13);
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+
+    routingControl = L.Routing.control({
+      waypoints: [
+        L.latLng(crd.latitude, crd.longitude),
+        L.latLng(target.latitude, target.longitude),
+      ],
+      show: false, // hides the directions panel
+      addWaypoints: false, // disables adding waypoints by clicking
+      draggableWaypoints: false,
+      fitSelectedRoutes: true,
+      routeWhileDragging: false,
+      showAlternatives: false,
+    }).addTo(map);
+  }
+}
+
+function error(err) {
+  console.warn("ERROR(" + err.code + "): " + err.message);
+}
+
+target = {
+  latitude: 47.7457448375294,
+  longitude: 7.338409953170661,
+};
+
+options = {
+  enableHighAccuracy: false,
+  timeout: 1000,
+  maximumAge: 0,
+};
+
+id = navigator.geolocation.watchPosition(success, error, options);
+
 // fonction pour lancer le jeu
 function startGame() {
   document.querySelector(".start").addEventListener("click", function () {
@@ -38,16 +107,13 @@ function startGame() {
 }
 
 function orientationLock() {
-  const element = document.documentElement; // tu peux aussi cibler un élément précis
+  const element = document.documentElement;
 
   if (element.requestFullscreen) {
     element.requestFullscreen().then(() => {
       if (screen.orientation && screen.orientation.lock) {
         screen.orientation.lock("portrait").catch((error) => {
-          console.error(
-            "Erreur lors du verrouillage de l'orientation :",
-            error
-          );
+          console.error("Orientation lock failed: ", error);
         });
       }
     });
@@ -66,6 +132,14 @@ let ctxTableau = tableau.getContext("2d");
 // variable pour le chrono
 let secondes = 0;
 let para = document.getElementById("timer");
+
+// variable pour la vitesse qui se met corrzectement en fonction des hz
+let time0 = performance.now();
+let timeNow = 0;
+let sec = 0;
+let timeDefinition = 0;
+let playerSpeedx = 0;
+let playerSpeedy = 0;
 
 // variables pour le joueur
 let hitbox = 40 / 2;
@@ -190,7 +264,7 @@ function SonTableau1() {
 
 function SonTableau2() {
   if (isGameOver || inventory.length === 0 || inventory[0] !== "red") {
-    return; 
+    return;
   }
 
   const centreX = XTableau2 + TailleTableau / 2;
@@ -222,7 +296,7 @@ function SonTableau2() {
 
 function SonTableau3() {
   if (isGameOver || inventory.length === 0 || inventory[0] !== "green") {
-    return; 
+    return;
   }
 
   const centreX = XTableau3 + TailleTableau / 2;
@@ -254,7 +328,7 @@ function SonTableau3() {
 
 function SonTableau4() {
   if (isGameOver || inventory.length === 0 || inventory[0] !== "violet") {
-    return; 
+    return;
   }
 
   const centreX = XTableau4 + TailleTableau / 2;
@@ -309,8 +383,8 @@ function playerControl(event) {
     deplacementX = 0;
     deplacementY = 0;
   } else {
-    deplacementX = 0.4 * Math.cos(infoPlayer.angle);
-    deplacementY = 0.4 * Math.sin(infoPlayer.angle);
+    deplacementX = playerSpeedx * Math.cos(infoPlayer.angle);
+    deplacementY = playerSpeedy * Math.sin(infoPlayer.angle);
   }
 }
 
@@ -600,6 +674,15 @@ function afficher() {
   ctxLumiere.restore();
 
   // affichage du déplacement du player et le player en lui meme
+  if (timeDefinition < 10) {
+    timeNow = performance.now();
+    sec = (timeNow - time0) / 1000;
+    time0 = timeNow;
+    playerSpeedx = 55 * sec;
+    playerSpeedy = 55 * sec;
+    timeDefinition += 1;
+  }
+
   let dx = posiX - infoPlayer.x;
   let dy = posiY - infoPlayer.y;
 

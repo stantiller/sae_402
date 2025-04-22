@@ -120,7 +120,7 @@ function startGame()
     let bul = bullets.getContext("2d");
     let play = player.getContext("2d");
 
-    // score et timer du jeu
+    // score timer du jeu et definition du temps
     let score = 0;
     let gainScore = 100
     let countDown = -1;
