@@ -1,5 +1,25 @@
-body
-{
-    margin: 0px;
-    font-family: Arial, Helvetica, sans-serif;
+.image-dialogue {
+  background-image: url("/img/siteImg/fondmussée.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.grid-dialogue {
+  display: grid;
+  left: 100%;
+  top: 100%;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto;
+}
+
+.image-perso {
+    width: 100px;
+    height: 100px;
+}
+
+.image-perso > img {
+  width: 100%;
+  height: 100%;
 }

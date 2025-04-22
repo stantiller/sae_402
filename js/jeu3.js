@@ -179,6 +179,7 @@ const sonTableaured = new Audio("../sounds/game3/tableau2.mp3");
 const sonTableaugreen = new Audio("../sounds/game3/tableau3.mp3");
 const sonTableauviolet = new Audio("../sounds/game3/tableau4.mp3");
 const sonDepot = new Audio("../sounds/game3/depot.mp3");
+const sonPas = new Audio("../sounds/game3/pas.mp3");
 
 // constantes pour appeler les images
 const backgroundImage = new Image();
@@ -218,7 +219,8 @@ function DepotSon() {
   const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
 
   if (angleDifference < 0.2) {
-    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
+    const dist = distance / maxDistance;
+    const frequence = Math.max(100, 2000 * Math.pow(dist, 2));
 
     if (!sonDepot.isPlaying) {
       sonDepot.isPlaying = true;
@@ -250,7 +252,8 @@ function SonTableau1() {
   const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
 
   if (angleDifference < 0.2) {
-    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
+    const dist = distance / maxDistance;
+    const frequence = Math.max(100, 2000 * Math.pow(dist, 2));
 
     if (!sonTableaublue.isPlaying) {
       sonTableaublue.isPlaying = true;
@@ -282,7 +285,8 @@ function SonTableau2() {
   const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
 
   if (angleDifference < 0.2) {
-    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
+    const dist = distance / maxDistance; 
+    const frequence = Math.max(100, 2000 * Math.pow(dist, 2));
 
     if (!sonTableaured.isPlaying) {
       sonTableaured.isPlaying = true;
@@ -314,7 +318,8 @@ function SonTableau3() {
   const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
 
   if (angleDifference < 0.2) {
-    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
+    const dist = distance / maxDistance; 
+    const frequence = Math.max(100, 2000 * Math.pow(dist, 2));
 
     if (!sonTableaugreen.isPlaying) {
       sonTableaugreen.isPlaying = true;
@@ -346,7 +351,8 @@ function SonTableau4() {
   const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
 
   if (angleDifference < 0.2) {
-    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
+    const dist = distance / maxDistance; 
+    const frequence = Math.max(100, 2000 * Math.pow(dist, 2));
 
     if (!sonTableauviolet.isPlaying) {
       sonTableauviolet.isPlaying = true;
@@ -383,6 +389,7 @@ function playerControl(event) {
     deplacementX = 0;
     deplacementY = 0;
   } else {
+    SoundPlay(sonPas);
     deplacementX = playerSpeedx * Math.cos(infoPlayer.angle);
     deplacementY = playerSpeedy * Math.sin(infoPlayer.angle);
   }
@@ -674,7 +681,7 @@ function afficher() {
   ctxLumiere.restore();
 
   // affichage du déplacement du player et le player en lui meme
-  if (timeDefinition < 10) {
+  if (timeDefinition < 20) {
     timeNow = performance.now();
     sec = (timeNow - time0) / 1000;
     time0 = timeNow;
@@ -715,10 +722,10 @@ function WinCondition() {
     tableau4.length === 1
   ) {
     if (!isGameOver) {
-      isGameOver = true; 
+      isGameOver = true;
       isPaused = true;
       clearInterval(chrono);
-      document.querySelector(".game").classList.add("invisible"); 
+      document.querySelector(".game").classList.add("invisible");
       document.querySelector(".winScreen").classList.remove("invisible");
     }
   }
