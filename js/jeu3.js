@@ -678,8 +678,8 @@ function afficher() {
     timeNow = performance.now();
     sec = (timeNow - time0) / 1000;
     time0 = timeNow;
-    playerSpeedx = 55 * sec;
-    playerSpeedy = 55 * sec;
+    playerSpeedx = 60 * sec;
+    playerSpeedy = 60 * sec;
     timeDefinition += 1;
   }
 
@@ -715,12 +715,11 @@ function WinCondition() {
     tableau4.length === 1
   ) {
     if (!isGameOver) {
-      isGameOver = true; // Marque le jeu comme terminé
-      isPaused = true; // Met le jeu en pause
-      clearInterval(chrono); // Arrête le timer
-      alert(
-        `Félicitations ! Vous avez terminé le jeu en ${secondes} secondes.`
-      );
+      isGameOver = true; 
+      isPaused = true;
+      clearInterval(chrono);
+      document.querySelector(".game").classList.add("invisible"); 
+      document.querySelector(".winScreen").classList.remove("invisible");
     }
   }
 }

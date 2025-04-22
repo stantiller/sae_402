@@ -12,7 +12,7 @@
         font-family: Arial, Helvetica, sans-serif;
       }
       .image-fond {
-        background-image: url("../img/siteImg/fondmussée.jpg");
+        background-image: url("../img/siteImg/fondportail.jpg");
         background-size: cover;
         background-position: center;
       }
@@ -91,28 +91,32 @@
     <link rel="stylesheet" media="screen" href="../styles/styleJeu2.css" />
   </head>
   <body>
-    <div class="mapContain">
+    <!-- <div class="mapContain">
       <div id="map"></div>
-    </div>
+    </div> -->
 
     <!-- div pour le début du jeu -->
-    <div class="flex image-fond" id="start">
+    <div class="flex image-fond startBackground">
       <div class="texte">
         <h3>Game N°2</h3>
-        <p>Putting art pieces in their place.</p>
+        <p>Dodge projectiles and shoot the thief.</p>
         <div class="start">Start</div>
       </div>
     </div>
 
-    <div class="winScreen invisible">
-      <div>You won !</div>
-      <div class="start">start again</div>
+    <div class="flex image-fond winScreen invisible">
+      <div class="texte">
+        <h3>You won !</h3>
+        <div class="start">Start again</div>
+      </div>
     </div>
 
-    <div class="loseScreen invisible">
-      <div>You lost...</div>
-      <div class="start">restart</div>
-    </div>
+    <div class="flex image-fond loseScreen invisible">
+        <div class="texte">
+          <h3>You lost...</h3>
+          <div class="start">Restart</div>
+        </div>
+      </div>
 
     <canvas id="score" class="invisible"></canvas>
 
