@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .animTxt
+        {
+            width: 200px;
+            height: 200px;
+        }
+        .animTxt>span {
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .animTxt>span.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="animTxt"></div>
+
+    <script>
+// animation texte
+const animDiv = document.querySelector(".animTxt");
+
+let clickCount = 0;
+
+const story = [
+    "text 1",
+    "text 2",
+    "text 3",
+    "text 4",
+    "text 5",
+];
+
+function animText(text) {
+    let output = "";
+    for (const letter of text) {
+        output += `<span>${letter}</span>`;
+    }
+    animDiv.innerHTML = output;
+
+    [...animDiv.children].forEach((span, index) => {
+        setTimeout(() => {
+            span.classList.add("visible");
+        }, 50 * index);
+    });
+}
+
+animDiv.addEventListener("click", () => {
+    if (clickCount < 5)
+    {
+    animText(story[clickCount % story.length]);
+    clickCount++;
+    }
+    else
+    {
+        document.body.style.background = "red";
+    }
+});
+    </script>
+</body>
+</html>

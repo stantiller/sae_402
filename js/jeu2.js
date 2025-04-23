@@ -11,6 +11,7 @@ const player = document.getElementById("playerZone");
 const startScreen = document.querySelector(".startBackground");
 const winningScreen = document.querySelector(".winScreen");
 const losingScreen = document.querySelector(".loseScreen");
+const storyScreen = document.querySelector(".storyScreen");
 const affichageMap = document.querySelector(".mapContain");
 showScore.height = 400;
 showScore.width = W;
@@ -1950,6 +1951,8 @@ document.querySelectorAll(".start").forEach(e => {
     e.addEventListener("click", startGame);
 });
 
+document.querySelector(".toStory").addEventListener("click", startStory)
+
 
 function clearGame()
 {
@@ -1970,34 +1973,38 @@ function loseScreen()
     losingScreen.classList.remove("invisible");
 }
 
+function startStory()
+{
+    winningScreen.classList.add("invisible");
+    storyScreen.classList.remove("invisible");
 
-/*
+    animDiv.addEventListener("click", () => {
+        animText(texts[clickCount % texts.length]);
+        clickCount++;
+    });
+}
 
 // animation texte
+let clickCount = 0;
 
-.animTxt>span {
-    opacity: 0;
-    transition: 0.2s;
-}
-.animTxt>span.visible {
-    opacity: 1;
-}
+const story = [
+    "text 1",
+    "text 2",
+    "text 3",
+    "text 4",
+    "text 5",
+];
 
-
-document.querySelectorAll("animTxt").forEach(div => {
+function animText(text) {
     let output = "";
-    div.innerText.split("").forEach(lettre => {
-        output += `<span>${lettre}</span>`;
-    });
-    div.innerHTML = output;
-    div.addEventListener("click", afficherTxt);
-});
+    for (const letter of text) {
+        output += `<span>${letter}</span>`;
+    }
+    animDiv.innerHTML = output;
 
-function afficherTxt()
-{
-    [...this.children].forEach((lettre, index) => {
-        setTimeout(()=>{lettre.classList.add("visible")}, 50*index);
+    [...animDiv.children].forEach((span, index) => {
+        setTimeout(() => {
+            span.classList.add("visible");
+        }, 50 * index);
     });
 }
-
-*/
