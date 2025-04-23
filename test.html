@@ -26,15 +26,16 @@
 <body>
 
     <div class="dialogueBox">
+        <div class="imgSpeaker"></div>
         <div class="speaker"></div>
         <div class="animTxt">click</div>
     </div>
-
     <script>
 // animation texte
 const storyDiv = document.querySelector(".dialogueBox");
 const animDiv = document.querySelector(".animTxt");
 const speakerDiv = document.querySelector(".speaker");
+const imgSpeaker = document.querySelector(".imgSpeaker");
 
 let clickCount = 0;
 
@@ -79,6 +80,11 @@ storyDiv.addEventListener("click", () => {
     {
         const dialogue = story[clickCount];
         speakerDiv.innerHTML = dialogue.character;
+        if (dialogue.character == "you")
+        {
+            imgSpeaker.innerHTML = "<img src='img/siteImg/player.png'>";
+        }
+        else imgSpeaker.innerHTML = "";
         animText(dialogue.text);
         clickCount++;
     }
