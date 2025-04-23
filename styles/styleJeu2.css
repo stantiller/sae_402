@@ -20,17 +20,3 @@ canvas
 {
     z-index: 1;
 }
-.winScreen
-{
-    z-index: 10;
-    background-color: rgba(200, 255, 200, 0.4);
-    text-align: center;
-    font-size: 30px;
-}
-.loseScreen
-{
-    z-index: 10;
-    background-color: rgba(255, 200, 200, 0.4);
-    text-align: center;
-    font-size: 30px;
-}
