@@ -75,9 +75,9 @@ function animText(text) {
 }
 
 storyDiv.addEventListener("click", () => {
-    if (clickCount < 5)
+    if (clickCount < story.length)
     {
-        const dialogue = story[clickCount % story.length];
+        const dialogue = story[clickCount];
         speakerDiv.innerHTML = dialogue.character;
         animText(dialogue.text);
         clickCount++;

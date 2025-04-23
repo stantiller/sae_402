@@ -1978,11 +1978,13 @@ function startStory()
     winningScreen.classList.add("invisible");
     storyScreen.classList.remove("invisible");
 
-    animDiv.addEventListener("click", () => {
-        if (clickCount < 5)
+    storyDiv.addEventListener("click", () => {
+        if (clickCount < story.length)
         {
-        animText(story[clickCount % story.length]);
-        clickCount++;
+            const dialogue = story[clickCount % story.length];
+            speakerDiv.innerHTML = dialogue.character;
+            animText(dialogue.text);
+            clickCount++;
         }
         else
         {
@@ -1992,7 +1994,9 @@ function startStory()
 }
 
 // animation texte
+const storyDiv = document.querySelector(".dialogueBox");
 const animDiv = document.querySelector(".animTxt");
+const speakerDiv = document.querySelector(".speaker");
 
 let clickCount = 0;
 
@@ -2000,19 +2004,19 @@ const story = [
     {
         character: "thief",
         text: "text 1"
-    }
+    },
     {
         character: "you",
         text: "text 2"
-    }
+    },
     {
-        character: "thief",
+        character: "",
         text: "text 3"
-    }
+    },
     {
         character: "you",
         text: "text 4"
-    }
+    },
     {
         character: "you",
         text: "text 5"
@@ -2025,7 +2029,6 @@ function animText(text) {
         output += `<span>${letter}</span>`;
     }
     animDiv.innerHTML = output;
-
     [...animDiv.children].forEach((span, index) => {
         setTimeout(() => {
             span.classList.add("visible");
