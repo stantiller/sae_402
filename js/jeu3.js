@@ -120,6 +120,8 @@ function orientationLock() {
   }
 }
 
+window.addEventListener("pageshow", orientationLock);
+
 let isPaused = false;
 
 // selection des contextes des canvas
@@ -219,8 +221,7 @@ function DepotSon() {
   const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
 
   if (angleDifference < 0.2) {
-    const dist = distance / maxDistance;
-    const frequence = Math.max(100, 2000 * Math.pow(dist, 2));
+    const frequence = Math.max(10, distance / maxDistance);
 
     if (!sonDepot.isPlaying) {
       sonDepot.isPlaying = true;
@@ -252,8 +253,7 @@ function SonTableau1() {
   const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
 
   if (angleDifference < 0.2) {
-    const dist = distance / maxDistance;
-    const frequence = Math.max(100, 2000 * Math.pow(dist, 2));
+    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
 
     if (!sonTableaublue.isPlaying) {
       sonTableaublue.isPlaying = true;
@@ -285,8 +285,7 @@ function SonTableau2() {
   const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
 
   if (angleDifference < 0.2) {
-    const dist = distance / maxDistance; 
-    const frequence = Math.max(100, 2000 * Math.pow(dist, 2));
+    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
 
     if (!sonTableaured.isPlaying) {
       sonTableaured.isPlaying = true;
@@ -318,8 +317,7 @@ function SonTableau3() {
   const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
 
   if (angleDifference < 0.2) {
-    const dist = distance / maxDistance; 
-    const frequence = Math.max(100, 2000 * Math.pow(dist, 2));
+    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
 
     if (!sonTableaugreen.isPlaying) {
       sonTableaugreen.isPlaying = true;
@@ -351,8 +349,7 @@ function SonTableau4() {
   const angleDifference = Math.abs(infoPlayer.angle - angleDepot);
 
   if (angleDifference < 0.2) {
-    const dist = distance / maxDistance; 
-    const frequence = Math.max(100, 2000 * Math.pow(dist, 2));
+    const frequence = Math.max(100, 1000 - (distance / maxDistance) * 1900);
 
     if (!sonTableauviolet.isPlaying) {
       sonTableauviolet.isPlaying = true;
@@ -729,4 +726,54 @@ function WinCondition() {
       document.querySelector(".winScreen").classList.remove("invisible");
     }
   }
+}
+
+document.querySelector(".quitter").addEventListener("click", quit);
+
+function quit() {
+  isGameOver = false;
+  isPaused = false;
+  clearInterval(chrono);
+  secondes = 0;
+  para.innerHTML = secondes;
+
+  // Réinitialise les tableaux et l'inventaire
+  depotTableau = ["blue", "red", "green", "violet"];
+  tableau1 = [];
+  tableau2 = [];
+  tableau3 = [];
+  tableau4 = [];
+  inventory = [];
+
+  // variable pour la vitesse qui se met corrzectement en fonction des hz
+  time0 = performance.now();
+  timeNow = 0;
+  sec = 0;
+  timeDefinition = 0;
+  playerSpeedx = 0;
+  playerSpeedy = 0;
+
+  // Réinitialise la position et l'état du joueur
+  infoPlayer = { x: taille / 2, y: hauteur / 2, angle: 0 };
+  deplacementX = 0;
+  deplacementY = 0;
+
+  // Réinitialise les sons
+  sonDepot.isPlaying = false;
+  sonTableaublue.isPlaying = false;
+  sonTableaured.isPlaying = false;
+  sonTableaugreen.isPlaying = false;
+  sonTableauviolet.isPlaying = false;
+
+  // Réinitialise les éléments visuels
+  document.querySelector(".game").classList.add("invisible");
+  document.querySelector("#start").classList.remove("invisible");
+  document.querySelector(".winScreen").classList.add("invisible");
+
+  // Réinitialise les canvas
+  ctxColission.clearRect(0, 0, taille, hauteur);
+  ctxBackground.clearRect(0, 0, taille, hauteur);
+  ctxPlayer.clearRect(0, 0, taille, hauteur);
+  ctxTableau.clearRect(0, 0, taille, hauteur);
+  ctxLumiere.clearRect(0, 0, taille, hauteur);
 }
