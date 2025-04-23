@@ -155,6 +155,12 @@ function startGame()
     let betaBackMove = 35;
 
     // ennemy
+    const eSprite = new Image();
+    eSprite.src = "../img/game2/enemy1.png";
+    let eSpriteHitbox = 40/2;
+    let eSpritex = 0;
+    let eSpritey = 0;
+    let eSpriteSize = 105;
     let eHitbox = 25/2;
     let ex = W/2 - eHitbox;
     let ey = 80;
@@ -293,6 +299,8 @@ function startGame()
     
         // affichage joueur
         play.drawImage(pSprite, pSpritex, pSpritey, pSpriteSize, pSpriteSize, (px - (pSpriteHitbox - pHitbox)), (py - (pSpriteHitbox - pHitbox)), pSpriteHitbox*2, pSpriteHitbox*2);
+
+        // affichage hitbox joueur
         play.fillStyle = "white";
         play.fillRect((px), (py), pHitbox*2, pHitbox*2);
 
@@ -300,6 +308,8 @@ function startGame()
         ennemyMovement();
     
         //affichage ennemy
+        boss.drawImage(eSprite, eSpritex, eSpritey, eSpriteSize, eSpriteSize, (ex - (eSpriteHitbox - eHitbox)), (ey - (eSpriteHitbox - eHitbox)), eSpriteHitbox*2, eSpriteHitbox*2);
+
         boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
     
         setTimeout(() => {
