@@ -174,6 +174,7 @@ function startGame()
     const plDead = new Audio('../sounds/game2/pldead00.wav');
     const bulletSound = new Audio('../sounds/game2/tan02.wav');
     const ennemyDmg = new Audio('../sounds/game2/damage00.wav');
+    const winSound = new Audio('../sounds/global/win.mp3');
     plDead.volume = 0.25;
     bulletSound.volume = 0.25;
     ennemyDmg.volume = 0.15;
@@ -1965,6 +1966,7 @@ function clearGame()
 
 function winScreen()
 {
+    playSound(winSound);
     winningScreen.classList.remove("invisible");
 }
 

@@ -122,6 +122,8 @@ function orientationLock() {
 
 window.addEventListener("pageshow", orientationLock);
 
+orientationLock();
+
 let isPaused = false;
 
 // selection des contextes des canvas
@@ -182,6 +184,9 @@ const sonTableaugreen = new Audio("../sounds/game3/tableau3.mp3");
 const sonTableauviolet = new Audio("../sounds/game3/tableau4.mp3");
 const sonDepot = new Audio("../sounds/game3/depot.mp3");
 const sonPas = new Audio("../sounds/game3/pas.mp3");
+const winSound = new Audio("../sounds/global/win.mp3");
+const WrongSon = new Audio("../sounds/game3/wrong.mp3");
+const rightSon = new Audio("../sounds/game3/right.mp3");
 
 // constantes pour appeler les images
 const backgroundImage = new Image();
@@ -366,9 +371,9 @@ function Timer() {
   if (isPaused) return;
   secondes++;
   para.innerHTML = secondes;
-  if (secondes == 1000) {
+  if (secondes == 300) {
     // arrête l'exécution lancée par setInterval()
-    window.clearTimeout(chrono);
+    quit();
   }
 }
 
@@ -435,6 +440,7 @@ function fonctionementTableau() {
           tableau1.push(inventory.shift());
           isPaused = true;
           // affichage si le tableau est bien placé
+          SoundPlay(rightSon);
           const goodElement = document.querySelector("#good");
           if (goodElement) {
             goodElement.classList.remove("invisible");
@@ -448,6 +454,7 @@ function fonctionementTableau() {
           depotTableau.push(inventory.shift());
           isPaused = true;
           // affichage si le tableau est mal placé
+          SoundPlay(WrongSon);
           const wrongElement = document.querySelector("#wrong");
           if (wrongElement) {
             wrongElement.classList.remove("invisible");
@@ -473,6 +480,7 @@ function fonctionementTableau() {
           tableau2.push(inventory.shift());
           isPaused = true;
           // affichage si le tableau est bien placé
+          SoundPlay(rightSon);
           const goodElement = document.querySelector("#good");
           if (goodElement) {
             goodElement.classList.remove("invisible");
@@ -486,6 +494,7 @@ function fonctionementTableau() {
           depotTableau.push(inventory.shift());
           isPaused = true;
           // affichage si le tableau est mal placé
+          SoundPlay(WrongSon);
           const wrongElement = document.querySelector("#wrong");
           if (wrongElement) {
             wrongElement.classList.remove("invisible");
@@ -512,6 +521,7 @@ function fonctionementTableau() {
           tableau3.push(inventory.shift());
           isPaused = true;
           // affichage si le tableau est bien placé
+          SoundPlay(rightSon);
           const goodElement = document.querySelector("#good");
           if (goodElement) {
             goodElement.classList.remove("invisible");
@@ -525,6 +535,7 @@ function fonctionementTableau() {
           depotTableau.push(inventory.shift());
           isPaused = true;
           // affichage si le tableau est mal placé
+          SoundPlay(WrongSon);
           const wrongElement = document.querySelector("#wrong");
           if (wrongElement) {
             wrongElement.classList.remove("invisible");
@@ -551,6 +562,7 @@ function fonctionementTableau() {
           tableau4.push(inventory.shift());
           isPaused = true;
           // affichage si le tableau est bien placé
+          SoundPlay(rightSon);
           const goodElement = document.querySelector("#good");
           if (goodElement) {
             goodElement.classList.remove("invisible");
@@ -564,6 +576,7 @@ function fonctionementTableau() {
           depotTableau.push(inventory.shift());
           isPaused = true;
           // affichage si le tableau est mal placé
+          SoundPlay(WrongSon);
           const wrongElement = document.querySelector("#wrong");
           if (wrongElement) {
             wrongElement.classList.remove("invisible");
@@ -721,6 +734,8 @@ function WinCondition() {
     if (!isGameOver) {
       isGameOver = true;
       isPaused = true;
+      // let scoreFinal = chrono;
+      SoundPlay(winSound);
       clearInterval(chrono);
       document.querySelector(".game").classList.add("invisible");
       document.querySelector(".winScreen").classList.remove("invisible");
