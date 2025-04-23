@@ -1997,11 +1997,26 @@ const animDiv = document.querySelector(".animTxt");
 let clickCount = 0;
 
 const story = [
-    "text 1",
-    "text 2",
-    "text 3",
-    "text 4",
-    "text 5",
+    {
+        character: "thief",
+        text: "text 1"
+    }
+    {
+        character: "you",
+        text: "text 2"
+    }
+    {
+        character: "thief",
+        text: "text 3"
+    }
+    {
+        character: "you",
+        text: "text 4"
+    }
+    {
+        character: "you",
+        text: "text 5"
+    }
 ];
 
 function animText(text) {

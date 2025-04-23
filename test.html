@@ -17,24 +17,48 @@
         .animTxt>span.visible {
             opacity: 1;
         }
+        .speaker {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="animTxt"></div>
+    <div class="dialogueBox">
+        <div class="speaker"></div>
+        <div class="animTxt">click</div>
+    </div>
 
     <script>
 // animation texte
+const storyDiv = document.querySelector(".dialogueBox");
 const animDiv = document.querySelector(".animTxt");
+const speakerDiv = document.querySelector(".speaker");
 
 let clickCount = 0;
 
 const story = [
-    "text 1",
-    "text 2",
-    "text 3",
-    "text 4",
-    "text 5",
+    {
+        character: "thief",
+        text: "text 1"
+    },
+    {
+        character: "you",
+        text: "text 2"
+    },
+    {
+        character: "",
+        text: "text 3"
+    },
+    {
+        character: "you",
+        text: "text 4"
+    },
+    {
+        character: "you",
+        text: "text 5"
+    }
 ];
 
 function animText(text) {
@@ -43,7 +67,6 @@ function animText(text) {
         output += `<span>${letter}</span>`;
     }
     animDiv.innerHTML = output;
-
     [...animDiv.children].forEach((span, index) => {
         setTimeout(() => {
             span.classList.add("visible");
@@ -51,11 +74,13 @@ function animText(text) {
     });
 }
 
-animDiv.addEventListener("click", () => {
+storyDiv.addEventListener("click", () => {
     if (clickCount < 5)
     {
-    animText(story[clickCount % story.length]);
-    clickCount++;
+        const dialogue = story[clickCount % story.length];
+        speakerDiv.innerHTML = dialogue.character;
+        animText(dialogue.text);
+        clickCount++;
     }
     else
     {
