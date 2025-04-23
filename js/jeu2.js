@@ -137,7 +137,7 @@ function startGame()
     // player
     const pSprite = new Image();
     pSprite.src = "../img/game2/sprite.png";
-    let pSpriteHitbox = 40/2;
+    let pSpriteHitbox = 35/2;
     let pSpritex = 0;
     let pSpritey = 0;
     let pSpriteSize = 105;
@@ -155,6 +155,12 @@ function startGame()
     let betaBackMove = 35;
 
     // ennemy
+    const eSprite = new Image();
+    eSprite.src = "../img/game2/enemy1.png";
+    let eSpriteHitbox = 35/2;
+    let eSpritex = 8;
+    let eSpritey = 18;
+    let eSpriteSize = 16;
     let eHitbox = 25/2;
     let ex = W/2 - eHitbox;
     let ey = 80;
@@ -253,7 +259,7 @@ function startGame()
     function afficher()
     {
         // redéfinition de la vitesse en pixels/sec sur les 10 premiere frames pour une vitesse constante
-        if (defineTime < 10) {
+        if (defineTime < 15) {
             tnow = performance.now();
             sec = (tnow - t0) / 1000;
             t0 = tnow;
@@ -293,14 +299,19 @@ function startGame()
     
         // affichage joueur
         play.drawImage(pSprite, pSpritex, pSpritey, pSpriteSize, pSpriteSize, (px - (pSpriteHitbox - pHitbox)), (py - (pSpriteHitbox - pHitbox)), pSpriteHitbox*2, pSpriteHitbox*2);
+
+        // affichage hitbox joueur
         play.fillStyle = "white";
         play.fillRect((px), (py), pHitbox*2, pHitbox*2);
 
         // mouvement ennemy
         ennemyMovement();
     
+        // affichage hitbox ennemy
+        // boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
+
         //affichage ennemy
-        boss.fillRect((ex), (ey), eHitbox*2, eHitbox*2);
+        boss.drawImage(eSprite, eSpritex, eSpritey, eSpriteSize, eSpriteSize, (ex - (eSpriteHitbox - eHitbox)), (ey - ((eSpriteHitbox/2) - eHitbox)), eSpriteHitbox*2, eSpriteHitbox*2);
     
         setTimeout(() => {
             if (ptimer == -1)
