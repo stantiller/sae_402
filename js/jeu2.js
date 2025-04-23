@@ -1979,12 +1979,21 @@ function startStory()
     storyScreen.classList.remove("invisible");
 
     animDiv.addEventListener("click", () => {
-        animText(texts[clickCount % texts.length]);
+        if (clickCount < 5)
+        {
+        animText(story[clickCount % story.length]);
         clickCount++;
+        }
+        else
+        {
+            document.body.style.background = "red";
+        }
     });
 }
 
 // animation texte
+const animDiv = document.querySelector(".animTxt");
+
 let clickCount = 0;
 
 const story = [
