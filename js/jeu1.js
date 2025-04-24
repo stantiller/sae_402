@@ -2,7 +2,6 @@ const canvas = document.getElementById('jeuCanvas');
 const ctx = canvas.getContext("2d");
 let animationId;
 
-let joueurNom = "";
 let jeuEnCours = false;
 
 // Le joueur
@@ -33,7 +32,7 @@ let bancTimer = 0;
 const bancInterval = 100;   // chaque 100 frames
 
 // Le chronomètre de la poursuite
-let poursuiteTime = 10;     // secondes
+let poursuiteTime = 30;     // secondes
 let poursuiteTimer = poursuiteTime * 60; // en frames (si 60 fps)
 
 // Contrôle du personnage en jeu
@@ -44,19 +43,12 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
+document.querySelector(".start").addEventListener("click", commencerJeu);
 // Fonction du commencement de la partie
 function commencerJeu() {
-    joueurNom = document.getElementById("nomJoueur").value.trim();
-    if (joueurNom === "") {
-        alert("Veuillez entrer votre nom !");
-        return;
-    }
+    document.querySelector("#start").classList.add("invisible");
+    document.querySelector(".game").classList.remove("invisible");
 
-    document.getElementById("nomJoueur").style.display = "none";
-    document.querySelector("button").style.display = "none";
-    document.getElementById("boutonRejouer").style.display = "none";
-    canvas.style.display = "block";
-    
     reinitialiserJeu();
     jeuEnCours = true;
     gameLoop();
@@ -75,25 +67,46 @@ function reinitialiserJeu() {
     bancTimer = 0;
     poursuiteTimer = poursuiteTime * 60;
 
-    document.getElementById("ecranFin").style.display = "none";
-
     jeuEnCours = true;
     gameLoop();
 }
 
 // Fonction du fin de la partie
-function finDuJeu(message) {
+function finDuJeu() {
     jeuEnCours = false;
     cancelAnimationFrame(animationId);
 
-    const ecranFin = document.getElementById("ecranFin");
-    const messageFin = document.getElementById("messageFin");
-
-    messageFin.textContent = message;
-    ecranFin.style.display = "flex";
+    document.querySelector(".winScreen").classList.remove("invisible");
+    document.querySelector(".game").classList.add("invisible");
     
-    document.getElementById("boutonRejouer").style.display = "none";
 }
+function mort(){
+    jeuEnCours = false;
+    cancelAnimationFrame(animationId);
+    document.querySelector(".loseScreen").classList.remove("invisible");
+    document.querySelector(".game").classList.add("invisible");
+}
+
+document.querySelector(".restart").addEventListener("click", restart);
+function restart(){
+    document.querySelector(".loseScreen").classList.add("invisible");
+    document.querySelector(".game").classList.remove("invisible");
+
+    reinitialiserJeu();
+    jeuEnCours = true;
+    gameLoop();
+}
+
+document.querySelector(".again").addEventListener("click", again);
+function again(){
+    document.querySelector(".winScreen").classList.add("invisible");
+    document.querySelector(".game").classList.remove("invisible");
+
+    reinitialiserJeu();
+    jeuEnCours = true;
+    gameLoop();
+  }
+
 
 function update() {
     // Le mouvement du jouer vers le haut
@@ -151,7 +164,7 @@ function update() {
                 joueur.x + joueur.width > banc.x &&
                 joueur.y < banc.y + banc.height &&
                 joueur.y + joueur.height > banc.y) {
-                    finDuJeu('Vous avez heurté un banc !');
+                    mort();
                 }
         });
     }
@@ -160,7 +173,7 @@ function update() {
     if (poursuiteTimer > 0) {
         poursuiteTimer--;
     } else {
-        finDuJeu('Vous avez poursuivi le voleur avec succès ! Victoire !');
+        finDuJeu();
     }
 }
 
