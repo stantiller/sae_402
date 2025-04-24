@@ -187,6 +187,7 @@ const sonPas = new Audio("../sounds/game3/pas.mp3");
 const winSound = new Audio("../sounds/global/win.mp3");
 const WrongSon = new Audio("../sounds/game3/wrong.mp3");
 const rightSon = new Audio("../sounds/game3/right.mp3");
+const sonTableau = new Audio("../sounds/game3/artpiece.mp3");
 
 // constantes pour appeler les images
 const backgroundImage = new Image();
@@ -412,6 +413,8 @@ function fonctionementTableau() {
         inventory.push(CouleurTableau);
         isPaused = true;
 
+        // affichage si le tableau est bien placé
+        SoundPlay(sonTableau);
         const afficherTableau = document.querySelector(
           `.tableau${CouleurTableau}`
         );
@@ -744,6 +747,53 @@ function WinCondition() {
 }
 
 document.querySelector(".quitter").addEventListener("click", quit);
+document.querySelector(".restart").addEventListener("click", restart);
+
+function restart() {
+  isGameOver = false;
+  isPaused = false;
+  clearInterval(chrono);
+  secondes = 0;
+  para.innerHTML = secondes;
+
+  // Réinitialise les tableaux et l'inventaire
+  depotTableau = ["blue", "red", "green", "violet"];
+  tableau1 = [];
+  tableau2 = [];
+  tableau3 = [];
+  tableau4 = [];
+  inventory = [];
+
+  // variable pour la vitesse qui se met corrzectement en fonction des hz
+  time0 = performance.now();
+  timeNow = 0;
+  sec = 0;
+  timeDefinition = 0;
+  playerSpeedx = 0;
+  playerSpeedy = 0;
+
+  // Réinitialise la position et l'état du joueur
+  infoPlayer = { x: taille / 2, y: hauteur / 2, angle: 0 };
+  deplacementX = 0;
+  deplacementY = 0;
+
+  // Réinitialise les sons
+  sonDepot.isPlaying = false;
+  sonTableaublue.isPlaying = false;
+  sonTableaured.isPlaying = false;
+  sonTableaugreen.isPlaying = false;
+  sonTableauviolet.isPlaying = false;
+
+  // Réinitialise les éléments visuels
+  document.querySelector("#start").classList.remove("invisible");
+  document.querySelector(".winScreen").classList.add("invisible");
+
+  // Réinitialise les canvas
+  ctxColission.clearRect(0, 0, taille, hauteur);
+  ctxBackground.clearRect(0, 0, taille, hauteur);
+  ctxPlayer.clearRect(0, 0, taille, hauteur);
+  ctxTableau.clearRect(0, 0, taille, hauteur);
+}
 
 function quit() {
   isGameOver = false;

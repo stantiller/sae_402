@@ -1,23 +1,105 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/style.css">
-    <title>Escape Game 5.4</title>
+    <style>
+        body {
+        margin: 0px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .image-fond {
+        background-image: url("../img/siteImg/fondbanc.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .start {
+        background: linear-gradient(to bottom, #ffffff, #d9d9d9);
+        margin-top: 4px;
+        color: black;
+        font-size: 30px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        width: fit-content;
+        margin: auto;
+        box-shadow: 0 4px #b3b3b3;
+        border: 1px solid #b3b3b3;
+      }
+
+      .start:hover {
+        background: linear-gradient(to bottom, #e6e6e6, #cccccc);
+        box-shadow: 0 2px #999999;
+      }
+
+      .flex {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+      }
+
+      .texte {
+        color: white;
+        font-size: 23px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: auto;
+        background-color: rgb(145, 73, 40);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        z-index: 5000;
+      }
+
+      .texte > p {
+        font-size: 17px;
+        color: rgb(231, 231, 231);
+      }
+
+      .invisible {
+        display: none;
+        pointer-events: none;
+      }
+      
+      #map {
+        height: 100vh;
+        width: 100vw;
+      }
+    </style>
+    <link rel="preload" href="../styles/styleJeu1.css" as="style" />
+    <link rel="stylesheet" href="../styles/stylejeu1.css">
+    <title>Jeu 1</title>
 </head>
 <body>
-    <h1>Suivez les voleurs !</h1>
-    <input type="text" id="nomJoueur" placeholder="Entrez votre nom">
-    <button onclick="commencerJeu()">Commencer</button>
-    <div>
-        <canvas id="jeuCanvas" width="400" height="600" style="display: none;"></canvas>
-        <button id="boutonRejouer" style="display: none;" onclick="reinitialiserJeu()">Rejouer</button>
+    <div class="flex image-fond" id="start">
+      <div class="texte">
+        <h3>Game N°1</h3>
+        <p>Catch the thieves !</p>
+        <div class="start">Start</div>
+      </div>
     </div>
-    <div id="ecranFin" style="display: none;">
-        <div id="messageFin"></div>
-        <button onclick="reinitialiserJeu()">Rejouer</button>
+    <div class="flex image-fond loseScreen invisible">
+        <div class="texte">
+          <h3>You lost...</h3>
+          <div class="start restart">Restart</div>
+        </div>
     </div>
+    <div class="flex image-fond winScreen invisible">
+        <div class="texte">
+          <h3>You won !</h3>
+          <div class="start again">Start again</div>
+        </div>
+      </div>
+    <div class="game invisible">
+        <canvas id="jeuCanvas" width="400" height="600"></canvas>
+    </div>
+
     <script src="../js/jeu1.js" defer></script>
 </body>
 </html>
