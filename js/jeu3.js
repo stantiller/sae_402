@@ -867,11 +867,11 @@ function startStory()
             speakerDiv.innerHTML = dialogue.character;
 
             if (dialogue.character == "You")
-              imgSpeaker.innerHTML = "<img src='img/siteImg/player.png'>";
+              imgSpeaker.innerHTML = "<img src='../img/siteImg/player.png'>";
             else if (dialogue.character == "Thief")
-              imgSpeaker.innerHTML = "<img src='img/siteImg/thief.png'>";
+              imgSpeaker.innerHTML = "<img src='../img/siteImg/thief.png'>";
             else if (dialogue.character == "Museum staff")
-              imgSpeaker.innerHTML = "<img src='img/siteImg/staff.png'>";
+              imgSpeaker.innerHTML = "<img src='../img/siteImg/staff.png'>";
             else 
               imgSpeaker.innerHTML = "";
 
