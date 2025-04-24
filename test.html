@@ -40,26 +40,9 @@ const imgSpeaker = document.querySelector(".imgSpeaker");
 let clickCount = 0;
 
 const story = [
-    {
-        character: "thief",
-        text: "text 1"
-    },
-    {
-        character: "you",
-        text: "text 2"
-    },
-    {
-        character: "",
-        text: "text 3"
-    },
-    {
-        character: "you",
-        text: "text 4"
-    },
-    {
-        character: "you",
-        text: "text 5"
-    }
+
+// recupérer la bonne histoire en bas du code
+
 ];
 
 function animText(text) {
@@ -96,3 +79,65 @@ storyDiv.addEventListener("click", () => {
     </script>
 </body>
 </html>
+
+<script>
+// before games
+const story = [
+    {
+        character: "",
+        text: "It was a nice friday afternoon and you were walking near the musée des beaux arts."
+    },
+    {
+        character: "",
+        text: "But suddenly you see a group of suspicious looking people rush out of the museum with a bunch of paintings."
+    },
+    {
+        character: "",
+        text: "You decide that you should probably chase them before they escape and leave with the paintings."
+    },
+    {
+        character: "You",
+        text: "I need to go over the bench if I want to catch up to them !"
+    }
+];
+
+// game 1
+const story = [
+    {
+        character: "You",
+        text: "Get back here ! I won't let you steal those paintings !"
+    },
+    {
+        character: "Thief",
+        text: "And how are you planning to stop us ?"
+    },
+    {
+        character: "You",
+        text: "I challenge you to a duel !"
+    },
+    {
+        character: "",
+        text: "the thieves look amused and one of them confidently accepts the challenge"
+    }
+];
+
+// game 3
+const story = [
+    {
+        character: "Museum staff",
+        text: "Thank you again for stopping the thieves and bringing back the paintings, we are really grateful for your help !"
+    },
+    {
+        character: "You",
+        text: "No worries I'm happy to have helped the museum !"
+    },
+    {
+        character: "Museum staff",
+        text: "We would like to reward you for your actions please accept it."
+    },
+    {
+        character: "",
+        text: "The museum staff hands you" // a finir
+    }
+];
+</script>

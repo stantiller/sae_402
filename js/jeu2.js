@@ -1982,7 +1982,9 @@ function clearGame()
 
 function winScreen()
 {
-    playSound(winSound);
+    winSound.pause();
+    winSound.load();
+    winSound.play();
     winningScreen.classList.remove("invisible");
 }
 
@@ -2020,24 +2022,40 @@ let clickCount = 0;
 
 const story = [
     {
-        character: "thief",
-        text: "text 1"
+        character: "",
+        text: "You easily defeat the thief in the duel."
     },
     {
-        character: "you",
-        text: "text 2"
+        character: "You",
+        text: "Give back the paintings you stole right now !"
+    },
+    {
+        character: "Thief",
+        text: "Fine you win take your paintings and let us go now."
     },
     {
         character: "",
-        text: "text 3"
+        text: "You take the paintings back from the thieves and watch them run away."
     },
     {
-        character: "you",
-        text: "text 4"
+        character: "You",
+        text: "I should go back to the museum to give these paintings back to them right now."
     },
     {
-        character: "you",
-        text: "text 5"
+        character: "",
+        text: "You quickly head back to the museum and talk to the staff."
+    },
+    {
+        character: "Museum staff",
+        text: "Thank you so much for bringing back the paintings !"
+    },
+    {
+        character: "You",
+        text: "No problem I can help you put them back to their place too if you don't mind"
+    },
+    {
+        character: "Museum staff",
+        text: "Sure we wouldn't mind a bit of help !"
     }
 ];
 
