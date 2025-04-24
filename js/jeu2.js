@@ -13,6 +13,7 @@ const winningScreen = document.querySelector(".winScreen");
 const losingScreen = document.querySelector(".loseScreen");
 const storyScreen = document.querySelector(".storyScreen");
 const affichageMap = document.querySelector(".mapContain");
+const quitButton = document.querySelector(".quitter");
 showScore.height = 400;
 showScore.width = W;
 background.height = H;
@@ -181,6 +182,7 @@ function startGame()
     ennemy.classList.remove("invisible");
     bullets.classList.remove("invisible");
     player.classList.remove("invisible");
+    quitButton.classList.remove("invisible");
     startScreen.classList.add("invisible");
     losingScreen.classList.add("invisible");
     winningScreen.classList.add("invisible");
@@ -198,6 +200,7 @@ function startGame()
     // fin du jeu gagne ou non
     let fin = false;
     let win = false;
+    let quit = false;
 
     // player
     let moveRight = false;
@@ -354,6 +357,8 @@ function startGame()
             clearGame();
             if (win == true)
                 winScreen();
+            else if (quit == true)
+                gameQuit();
             else
                 loseScreen();
         }
@@ -362,6 +367,8 @@ function startGame()
     }
     window.addEventListener("deviceorientation", playerControl, true);
     afficher();
+
+    quitButton.addEventListener("click", quitGame);
 
     // timer
     function countDownTimer()
@@ -527,6 +534,7 @@ function startGame()
 
         fin = true;
         win = false;
+        quit = false;
     }
     function gameWon()
     {
@@ -534,6 +542,17 @@ function startGame()
 
         fin = true;
         win = true;
+        quit = false;
+    }
+    function quitGame()
+    {
+        gainNode.gain.value = 0;
+
+        clearInterval(countDown);
+
+        fin = true;
+        win = false;
+        quit = true;
     }
 
     // tir du joueur
@@ -1968,7 +1987,7 @@ document.querySelectorAll(".start").forEach(e => {
     e.addEventListener("click", startGame);
 });
 
-document.querySelector(".toStory").addEventListener("click", startStory)
+document.querySelector(".toStory").addEventListener("click", startStory);
 
 
 function clearGame()
@@ -1978,6 +1997,7 @@ function clearGame()
     ennemy.classList.add("invisible");
     bullets.classList.add("invisible");
     player.classList.add("invisible");
+    quitButton.classList.add("invisible");
 }
 
 function winScreen()
@@ -1986,6 +2006,11 @@ function winScreen()
     winSound.load();
     winSound.play();
     winningScreen.classList.remove("invisible");
+}
+
+function gameQuit()
+{
+    startScreen.classList.remove("invisible");
 }
 
 function loseScreen()

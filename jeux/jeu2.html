@@ -17,7 +17,7 @@
         background-position: center;
       }
 
-      .start {
+      .start, .quitter {
         background: linear-gradient(to bottom, #ffffff, #d9d9d9);
         margin-top: 4px;
         color: black;
@@ -33,7 +33,7 @@
         border: 1px solid #b3b3b3;
       }
 
-      .start:hover {
+      .start:hover, .quitter:hover {
         background: linear-gradient(to bottom, #e6e6e6, #cccccc);
         box-shadow: 0 2px #999999;
       }
@@ -136,6 +136,8 @@
     <canvas id="bulletZone" class="invisible"></canvas>
 
     <canvas id="playerZone" class="invisible"></canvas>
+
+    <div class="quitter buttonFermer invisible">Quit</div>
 
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
