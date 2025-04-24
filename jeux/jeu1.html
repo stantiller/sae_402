@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-        body {
+      body {
         margin: 0px;
         font-family: Arial, Helvetica, sans-serif;
       }
@@ -66,22 +66,21 @@
         display: none;
         pointer-events: none;
       }
-      
+
       #map {
         height: 100vh;
         width: 100vw;
       }
     </style>
     <link rel="preload" href="../styles/styleJeu1.css" as="style" />
-    <link rel="stylesheet" href="../styles/stylejeu1.css">
+    <link rel="stylesheet" href="../styles/stylejeu1.css" />
     <title>Jeu 1</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="flex image-fond" id="start">
       <div class="texte">
-
         <div class="cheatCode">
-          <input type="text" class="cheat" value="" placeholder="Code ?">
+          <input type="text" class="cheat" value="" placeholder="Code ?" />
           <button class="code">Try code</button>
         </div>
 
@@ -91,29 +90,33 @@
       </div>
     </div>
     <div class="flex image-fond loseScreen invisible">
-        <div class="texte">
-          <h3>You lost...</h3>
-          <div class="start restart">Restart</div>
-        </div>
+      <div class="texte">
+        <h3>You lost...</h3>
+        <div class="start restart">Restart</div>
+      </div>
     </div>
     <div class="flex image-fond winScreen invisible">
-        <div class="texte">
-          <h3>You won !</h3>
-          <div class="start toStory">Go to story</div>
-        </div>
+      <div class="texte">
+        <h3>You won !</h3>
+        <div class="start toStory">Go to story</div>
       </div>
+    </div>
     <div class="game invisible">
-        <canvas id="jeuCanvas" width="400" height="600"></canvas>
+      <canvas id="jeuCanvas" width="400" height="600"></canvas>
     </div>
 
-    <div class="storyScreen invisible">
-      <div class="dialogueBox">
-        <div class="imgSpeaker"></div>
-        <div class="speaker"></div>
-        <div class="animTxt">Click to start</div>
+    <div class="image-dialogue storyScreen invisible dialogueBox">
+      <div class="grande-boite">
+        <div class="perso">
+          <div class="boite speaker"></div>
+          <div class="image-perso">
+            <img src="../img/siteImg/player.png" alt="image du joueur" />
+          </div>
+        </div>
+        <div class="dialogue animTxt">CLICK</div>
       </div>
     </div>
 
     <script src="../js/jeu1.js" defer></script>
-</body>
+  </body>
 </html>

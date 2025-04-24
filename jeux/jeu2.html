@@ -17,7 +17,7 @@
         background-position: center;
       }
 
-      .start, .quitter {
+      .toStory {
         background: linear-gradient(to bottom, #ffffff, #d9d9d9);
         margin-top: 4px;
         color: black;
@@ -33,7 +33,30 @@
         border: 1px solid #b3b3b3;
       }
 
-      .start:hover, .quitter:hover {
+      .toStory:hover {
+        background: linear-gradient(to bottom, #e6e6e6, #cccccc);
+        box-shadow: 0 2px #999999;
+      }
+
+      .start,
+      .quitter {
+        background: linear-gradient(to bottom, #ffffff, #d9d9d9);
+        margin-top: 4px;
+        color: black;
+        font-size: 30px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        width: fit-content;
+        margin: auto;
+        box-shadow: 0 4px #b3b3b3;
+        border: 1px solid #b3b3b3;
+      }
+
+      .start:hover,
+      .quitter:hover {
         background: linear-gradient(to bottom, #e6e6e6, #cccccc);
         box-shadow: 0 2px #999999;
       }
@@ -69,7 +92,7 @@
         display: none;
         pointer-events: none;
       }
-      
+
       #map {
         height: 100vh;
         width: 100vw;
@@ -100,10 +123,10 @@
     <div class="flex image-fond startBackground">
       <div class="texte">
         <div class="cheatCode">
-          <input type="text" class="cheat" value="" placeholder="Code ?">
+          <input type="text" class="cheat" value="" placeholder="Code ?" />
           <button class="code">Try code</button>
         </div>
-        
+
         <h3>Game N°2</h3>
         <p>Dodge projectiles and shoot the thief.</p>
         <div class="start">Start</div>
@@ -118,20 +141,11 @@
     </div>
 
     <div class="flex image-fond loseScreen invisible">
-        <div class="texte">
-          <h3>You lost...</h3>
-          <div class="start">Restart</div>
-        </div>
-    </div>
-
-    <div class="storyScreen invisible">
-      <div class="dialogueBox">
-        <div class="imgSpeaker"></div>
-        <div class="speaker"></div>
-        <div class="animTxt">Click to start</div>
+      <div class="texte">
+        <h3>You lost...</h3>
+        <div class="start">Restart</div>
       </div>
     </div>
-
 
     <canvas id="score" class="invisible"></canvas>
 
@@ -145,6 +159,17 @@
 
     <div class="quitter buttonFermer invisible">Quit</div>
 
+    <div class="image-dialogue storyScreen invisible dialogueBox">
+      <div class="grande-boite">
+        <div class="perso">
+          <div class="boite speaker"></div>
+          <div class="image-perso">
+            <img src="../img/siteImg/player.png" alt="image du joueur" />
+          </div>
+        </div>
+        <div class="dialogue animTxt">CLICK</div>
+      </div>
+    </div>
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="

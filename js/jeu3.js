@@ -25,6 +25,7 @@ tableau.height = hauteur;
 
 // Indique si le jeu est terminé
 let isGameOver = false;
+let isGameActive = false;
 
 // vérification de la position
 var id, target, options;
@@ -103,6 +104,7 @@ function startGame() {
     orientationLock();
     afficher();
     chrono = window.setInterval(Timer, 1000);
+    isGameActive = true;
   });
 }
 
@@ -134,6 +136,7 @@ let ctxPlayer = player.getContext("2d");
 let ctxTableau = tableau.getContext("2d");
 
 // variable pour le chrono
+let chrono = 0;
 let secondes = 0;
 let para = document.getElementById("timer");
 
@@ -380,7 +383,7 @@ function Timer() {
 
 // fonction pour le controleur de mouvement pour le joueur
 function playerControl(event) {
-  if (isPaused) return;
+  if (isPaused || !isGameActive) return;
   posiX = event.pageX || event.changedTouches[0].pageX;
   posiY = event.pageY || event.changedTouches[0].pageY;
 
@@ -747,7 +750,7 @@ function WinCondition() {
 }
 
 document.querySelector(".quitter").addEventListener("click", quit);
-// document.querySelector(".restart").addEventListener("click", restart);
+document.querySelector(".restart").addEventListener("click", restart);
 
 function restart() {
   isGameOver = false;
@@ -793,6 +796,8 @@ function restart() {
   ctxBackground.clearRect(0, 0, taille, hauteur);
   ctxPlayer.clearRect(0, 0, taille, hauteur);
   ctxTableau.clearRect(0, 0, taille, hauteur);
+
+  isGameActive = false;
 }
 
 function quit() {
@@ -841,6 +846,8 @@ function quit() {
   ctxPlayer.clearRect(0, 0, taille, hauteur);
   ctxTableau.clearRect(0, 0, taille, hauteur);
   ctxLumiere.clearRect(0, 0, taille, hauteur);
+
+  isGameActive = false;
 }
 
 

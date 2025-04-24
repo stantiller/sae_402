@@ -18,7 +18,7 @@
       }
 
       .start {
-        background: linear-gradient(to bottom, #ffffff, #d9d9d9); 
+        background: linear-gradient(to bottom, #ffffff, #d9d9d9);
         margin-top: 4px;
         color: black;
         font-size: 30px;
@@ -100,12 +100,12 @@
       }
 
       canvas {
-        display: block; 
+        display: block;
         position: absolute;
         top: 0;
         left: 0;
-        width: 100vw; 
-        height: 100vh; 
+        width: 100vw;
+        height: 100vh;
       }
 
       #noir {
@@ -139,9 +139,8 @@
     <!-- div pour le début du jeu -->
     <div class="flex image-fond" id="start">
       <div class="texte">
-
         <div class="cheatCode">
-          <input type="text" class="cheat" value="" placeholder="Code ?">
+          <input type="text" class="cheat" value="" placeholder="Code ?" />
           <button class="code">Try code</button>
         </div>
 
@@ -164,34 +163,22 @@
     <!-- div pour chaque tableau -->
     <div class="tableaublue tableauCommun">
       <div>
-        <img
-          src="../img/game3/tableau1.jpg"
-          alt="image du 1ere tableau"
-        />
+        <img src="../img/game3/tableau1.jpg" alt="image du 1ere tableau" />
       </div>
     </div>
     <div class="tableaured tableauCommun">
       <div>
-        <img
-          src="../img/game3/tableau2.jpg"
-          alt="image du 2eme tableau"
-        />
+        <img src="../img/game3/tableau2.jpg" alt="image du 2eme tableau" />
       </div>
     </div>
     <div class="tableaugreen tableauCommun">
       <div>
-        <img
-          src="../img/game3/tableau3.jpg"
-          alt="image du 3eme tableau"
-        />
+        <img src="../img/game3/tableau3.jpg" alt="image du 3eme tableau" />
       </div>
     </div>
     <div class="tableauviolet tableauCommun">
       <div>
-        <img
-          src="../img/game3/tableau4.jpg"
-          alt="image du 4eme tableau"
-        />
+        <img src="../img/game3/tableau4.jpg" alt="image du 4eme tableau" />
       </div>
     </div>
 
@@ -207,20 +194,23 @@
       <div class="start quitter buttonFermer">Quit</div>
     </div>
 
-
-    <div class="storyScreen invisible">
-      <div class="dialogueBox">
-        <div class="imgSpeaker"></div>
-        <div class="speaker"></div>
-        <div class="animTxt">Click to start</div>
+    <div class="image-dialogue storyScreen invisible dialogueBox">
+      <div class="grande-boite">
+        <div class="perso">
+          <div class="boite speaker"></div>
+          <div class="image-perso">
+            <img src="../img/siteImg/player.png" alt="image du joueur" />
+          </div>
+        </div>
+        <div class="dialogue animTxt">CLICK</div>
       </div>
     </div>
-
 
     <div class="flex image-fond winScreen invisible" id="start2">
       <div class="texte">
         <h3>You won !</h3>
         <div class="start toStory">Go to story</div>
+        <div class="start restart">Restart</div>
       </div>
     </div>
     <script

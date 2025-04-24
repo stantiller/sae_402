@@ -105,7 +105,7 @@ function again(){
     reinitialiserJeu();
     jeuEnCours = true;
     gameLoop();
-  }
+  } 
 
 
 function update() {
@@ -264,7 +264,6 @@ const story = [
         text: "the thieves look amused and one of them confidently accepts the challenge"
     }
 ];
-
 function animText(text) {
     let output = "";
     for (const letter of text) {
