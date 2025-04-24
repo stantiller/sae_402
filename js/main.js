@@ -34,7 +34,7 @@ function startStory()
         }
         else
         {
-            window.location.href = "../jeux/jeu1.html";
+            window.location.href = "jeux/jeu1.html";
         }
     });
 }
