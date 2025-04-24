@@ -241,7 +241,7 @@ function startStory()
         }
         else
         {
-            document.querySelector(".storyScreen").classList.remove("invisible");
+            document.querySelector("#continuer").classList.remove("invisible");
             
         }
     });
