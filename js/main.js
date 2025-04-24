@@ -34,7 +34,7 @@ function startStory()
         }
         else
         {
-            document.body.style.background = "red";
+            window.location.href = "../jeux/jeu1.html";
         }
     });
 }
