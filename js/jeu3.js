@@ -842,3 +842,67 @@ function quit() {
   ctxTableau.clearRect(0, 0, taille, hauteur);
   ctxLumiere.clearRect(0, 0, taille, hauteur);
 }
+
+
+// histoire
+const storyScreen = document.querySelector(".storyScreen");
+const storyDiv = document.querySelector(".dialogueBox");
+const animDiv = document.querySelector(".animTxt");
+const speakerDiv = document.querySelector(".speaker");
+
+document.querySelector(".toStory").addEventListener("click", startStory);
+
+let clickCount = 0;
+
+function startStory()
+{
+    document.querySelector(".winScreen").classList.add("invisible");
+    storyScreen.classList.remove("invisible");
+
+    storyDiv.addEventListener("click", () => {
+        if (clickCount < story.length)
+        {
+            const dialogue = story[clickCount % story.length];
+            speakerDiv.innerHTML = dialogue.character;
+            animText(dialogue.text);
+            clickCount++;
+        }
+        else
+        {
+            document.body.style.background = "red";
+        }
+    });
+}
+
+const story = [
+  {
+      character: "Museum staff",
+      text: "Thank you again for stopping the thieves and bringing back the paintings, we are really grateful for your help !"
+  },
+  {
+      character: "You",
+      text: "No worries I'm happy to have helped the museum !"
+  },
+  {
+      character: "Museum staff",
+      text: "We would like to reward you for your actions please accept it."
+  },
+  {
+      character: "",
+      text: "The museum staff hands you a notebook and a pencil (average school rewards be like :)" 
+      // a finir et mettre un reward normal (a part si on veux garder ma blague (elle est drole (trust me (it's funny))))
+  }
+];
+
+function animText(text) {
+    let output = "";
+    for (const letter of text) {
+        output += `<span>${letter}</span>`;
+    }
+    animDiv.innerHTML = output;
+    [...animDiv.children].forEach((span, index) => {
+        setTimeout(() => {
+            span.classList.add("visible");
+        }, 50 * index);
+    });
+}

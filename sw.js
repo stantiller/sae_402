@@ -12,23 +12,55 @@ self.addEventListener("install", function(event) {
         return cache.addAll([
           '/',
           'index.html',
+		  'jeux/jeu1.html',
 		  'jeux/jeu2.html',
 		  'jeux/jeu3.html',
           'manifest.json',
+
 		  'js/main.js',
+		  'js/jeu1.js',
 		  'js/jeu2.js',
 		  'js/jeu3.js',
+
 		  'styles/style.css',
+		  'styles/styleJeu1.css',
 		  'styles/styleJeu2.css',
+		  'styles/styleJeu3.css',
+
+		  'img/game2/24968.jpg',
 		  'img/game2/bullet_sprite_sheet.png',
-		  'img/sprite.png',
+		  'img/game2/enemy1.png',
+		  'img/game2/sprite.png',
+
 		  'img/game3/spirte/sprite.png',
 		  'img/game3/background.jpg',
 		  'img/game3/collision.jpg',
+		  'img/game3/tableau1.jpg',
+		  'img/game3/tableau2.jpg',
+		  'img/game3/tableau3.jpg',
+		  'img/game3/tableau4.jpg',
 		  'img/game3/tableaux.png',
+
+		  'img/siteImg/fondaccueil.jpg',
+		  'img/siteImg/fondbanc.jpg',
+		  'img/siteImg/fondmussée.jpg',
+		  'img/siteImg/fondportail.jpg',
+		  'img/siteImg/player.jpg',
+
 		  'sounds/game2/damage00.wav',
-		  'sounds/pldead00.wav',
-		  'sounds/game2/tan02.wav'
+		  'sounds/game2/pldead00.wav',
+		  'sounds/game2/tan02.wav',
+
+		  'sounds/game3/artpiece.mp3',
+		  'sounds/game3/colission.mp3',
+		  'sounds/game3/depot.mp3',
+		  'sounds/game3/pas.mp3',
+		  'sounds/game3/right.mp3',
+		  'sounds/game3/tableau1.mp3',
+		  'sounds/game3/tableau2.mp3',
+		  'sounds/game3/tableau3.mp3',
+		  'sounds/game3/tableau4.mp3',
+		  'sounds/game3/wrong.mp3'
         ]);
       })
 	);

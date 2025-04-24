@@ -2018,6 +2018,13 @@ function loseScreen()
     losingScreen.classList.remove("invisible");
 }
 
+// histoire
+const storyDiv = document.querySelector(".dialogueBox");
+const animDiv = document.querySelector(".animTxt");
+const speakerDiv = document.querySelector(".speaker");
+
+let clickCount = 0;
+
 function startStory()
 {
     winningScreen.classList.add("invisible");
@@ -2037,13 +2044,6 @@ function startStory()
         }
     });
 }
-
-// animation texte
-const storyDiv = document.querySelector(".dialogueBox");
-const animDiv = document.querySelector(".animTxt");
-const speakerDiv = document.querySelector(".speaker");
-
-let clickCount = 0;
 
 const story = [
     {
@@ -2076,7 +2076,7 @@ const story = [
     },
     {
         character: "You",
-        text: "No problem I can help you put them back to their place too if you don't mind"
+        text: "No problem I can help you put them back to their place too if you don't mind."
     },
     {
         character: "Museum staff",
