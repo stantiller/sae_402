@@ -14,6 +14,8 @@ const losingScreen = document.querySelector(".loseScreen");
 const storyScreen = document.querySelector(".storyScreen");
 const affichageMap = document.querySelector(".mapContain");
 const quitButton = document.querySelector(".quitter");
+const cheat = document.querySelector(".cheat");
+const cheatButton = document.querySelector(".code");
 showScore.height = 400;
 showScore.width = W;
 background.height = H;
@@ -2006,6 +2008,7 @@ function winScreen()
     winSound.load();
     winSound.play();
     winningScreen.classList.remove("invisible");
+    startScreen.classList.add("invisible");
 }
 
 function gameQuit()
@@ -2095,4 +2098,13 @@ function animText(text) {
             span.classList.add("visible");
         }, 50 * index);
     });
+}
+
+// cheat code
+cheatButton.addEventListener("click", cheatCode);
+
+function cheatCode()
+{
+    if (cheat.value == "mmi")
+        winScreen();
 }

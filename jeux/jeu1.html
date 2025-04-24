@@ -79,6 +79,12 @@
 <body>
     <div class="flex image-fond" id="start">
       <div class="texte">
+
+        <div class="cheatCode">
+          <input type="text" class="cheat" value="" placeholder="Code ?">
+          <button class="code">Try code</button>
+        </div>
+
         <h3>Game N°1</h3>
         <p>Catch the thieves !</p>
         <div class="start">Start</div>
@@ -93,11 +99,18 @@
     <div class="flex image-fond winScreen invisible">
         <div class="texte">
           <h3>You won !</h3>
-          <div class="start again">Start again</div>
+          <div class="start toStory">Go to story</div>
         </div>
       </div>
     <div class="game invisible">
         <canvas id="jeuCanvas" width="400" height="600"></canvas>
+    </div>
+
+    <div class="storyScreen invisible">
+      <div class="dialogueBox">
+        <div class="speaker"></div>
+        <div class="animTxt">click</div>
+      </div>
     </div>
 
     <script src="../js/jeu1.js" defer></script>

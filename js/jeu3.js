@@ -747,7 +747,7 @@ function WinCondition() {
 }
 
 document.querySelector(".quitter").addEventListener("click", quit);
-document.querySelector(".restart").addEventListener("click", restart);
+// document.querySelector(".restart").addEventListener("click", restart);
 
 function restart() {
   isGameOver = false;
@@ -889,7 +889,7 @@ const story = [
   },
   {
       character: "",
-      text: "The museum staff hands you a notebook and a pencil (average school rewards be like :)" 
+      text: "The museum staff hands you a notebook and a pencil (average school rewards be like)" 
       // a finir et mettre un reward normal (a part si on veux garder ma blague (elle est drole (trust me (it's funny))))
   }
 ];
@@ -905,4 +905,22 @@ function animText(text) {
             span.classList.add("visible");
         }, 50 * index);
     });
+}
+
+// cheat code
+const cheat = document.querySelector(".cheat");
+const cheatButton = document.querySelector(".code");
+
+cheatButton.addEventListener("click", cheatCode);
+
+function cheatCode()
+{
+    if (cheat.value == "mmi")
+    {
+      winSound.pause();
+      winSound.load();
+      winSound.play();
+      document.querySelector("#start").classList.add("invisible");
+      document.querySelector(".winScreen").classList.remove("invisible");
+    }
 }

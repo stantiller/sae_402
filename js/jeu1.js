@@ -97,7 +97,7 @@ function restart(){
     gameLoop();
 }
 
-document.querySelector(".again").addEventListener("click", again);
+// document.querySelector(".again").addEventListener("click", again);
 function again(){
     document.querySelector(".winScreen").classList.add("invisible");
     document.querySelector(".game").classList.remove("invisible");
@@ -205,4 +205,81 @@ function gameLoop() {
     update();
     draw();
     animationId = requestAnimationFrame(gameLoop);
+}
+
+// histoire
+const storyScreen = document.querySelector(".storyScreen");
+const storyDiv = document.querySelector(".dialogueBox");
+const animDiv = document.querySelector(".animTxt");
+const speakerDiv = document.querySelector(".speaker");
+
+document.querySelector(".toStory").addEventListener("click", startStory);
+
+let clickCount = 0;
+
+function startStory()
+{
+    document.querySelector(".winScreen").classList.add("invisible");
+    storyScreen.classList.remove("invisible");
+
+    storyDiv.addEventListener("click", () => {
+        if (clickCount < story.length)
+        {
+            const dialogue = story[clickCount % story.length];
+            speakerDiv.innerHTML = dialogue.character;
+            animText(dialogue.text);
+            clickCount++;
+        }
+        else
+        {
+            document.body.style.background = "red";
+        }
+    });
+}
+
+const story = [
+    {
+        character: "You",
+        text: "Get back here ! I won't let you steal those paintings !"
+    },
+    {
+        character: "Thief",
+        text: "And how are you planning to stop us ?"
+    },
+    {
+        character: "You",
+        text: "I challenge you to a duel !"
+    },
+    {
+        character: "",
+        text: "the thieves look amused and one of them confidently accepts the challenge"
+    }
+];
+
+function animText(text) {
+    let output = "";
+    for (const letter of text) {
+        output += `<span>${letter}</span>`;
+    }
+    animDiv.innerHTML = output;
+    [...animDiv.children].forEach((span, index) => {
+        setTimeout(() => {
+            span.classList.add("visible");
+        }, 50 * index);
+    });
+}
+
+// cheat code
+const cheat = document.querySelector(".cheat");
+const cheatButton = document.querySelector(".code");
+
+cheatButton.addEventListener("click", cheatCode);
+
+function cheatCode()
+{
+    if (cheat.value == "mmi")
+    {
+        document.querySelector("#start").classList.add("invisible");
+        document.querySelector(".winScreen").classList.remove("invisible");
+    }
 }
