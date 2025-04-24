@@ -60,7 +60,7 @@ let pSpritey = 0;
 let pSpriteSize = 105;
 let pHitbox = 12/2;
 
-// ennemy sprite and hibox
+// ennemy sprite and hitbox
 const eSprite = new Image();
 eSprite.src = "../img/game2/enemy1.png";
 let eSpriteHitbox = 35/2;
@@ -69,13 +69,31 @@ let eSpritey = 18;
 let eSpriteSize = 16;
 let eHitbox = 25/2;
 
-// bullet sprite and hibox
+// bullet sprite and hitbox
 const bulletImg = new Image();
 bulletImg.src = "../img/game2/bullet_sprite_sheet.png";
 let bImgx = 338;
 let bImgy = 73;
 let bImgSize = 16;
 let bHitbox = 14/2;
+
+// number of bullets in patterns
+const nbrPattern1 = 2;
+const nbrPattern2 = 5;
+const nbrPattern3 = 1;
+const nbrPattern4 = 2;
+const nbrPattern5 = 1;
+const nbrPattern6 = 1;
+const nbrPattern7 = 1;
+const nbrPattern8 = 8;
+const nbrPattern9 = 1;
+const nbrPattern10 = 5;
+const nbrPattern11 = 1;
+const nbrPattern12 = 10;
+const nbrPattern13 = 1;
+const nbrPattern14 = 1;
+const nbrPattern15 = 2;
+const nbrPattern16 = 2;
 
 // oscillateur
 const approachSound = new AudioContext();
@@ -214,22 +232,6 @@ function startGame()
     let pbspeedy = 4;
 
     // bullets and patterns
-    const nbrPattern1 = 2;
-    const nbrPattern2 = 5;
-    const nbrPattern3 = 1;
-    const nbrPattern4 = 2;
-    const nbrPattern5 = 1;
-    const nbrPattern6 = 1;
-    const nbrPattern7 = 1;
-    const nbrPattern8 = 8;
-    const nbrPattern9 = 1;
-    const nbrPattern10 = 5;
-    const nbrPattern11 = 1;
-    const nbrPattern12 = 10;
-    const nbrPattern13 = 1;
-    const nbrPattern14 = 1;
-    const nbrPattern15 = 2;
-    const nbrPattern16 = 2;
     let pattern1Push = false;
     let pattern2Push = false;
     let pattern3Push = false;
