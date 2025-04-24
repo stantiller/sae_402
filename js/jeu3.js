@@ -849,6 +849,7 @@ const storyScreen = document.querySelector(".storyScreen");
 const storyDiv = document.querySelector(".dialogueBox");
 const animDiv = document.querySelector(".animTxt");
 const speakerDiv = document.querySelector(".speaker");
+const imgSpeaker = document.querySelector(".imgSpeaker");
 
 document.querySelector(".toStory").addEventListener("click", startStory);
 

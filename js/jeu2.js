@@ -2025,6 +2025,7 @@ function loseScreen()
 const storyDiv = document.querySelector(".dialogueBox");
 const animDiv = document.querySelector(".animTxt");
 const speakerDiv = document.querySelector(".speaker");
+const imgSpeaker = document.querySelector(".imgSpeaker");
 
 let clickCount = 0;
 
