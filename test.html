@@ -28,7 +28,7 @@
     <div class="dialogueBox">
         <div class="imgSpeaker"></div>
         <div class="speaker"></div>
-        <div class="animTxt">click</div>
+        <div class="animTxt">Click to start</div>
     </div>
     <script>
 // animation texte
@@ -63,11 +63,14 @@ storyDiv.addEventListener("click", () => {
     {
         const dialogue = story[clickCount];
         speakerDiv.innerHTML = dialogue.character;
-        if (dialogue.character == "you")
-        {
+        if (dialogue.character == "You")
             imgSpeaker.innerHTML = "<img src='img/siteImg/player.png'>";
-        }
-        else imgSpeaker.innerHTML = "";
+        else if (dialogue.character == "Thief")
+            imgSpeaker.innerHTML = "<img src='img/siteImg/player.png'>";
+        else if (dialogue.character == "Museum staff")
+            imgSpeaker.innerHTML = "<img src='img/siteImg/player.png'>";
+        else 
+            imgSpeaker.innerHTML = "";
         animText(dialogue.text);
         clickCount++;
     }
