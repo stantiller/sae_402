@@ -24,6 +24,77 @@ bullets.width = W;
 player.height = H;
 player.width = W;
 
+// variables de contexte
+let ctxScore = showScore.getContext("2d");
+let bg = background.getContext("2d");
+let boss = ennemy.getContext("2d");
+let bul = bullets.getContext("2d");
+let play = player.getContext("2d");
+
+// son
+const plDead = new Audio('../sounds/game2/pldead00.wav');
+const bulletSound = new Audio('../sounds/game2/tan02.wav');
+const ennemyDmg = new Audio('../sounds/game2/damage00.wav');
+const winSound = new Audio('../sounds/global/win.mp3');
+plDead.volume = 0.25;
+bulletSound.volume = 0.25;
+ennemyDmg.volume = 0.15;
+let approachSoundVolume = 0.35;
+let soundDist = 250;
+let maxFreq = 1500;
+
+// background sprite
+const bgSprite = new Image();
+bgSprite.src = "../img/game2/24968.jpg";
+let bgSpritex = 3600;
+let bgSpritey = 100;
+let bgSpriteSizex = 1650;
+let bgSpriteSizey = 2800;
+
+// player sprite and hitbox
+const pSprite = new Image();
+pSprite.src = "../img/game2/sprite.png";
+let pSpriteHitbox = 35/2;
+let pSpritex = 0;
+let pSpritey = 0;
+let pSpriteSize = 105;
+let pHitbox = 12/2;
+
+// ennemy sprite and hitbox
+const eSprite = new Image();
+eSprite.src = "../img/game2/enemy1.png";
+let eSpriteHitbox = 35/2;
+let eSpritex = 8;
+let eSpritey = 18;
+let eSpriteSize = 16;
+let eHitbox = 25/2;
+
+// bullet sprite and hitbox
+const bulletImg = new Image();
+bulletImg.src = "../img/game2/bullet_sprite_sheet.png";
+let bImgx = 338;
+let bImgy = 73;
+let bImgSize = 16;
+let bHitbox = 14/2;
+
+// number of bullets in patterns
+const nbrPattern1 = 2;
+const nbrPattern2 = 5;
+const nbrPattern3 = 1;
+const nbrPattern4 = 2;
+const nbrPattern5 = 1;
+const nbrPattern6 = 1;
+const nbrPattern7 = 1;
+const nbrPattern8 = 8;
+const nbrPattern9 = 1;
+const nbrPattern10 = 5;
+const nbrPattern11 = 1;
+const nbrPattern12 = 10;
+const nbrPattern13 = 1;
+const nbrPattern14 = 1;
+const nbrPattern15 = 2;
+const nbrPattern16 = 2;
+
 // oscillateur
 const approachSound = new AudioContext();
 const oscillator = approachSound.createOscillator();
@@ -114,13 +185,6 @@ function startGame()
     losingScreen.classList.add("invisible");
     winningScreen.classList.add("invisible");
 
-    // variables de contexte
-    let ctxScore = showScore.getContext("2d");
-    let bg = background.getContext("2d");
-    let boss = ennemy.getContext("2d");
-    let bul = bullets.getContext("2d");
-    let play = player.getContext("2d");
-
     // score timer du jeu et definition du temps
     let score = 0;
     let gainScore = 100
@@ -136,33 +200,19 @@ function startGame()
     let win = false;
 
     // player
-    const pSprite = new Image();
-    pSprite.src = "../img/game2/sprite.png";
-    let pSpriteHitbox = 35/2;
-    let pSpritex = 0;
-    let pSpritey = 0;
-    let pSpriteSize = 105;
     let moveRight = false;
     let moveLeft = false;
     let moveForward = false;
     let moveBack = false;
-    let pHitbox = 12/2;
     let px = W/2 - pHitbox;
     let py = H-200;
     let pvx = 2;
     let pvy = 2;
     let gammaMove = 5;
     let betaForwMove = 10;
-    let betaBackMove = 35;
+    let betaBackMove = 25;
 
     // ennemy
-    const eSprite = new Image();
-    eSprite.src = "../img/game2/enemy1.png";
-    let eSpriteHitbox = 35/2;
-    let eSpritex = 8;
-    let eSpritey = 18;
-    let eSpriteSize = 16;
-    let eHitbox = 25/2;
     let ex = W/2 - eHitbox;
     let ey = 80;
     let evx = 2.5;
@@ -171,20 +221,8 @@ function startGame()
     let eTargety = ey;
 
     // sons
-    const plDead = new Audio('../sounds/game2/pldead00.wav');
-    const bulletSound = new Audio('../sounds/game2/tan02.wav');
-    const ennemyDmg = new Audio('../sounds/game2/damage00.wav');
-    const winSound = new Audio('../sounds/global/win.mp3');
-    plDead.volume = 0.25;
-    bulletSound.volume = 0.25;
-    ennemyDmg.volume = 0.15;
-    let approachSoundVolume = 0.35;
-    let soundDist = 250;
-    let maxFreq = 1500;
     let freq = 0;
     gainNode.gain.value = 0;
-    // js audio api sine wave
-    // https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode
 
     //player bullets
     let pBullets = []
@@ -193,30 +231,7 @@ function startGame()
     let fRate = 200;
     let pbspeedy = 4;
 
-    // bullets sprite and coordinates
-    const bulletImg = new Image();
-    bulletImg.src = "../img/game2/bullet_sprite_sheet.png";
-    let bImgx = 338;
-    let bImgy = 73;
-    let bImgSize = 16;
-
     // bullets and patterns
-    const nbrPattern1 = 2;
-    const nbrPattern2 = 5;
-    const nbrPattern3 = 1;
-    const nbrPattern4 = 2;
-    const nbrPattern5 = 1;
-    const nbrPattern6 = 1;
-    const nbrPattern7 = 1;
-    const nbrPattern8 = 8;
-    const nbrPattern9 = 1;
-    const nbrPattern10 = 5;
-    const nbrPattern11 = 1;
-    const nbrPattern12 = 10;
-    const nbrPattern13 = 1;
-    const nbrPattern14 = 1;
-    const nbrPattern15 = 2;
-    const nbrPattern16 = 2;
     let pattern1Push = false;
     let pattern2Push = false;
     let pattern3Push = false;
@@ -249,7 +264,6 @@ function startGame()
     let pattern14 = [];
     let pattern15 = [];
     let pattern16 = [];
-    let bHitbox = 14/2;
     let ebspeedx = 0.5;
     let ebspeedy = 2;
     // variables pour les balles qui tirent vers le joueur
@@ -282,9 +296,12 @@ function startGame()
             countDownTimer();
         }
 
-        // fond et clear de toutes les zones
-        bg.fillStyle = "skyblue";
-        bg.fillRect(0, 0, W, H);
+        // fond
+        bg.drawImage(bgSprite, bgSpritex, bgSpritey, bgSpriteSizex, bgSpriteSizey, 0, 0, W, H);
+
+        // clear des zones
+        ctxScore.fillStyle = "white";
+        ctxScore.clearRect(0, 0, W, 80)
         boss.clearRect(0, 0, W, H);
         bul.clearRect(0, 0, W, H);
         play.clearRect(0, 0, W, H)
@@ -303,8 +320,8 @@ function startGame()
         play.drawImage(pSprite, pSpritex, pSpritey, pSpriteSize, pSpriteSize, (px - (pSpriteHitbox - pHitbox)), (py - (pSpriteHitbox - pHitbox)), pSpriteHitbox*2, pSpriteHitbox*2);
 
         // affichage hitbox joueur
-        play.fillStyle = "white";
-        play.fillRect((px), (py), pHitbox*2, pHitbox*2);
+        // play.fillStyle = "white";
+        // play.fillRect((px), (py), pHitbox*2, pHitbox*2);
 
         // mouvement ennemy
         ennemyMovement();
@@ -326,7 +343,6 @@ function startGame()
         playerShoot();
     
         // timer and score
-        ctxScore.clearRect(0, 0, W, H)
         ctxScore.font = "20px Arial";
         ctxScore.fillText(cdTimer, (W - 40), 30);
         ctxScore.font = "20px Arial";
@@ -444,14 +460,14 @@ function startGame()
     // collisions mur joueur
     function wallCollision()
     {
-        if (px < 0)
-            px = 0;
-        if (px > (W - (pHitbox * 2)))
-            px = W - (pHitbox * 2);
-        if (py < 0)
-            py = 0;
-        if (py > (H - (pHitbox * 2)))
-            py = H - (pHitbox * 2);
+        if (px < (0 + pSpriteHitbox - pHitbox))
+            px = 0 + (pSpriteHitbox - pHitbox);
+        if (px > (W - ((pSpriteHitbox * 2) - (pHitbox *2))))
+            px = W - ((pSpriteHitbox * 2) - (pHitbox *2));
+        if (py < (0 + pSpriteHitbox - pHitbox))
+            py = 0 + (pSpriteHitbox - pHitbox);
+        if (py > (H - ((pSpriteHitbox * 2) - (pHitbox *2))))
+            py = H - ((pSpriteHitbox * 2) - (pHitbox *2));
     }
 
     // verification de collision joueur
@@ -496,7 +512,6 @@ function startGame()
     }
     function ennemyHit()
     {
-        bg.fillRect(0, 0, W, H);
         score += gainScore;
         playSound(ennemyDmg)
     }
@@ -540,6 +555,7 @@ function startGame()
 
             pBullet.pby -= pBullet.pbvy;
 
+            bul.fillStyle = "lightgreen";
             bul.fillRect((pBullet.pbx), (pBullet.pby), pbHitbox*2, 6);
 
             ennemyCollision(pBullet);
