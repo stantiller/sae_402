@@ -74,6 +74,10 @@ canvas {
   margin-left: 110px;
 }
 
+#continuer {
+    z-index: 10000;
+}
+
 .image-perso > img {
   width: 100%;
   height: 100%;
