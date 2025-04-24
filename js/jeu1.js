@@ -241,7 +241,8 @@ function startStory()
         }
         else
         {
-            document.body.style.background = "red";
+            document.querySelector(".storyScreen").classList.remove("invisible");
+            
         }
     });
 }
