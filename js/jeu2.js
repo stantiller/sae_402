@@ -107,73 +107,78 @@ gainNode.connect(approachSound.destination);
 oscillator.start();
 gainNode.gain.value = 0;
 
-// // vérification de la position
-// var id, target, options;
-// var map = 0;
-// let routingControl = null;
+// vérification de la position
+var id, target, options;
+var map = 0;
+let routingControl = null;
 
-// function success(pos) {
-//     var crd = pos.coords;
+function success(pos) {
+    var crd = pos.coords;
 
-//     if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 10) {
-//         console.log("Bravo, vous avez atteint la cible");
-//         navigator.geolocation.clearWatch(id);
-//         if (routingControl) {
-//             map.removeControl(routingControl);
-//             routingControl = null;
-//         }
-//         if (map !== 0)
-//             map.remove();
-//         affichageMap.remove();
-//         startScreen.classList.remove("invisible");
-//     }
-//     else
-//     {
-//         if (routingControl) {
-//             map.removeControl(routingControl);
-//             routingControl = null;
-//         }
-//         if (map !== 0)
-//             map.remove();
+    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 6) {
+        console.log("Bravo, vous avez atteint la cible");
+        navigator.geolocation.clearWatch(id);
+        if (routingControl) {
+            map.removeControl(routingControl);
+            routingControl = null;
+        }
+        if (map !== 0)
+            map.remove();
+        affichageMap.remove();
+        startScreen.classList.remove("invisible");
+    }
+    else
+    {
+        if (routingControl) {
+            map.removeControl(routingControl);
+            routingControl = null;
+        }
+        if (map !== 0)
+            map.remove();
 
-//         map = L.map('map').setView([crd.latitude, crd.longitude], 13);
+        map = L.map('map').setView([crd.latitude, crd.longitude], 13);
 
-//         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//             maxZoom: 19,
-//             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-//         }).addTo(map);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
 
-//         routingControl = L.Routing.control({
-//             waypoints: [
-//                 L.latLng(crd.latitude, crd.longitude),
-//                 L.latLng(target.latitude, target.longitude)
-//             ],
-//             show: false, // hides the directions panel
-//             addWaypoints: false, // disables adding waypoints by clicking
-//             draggableWaypoints: false,
-//             fitSelectedRoutes: true,
-//             routeWhileDragging: false,
-//             showAlternatives: false
-//         }).addTo(map);
-//     }
-// }
+        routingControl = L.Routing.control({
+            waypoints: [
+                L.latLng(crd.latitude, crd.longitude),
+                L.latLng(target.latitude, target.longitude)
+            ],
+            show: false, // hides the directions panel
+            addWaypoints: false, // disables adding waypoints by clicking
+            draggableWaypoints: false,
+            fitSelectedRoutes: true,
+            routeWhileDragging: false,
+            showAlternatives: false
+        }).addTo(map);
+    }
+}
 
-// function error(err) {
-//     console.warn("ERROR(" + err.code + "): " + err.message);
-// }
+function error(err) {
+    console.warn("ERROR(" + err.code + "): " + err.message);
+}
 
 // target = {
 //     latitude: 47.745203,
 //     longitude: 7.336902,
 // };
 
-// options = {
-//     enableHighAccuracy: false,
-//     timeout: 1000,
-//     maximumAge: 0,
-// };
+target = {
+    latitude: 47.730042,
+    longitude: 7.301872,
+};
 
-// id = navigator.geolocation.watchPosition(success, error, options);
+options = {
+    enableHighAccuracy: false,
+    timeout: 1000,
+    maximumAge: 0,
+};
+
+id = navigator.geolocation.watchPosition(success, error, options);
 
 // jeu
 function startGame()
