@@ -115,7 +115,7 @@ let routingControl = null;
 function success(pos) {
     var crd = pos.coords;
 
-    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 2) {
+    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 6) {
         console.log("Bravo, vous avez atteint la cible");
         navigator.geolocation.clearWatch(id);
         if (routingControl) {
