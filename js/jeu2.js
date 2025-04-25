@@ -189,6 +189,22 @@ function updateLocation()
 // video
 const tuto = document.querySelector(".tutorial");
 const video = document.querySelector(".video");
+const tutoButton = document.querySelector(".tuto");
+
+tutoButton.addEventListener("click", startVideo);
+
+function startVideo()
+{
+    tuto.classList.remove("invisible");
+    video.play();
+    tuto.addEventListener("click", stopVideo);
+}
+
+function stopVideo()
+{
+    tuto.classList.add("invisible");
+    video.pause();
+}
 
 // jeu
 function startGame()
