@@ -1,3 +1,16 @@
+// Empêche le scroll lors du toucher ou de l'appui sur espace
+window.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+}, { passive: false});
+window.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+}, { passive: false });
+window.addEventListener('keydown', (e) => {
+    if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.code)) {
+        e.preventDefault();
+    }
+});
+
 const canvas = document.getElementById('jeuCanvas');
 const ctx = canvas.getContext("2d");
 let animationId;
