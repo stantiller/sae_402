@@ -39,7 +39,7 @@ function success(pos) {
   if (
     L.latLng(crd.latitude, crd.longitude).distanceTo(
       L.latLng(target.latitude, target.longitude)
-    ) <= 10
+    ) <= 14
   ) {
     console.log("Bravo, vous avez atteint la cible");
     navigator.geolocation.clearWatch(id);
@@ -58,7 +58,7 @@ function success(pos) {
     }
     if (map !== 0) map.remove();
 
-    map = L.map("map").setView([crd.latitude, crd.longitude], 17);
+    map = L.map("map").setView([crd.latitude, crd.longitude], 16.5);
 
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,

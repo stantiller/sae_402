@@ -116,7 +116,7 @@ let locationUpdate = -1;
 function success(pos) {
     var crd = pos.coords;
 
-    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 10) {
+    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 14) {
         console.log("Bravo, vous avez atteint la cible");
         navigator.geolocation.clearWatch(id);
         if (routingControl) {
@@ -138,7 +138,7 @@ function success(pos) {
         if (map !== 0)
             map.remove();
 
-        map = L.map('map').setView([crd.latitude, crd.longitude], 17);
+        map = L.map('map').setView([crd.latitude, crd.longitude], 16.5);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -164,14 +164,9 @@ function error(err) {
     console.warn("ERROR(" + err.code + "): " + err.message);
 }
 
-// target = {
-//     latitude: 47.745203,
-//     longitude: 7.336902,
-// };
-
 target = {
-    latitude: 47.730042,
-    longitude: 7.301872,
+    latitude: 47.745203,
+    longitude: 7.336902,
 };
 
 options = {
@@ -190,6 +185,10 @@ function updateLocation()
 {
     id = navigator.geolocation.watchPosition(success, error, options);
 }
+
+// video
+const tuto = document.querySelector(".tutorial");
+const video = document.querySelector(".video");
 
 // jeu
 function startGame()

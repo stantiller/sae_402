@@ -17,6 +17,84 @@ let animationId;
 
 let jeuEnCours = false;
 
+// vérification de la position
+var id, target, options;
+var map = 0;
+let routingControl = null;
+let locationUpdate = -1;
+
+function success(pos) {
+  var crd = pos.coords;
+
+  if (
+    L.latLng(crd.latitude, crd.longitude).distanceTo(
+      L.latLng(target.latitude, target.longitude)
+    ) <= 14
+  ) {
+    console.log("Bravo, vous avez atteint la cible");
+    navigator.geolocation.clearWatch(id);
+    if (routingControl) {
+      map.removeControl(routingControl);
+      routingControl = null;
+    }
+    if (map !== 0) map.remove();
+    document.querySelector(".mapContain").remove();
+    document.querySelector("#start").classList.remove("invisible");
+    clearInterval(locationUpdate);
+  } else {
+    if (routingControl) {
+      map.removeControl(routingControl);
+      routingControl = null;
+    }
+    if (map !== 0) map.remove();
+
+    map = L.map("map").setView([crd.latitude, crd.longitude], 16.5);
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+
+    routingControl = L.Routing.control({
+      waypoints: [
+        L.latLng(crd.latitude, crd.longitude),
+        L.latLng(target.latitude, target.longitude),
+      ],
+      show: false, // hides the directions panel
+      addWaypoints: false, // disables adding waypoints by clicking
+      draggableWaypoints: false,
+      fitSelectedRoutes: true,
+      routeWhileDragging: false,
+      showAlternatives: false,
+    }).addTo(map);
+  }
+}
+
+function error(err) {
+  console.warn("ERROR(" + err.code + "): " + err.message);
+}
+
+target = {
+  latitude: 47.745343,
+  longitude: 7.338167,
+};
+
+options = {
+  enableHighAccuracy: false,
+  timeout: 1000,
+  maximumAge: 0,
+};
+
+if (locationUpdate == -1) {
+  locationUpdate = setInterval(updateLocation, 2000);
+  updateLocation();
+}
+
+function updateLocation() {
+  id = navigator.geolocation.watchPosition(success, error, options);
+}
+
 // Le joueur
 const joueur = {
     x: 0,
