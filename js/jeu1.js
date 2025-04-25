@@ -241,8 +241,7 @@ function startStory()
         }
         else
         {
-            document.querySelector("#continuer").classList.remove("invisible");
-            
+            window.location.href = "../jeux/jeu2.html";
         }
     });
 }
