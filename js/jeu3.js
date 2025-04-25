@@ -31,6 +31,7 @@ let isGameActive = false;
 var id, target, options;
 var map = 0;
 let routingControl = null;
+let locationUpdate = -1;
 
 function success(pos) {
   var crd = pos.coords;
@@ -38,7 +39,7 @@ function success(pos) {
   if (
     L.latLng(crd.latitude, crd.longitude).distanceTo(
       L.latLng(target.latitude, target.longitude)
-    ) <= 10
+    ) <= 14
   ) {
     console.log("Bravo, vous avez atteint la cible");
     navigator.geolocation.clearWatch(id);
@@ -49,6 +50,7 @@ function success(pos) {
     if (map !== 0) map.remove();
     document.querySelector(".mapContain").remove();
     document.querySelector("#start").classList.remove("invisible");
+    clearInterval(locationUpdate);
   } else {
     if (routingControl) {
       map.removeControl(routingControl);
@@ -56,7 +58,7 @@ function success(pos) {
     }
     if (map !== 0) map.remove();
 
-    map = L.map("map").setView([crd.latitude, crd.longitude], 13);
+    map = L.map("map").setView([crd.latitude, crd.longitude], 16.5);
 
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
@@ -94,7 +96,14 @@ options = {
   maximumAge: 0,
 };
 
-id = navigator.geolocation.watchPosition(success, error, options);
+if (locationUpdate == -1) {
+  locationUpdate = setInterval(updateLocation, 2000);
+  updateLocation();
+}
+
+function updateLocation() {
+  id = navigator.geolocation.watchPosition(success, error, options);
+}
 
 // fonction pour lancer le jeu
 function startGame() {
@@ -863,69 +872,66 @@ document.querySelector(".toStory").addEventListener("click", startStory);
 
 let clickCount = 0;
 
-function startStory()
-{
-    document.querySelector(".winScreen").classList.add("invisible");
-    storyScreen.classList.remove("invisible");
+function startStory() {
+  document.querySelector(".winScreen").classList.add("invisible");
+  storyScreen.classList.remove("invisible");
 
-    storyDiv.addEventListener("click", () => {
-        if (clickCount < story.length)
-        {
-            const dialogue = story[clickCount % story.length];
-            speakerDiv.innerHTML = dialogue.character;
+  storyDiv.addEventListener("click", () => {
+    if (clickCount < story.length) {
+      const dialogue = story[clickCount % story.length];
+      speakerDiv.innerHTML = dialogue.character;
 
-            if (dialogue.character == "You")
-              imgSpeaker.innerHTML = "<img src='../img/siteImg/player.png'>";
-            else if (dialogue.character == "Thief")
-              imgSpeaker.innerHTML = "<img src='../img/siteImg/thief.png'>";
-            else if (dialogue.character == "Museum staff")
-              imgSpeaker.innerHTML = "<img src='../img/siteImg/staff.png'>";
-            else 
-              imgSpeaker.innerHTML = "";
+      if (dialogue.character == "You")
+        imgSpeaker.innerHTML = "<img src='../img/siteImg/player.png'>";
+      else if (dialogue.character == "Thief")
+        imgSpeaker.innerHTML = "<img src='../img/siteImg/thief.png'>";
+      else if (dialogue.character == "Museum staff")
+        imgSpeaker.innerHTML = "<img src='../img/siteImg/staff.png'>";
+      else
+        imgSpeaker.innerHTML = "";
 
-            animText(dialogue.text);
-            clickCount++;
-        }
-        else
-        {
-            document.querySelector(".storyScreen").classList.add("invisible");
-            document.querySelector(".rewardScreen").classList.remove("invisible");
-            SoundPlay(rewardSon);
-        }
-    });
+      animText(dialogue.text);
+      clickCount++;
+    }
+    else {
+      document.querySelector(".storyScreen").classList.add("invisible");
+      document.querySelector(".rewardScreen").classList.remove("invisible");
+      SoundPlay(rewardSon);
+    }
+  });
 }
 
 const story = [
   {
-      character: "Museum staff",
-      text: "Thank you again for stopping the thieves and bringing back the paintings, we are really grateful for your help !"
+    character: "Museum staff",
+    text: "Thank you again for stopping the thieves and bringing back the paintings, we are really grateful for your help !"
   },
   {
-      character: "You",
-      text: "No worries I'm happy to have helped the museum !"
+    character: "You",
+    text: "No worries I'm happy to have helped the museum !"
   },
   {
-      character: "Museum staff",
-      text: "We would like to reward you for your actions please accept it."
+    character: "Museum staff",
+    text: "We would like to reward you for your actions please accept it."
   },
   {
-      character: "",
-      text: "The museum staff hands you a notebook and a pencil (average school rewards be like)" 
-      // a finir et mettre un reward normal (a part si on veux garder ma blague (elle est drole (trust me (it's funny))))
+    character: "",
+    text: "The museum staff hands you a notebook and a pencil (average school rewards be like)"
+    // a finir et mettre un reward normal (a part si on veux garder ma blague (elle est drole (trust me (it's funny))))
   }
 ];
 
 function animText(text) {
-    let output = "";
-    for (const letter of text) {
-        output += `<span>${letter}</span>`;
-    }
-    animDiv.innerHTML = output;
-    [...animDiv.children].forEach((span, index) => {
-        setTimeout(() => {
-            span.classList.add("visible");
-        }, 50 * index);
-    });
+  let output = "";
+  for (const letter of text) {
+    output += `<span>${letter}</span>`;
+  }
+  animDiv.innerHTML = output;
+  [...animDiv.children].forEach((span, index) => {
+    setTimeout(() => {
+      span.classList.add("visible");
+    }, 50 * index);
+  });
 }
 
 // cheat code
@@ -934,14 +940,12 @@ const cheatButton = document.querySelector(".code");
 
 cheatButton.addEventListener("click", cheatCode);
 
-function cheatCode()
-{
-    if (cheat.value == "mmi")
-    {
-      winSound.pause();
-      winSound.load();
-      winSound.play();
-      document.querySelector("#start").classList.add("invisible");
-      document.querySelector(".winScreen").classList.remove("invisible");
-    }
+function cheatCode() {
+  if (cheat.value == "mmi") {
+    winSound.pause();
+    winSound.load();
+    winSound.play();
+    document.querySelector("#start").classList.add("invisible");
+    document.querySelector(".winScreen").classList.remove("invisible");
+  }
 }

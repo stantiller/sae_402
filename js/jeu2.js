@@ -111,11 +111,12 @@ gainNode.gain.value = 0;
 var id, target, options;
 var map = 0;
 let routingControl = null;
+let locationUpdate = -1;
 
 function success(pos) {
     var crd = pos.coords;
 
-    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 6) {
+    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 14) {
         console.log("Bravo, vous avez atteint la cible");
         navigator.geolocation.clearWatch(id);
         if (routingControl) {
@@ -126,6 +127,7 @@ function success(pos) {
             map.remove();
         affichageMap.remove();
         startScreen.classList.remove("invisible");
+        clearInterval(locationUpdate);
     }
     else
     {
@@ -136,7 +138,7 @@ function success(pos) {
         if (map !== 0)
             map.remove();
 
-        map = L.map('map').setView([crd.latitude, crd.longitude], 13);
+        map = L.map('map').setView([crd.latitude, crd.longitude], 16.5);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -162,14 +164,9 @@ function error(err) {
     console.warn("ERROR(" + err.code + "): " + err.message);
 }
 
-// target = {
-//     latitude: 47.745203,
-//     longitude: 7.336902,
-// };
-
 target = {
-    latitude: 47.730042,
-    longitude: 7.301872,
+    latitude: 47.745203,
+    longitude: 7.336902,
 };
 
 options = {
@@ -178,7 +175,20 @@ options = {
     maximumAge: 0,
 };
 
-id = navigator.geolocation.watchPosition(success, error, options);
+if (locationUpdate == -1)
+{
+    locationUpdate = setInterval(updateLocation, 2000);
+    updateLocation();
+}
+
+function updateLocation()
+{
+    id = navigator.geolocation.watchPosition(success, error, options);
+}
+
+// video
+const tuto = document.querySelector(".tutorial");
+const video = document.querySelector(".video");
 
 // jeu
 function startGame()
