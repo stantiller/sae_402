@@ -55,12 +55,14 @@ self.addEventListener("install", function(event) {
 		  'sounds/game3/colission.mp3',
 		  'sounds/game3/depot.mp3',
 		  'sounds/game3/pas.mp3',
-		  'sounds/game3/right.mp3',
+		  'sounds/game3/rigth.mp3',
 		  'sounds/game3/tableau1.mp3',
 		  'sounds/game3/tableau2.mp3',
 		  'sounds/game3/tableau3.mp3',
 		  'sounds/game3/tableau4.mp3',
-		  'sounds/game3/wrong.mp3'
+		  'sounds/game3/wrong.mp3',
+		  'sounds/game3/reward.mp3',
+		  'sounds/game3/victory.mp3'
         ]);
       })
 	);
