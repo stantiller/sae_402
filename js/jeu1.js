@@ -1,3 +1,16 @@
+// Empêche le scroll lors du toucher ou de l'appui sur espace
+window.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+}, { passive: false});
+window.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+}, { passive: false });
+window.addEventListener('keydown', (e) => {
+    if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.code)) {
+        e.preventDefault();
+    }
+});
+
 const canvas = document.getElementById('jeuCanvas');
 const ctx = canvas.getContext("2d");
 let animationId;
@@ -35,9 +48,16 @@ const bancInterval = 100;   // chaque 100 frames
 let poursuiteTime = 30;     // secondes
 let poursuiteTimer = poursuiteTime * 60; // en frames (si 60 fps)
 
-// Contrôle du personnage en jeu
+// Contrôle du personnage en jeu (ordinateur)
 window.addEventListener('keydown', (e) => {
     if (e.code === 'Space' && !joueur.isJumping) {
+        joueur.vy = joueur.jumpStrength;
+        joueur.isJumping = true;
+    }
+});
+// Contrôle du personnage en jeu (mobile)
+window.addEventListener('touchstart', () => {
+    if (!joueur.isJumping) {
         joueur.vy = joueur.jumpStrength;
         joueur.isJumping = true;
     }
