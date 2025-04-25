@@ -12,6 +12,12 @@
   margin: auto;
 }
 
+.image-reward {
+  background-image: url("../img/siteImg/fondmussée.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
 .buttonFermer {
   z-index: 1000;
   position: absolute;

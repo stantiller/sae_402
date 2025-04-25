@@ -189,8 +189,9 @@ const sonDepot = new Audio("../sounds/game3/depot.mp3");
 const sonPas = new Audio("../sounds/game3/pas.mp3");
 const winSound = new Audio("../sounds/game3/victory.mp3");
 const WrongSon = new Audio("../sounds/game3/wrong.mp3");
-const rightSon = new Audio("../sounds/game3/right.mp3");
+const rightSon = new Audio("../sounds/game3/rigth.mp3");
 const sonTableau = new Audio("../sounds/game3/artpiece.mp3");
+const rewardSon = new Audio("../sounds/game3/reward.mp3");
 
 // constantes pour appeler les images
 const backgroundImage = new Image();
@@ -887,7 +888,9 @@ function startStory()
         }
         else
         {
-            document.body.style.background = "red";
+            document.querySelector(".storyScreen").classList.add("invisible");
+            document.querySelector(".rewardScreen").classList.remove("invisible");
+            SoundPlay(rewardSon);
         }
     });
 }

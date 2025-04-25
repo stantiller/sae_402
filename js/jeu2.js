@@ -111,6 +111,7 @@ gainNode.gain.value = 0;
 var id, target, options;
 var map = 0;
 let routingControl = null;
+let locationUpdate = -1;
 
 function success(pos) {
     var crd = pos.coords;
@@ -126,6 +127,7 @@ function success(pos) {
             map.remove();
         affichageMap.remove();
         startScreen.classList.remove("invisible");
+        clearInterval(locationUpdate);
     }
     else
     {
@@ -178,7 +180,16 @@ options = {
     maximumAge: 0,
 };
 
-id = navigator.geolocation.watchPosition(success, error, options);
+if (locationUpdate == -1)
+{
+    locationUpdate = setInterval(updateLocation, 2000);
+    updateLocation();
+}
+
+function updateLocation()
+{
+    id = navigator.geolocation.watchPosition(success, error, options);
+}
 
 // jeu
 function startGame()
