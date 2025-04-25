@@ -116,7 +116,7 @@ let locationUpdate = -1;
 function success(pos) {
     var crd = pos.coords;
 
-    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 6) {
+    if (L.latLng(crd.latitude, crd.longitude).distanceTo(L.latLng(target.latitude, target.longitude)) <= 10) {
         console.log("Bravo, vous avez atteint la cible");
         navigator.geolocation.clearWatch(id);
         if (routingControl) {
@@ -138,7 +138,7 @@ function success(pos) {
         if (map !== 0)
             map.remove();
 
-        map = L.map('map').setView([crd.latitude, crd.longitude], 13);
+        map = L.map('map').setView([crd.latitude, crd.longitude], 17);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
