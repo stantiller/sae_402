@@ -12,6 +12,7 @@ let clickCount = 0;
 function startStory()
 {
     document.querySelector(".image-fond").classList.add("invisible");
+    document.querySelector(".texte1").classList.remove("invisible");
     storyScreen.classList.remove("invisible");
 
     storyDiv.addEventListener("click", () => {
