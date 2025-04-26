@@ -941,11 +941,33 @@ const cheatButton = document.querySelector(".code");
 cheatButton.addEventListener("click", cheatCode);
 
 function cheatCode() {
-  if (cheat.value == "mmi") {
+  if (cheat.value == "mmi" || cheat.value == "Mmi" || cheat.value == "MMI") {
     winSound.pause();
     winSound.load();
     winSound.play();
     document.querySelector("#start").classList.add("invisible");
     document.querySelector(".winScreen").classList.remove("invisible");
+  }
+}
+
+// cheat code map
+const cheatMap = document.querySelector(".cheatMap");
+const cheatButtonMap = document.querySelector(".codeMap");
+
+cheatButtonMap.addEventListener("click", cheatCodeMap);
+
+function cheatCodeMap() {
+  if (cheatMap.value == "mmi" || cheatMap.value == "Mmi" || cheatMap.value == "MMI") {
+    navigator.geolocation.clearWatch(id);
+    if (routingControl)
+    {
+      map.removeControl(routingControl);
+      routingControl = null;
+    }
+    if (map !== 0) 
+      map.remove();
+    document.querySelector(".mapContain").remove();
+    document.querySelector("#start").classList.remove("invisible");
+    clearInterval(locationUpdate);
   }
 }

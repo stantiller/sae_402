@@ -116,6 +116,19 @@
         height: 100vh;
         width: 100vw;
       }
+
+      .cheatCodeMap
+      {
+        position: absolute;
+        width: fit-content;
+        bottom: 0;
+        margin: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        background: rgba(34, 34, 34, 0.6);
+        display: flex;
+        z-index: 1000000;
+      }
     </style>
     <link rel="preload" href="../styles/styleJeu3.css" as="style" />
     <link
@@ -134,10 +147,14 @@
   <body>
     <!-- map pour s'orienter et arriver au jeu -->
     <div class="mapContain">
+      <div class="cheatCodeMap">
+        <input type="text" class="cheatMap" value="" placeholder="Code ?" />
+        <button class="codeMap">Try code</button>
+      </div>
       <div id="map"></div>
     </div>
     <!-- div pour le début du jeu -->
-    <div class="flex image-fond" id="start">
+    <div class="flex image-fond invisible" id="start">
       <div class="texte">
         <div class="cheatCode">
           <input type="text" class="cheat" value="" placeholder="Code ?" />

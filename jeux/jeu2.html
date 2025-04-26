@@ -97,6 +97,19 @@
         height: 100vh;
         width: 100vw;
       }
+
+      .cheatCodeMap
+      {
+        position: absolute;
+        width: fit-content;
+        bottom: 0;
+        margin: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        background: rgba(34, 34, 34, 0.6);
+        display: flex;
+        z-index: 1000000;
+      }
     </style>
 
     <link rel="preload" href="../styles/styleJeu2.css" as="style" />
@@ -116,6 +129,10 @@
   </head>
   <body>
     <div class="mapContain">
+      <div class="cheatCodeMap">
+        <input type="text" class="cheatMap" value="" placeholder="Code ?" />
+        <button class="codeMap">Try code</button>
+      </div>
       <div id="map"></div>
     </div>
 

@@ -14,8 +14,6 @@ const losingScreen = document.querySelector(".loseScreen");
 const storyScreen = document.querySelector(".storyScreen");
 const affichageMap = document.querySelector(".mapContain");
 const quitButton = document.querySelector(".quitter");
-const cheat = document.querySelector(".cheat");
-const cheatButton = document.querySelector(".code");
 showScore.height = 400;
 showScore.width = W;
 background.height = H;
@@ -204,6 +202,7 @@ function stopVideo()
 {
     tuto.classList.add("invisible");
     video.pause();
+    video.currentTime = 0;
 }
 
 // jeu
@@ -2141,10 +2140,35 @@ function animText(text) {
 }
 
 // cheat code
+const cheat = document.querySelector(".cheat");
+const cheatButton = document.querySelector(".code");
+
 cheatButton.addEventListener("click", cheatCode);
 
 function cheatCode()
 {
-    if (cheat.value == "mmi")
+    if (cheat.value == "mmi" || cheat.value == "Mmi" || cheat.value == "MMI")
         winScreen();
+}
+
+
+// cheat code map
+const cheatMap = document.querySelector(".cheatMap");
+const cheatButtonMap = document.querySelector(".codeMap");
+
+cheatButtonMap.addEventListener("click", cheatCodeMap);
+
+function cheatCodeMap() {
+  if (cheatMap.value == "mmi" || cheatMap.value == "Mmi" || cheatMap.value == "MMI") {
+    navigator.geolocation.clearWatch(id);
+    if (routingControl) {
+        map.removeControl(routingControl);
+        routingControl = null;
+    }
+    if (map !== 0)
+        map.remove();
+    affichageMap.remove();
+    startScreen.classList.remove("invisible");
+    clearInterval(locationUpdate);
+  }
 }
