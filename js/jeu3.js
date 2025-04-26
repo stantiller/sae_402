@@ -109,6 +109,7 @@ function updateLocation() {
 function startGame() {
   document.querySelector(".start").addEventListener("click", function () {
     document.querySelector("#start").classList.add("invisible");
+    document.querySelector(".texte1").classList.add("invisible");
     document.querySelector(".game").classList.remove("invisible");
     orientationLock();
     afficher();
@@ -754,6 +755,7 @@ function WinCondition() {
       SoundPlay(winSound);
       clearInterval(chrono);
       document.querySelector(".game").classList.add("invisible");
+      document.querySelector(".texte1").classList.remove("invisible");
       document.querySelector(".winScreen").classList.remove("invisible");
     }
   }
@@ -798,6 +800,7 @@ function restart() {
   sonTableauviolet.isPlaying = false;
 
   // Réinitialise les éléments visuels
+  document.querySelector(".texte1").classList.remove("invisible");
   document.querySelector("#start").classList.remove("invisible");
   document.querySelector(".winScreen").classList.add("invisible");
 
@@ -848,6 +851,7 @@ function quit() {
   // Réinitialise les éléments visuels
   document.querySelector(".game").classList.add("invisible");
   document.querySelector("#start").classList.remove("invisible");
+  document.querySelector(".texte1").classList.remove("invisible");
   document.querySelector(".winScreen").classList.add("invisible");
 
   // Réinitialise les canvas
@@ -873,6 +877,7 @@ document.querySelector(".toStory").addEventListener("click", startStory);
 let clickCount = 0;
 
 function startStory() {
+  
   document.querySelector(".winScreen").classList.add("invisible");
   storyScreen.classList.remove("invisible");
 
@@ -967,6 +972,7 @@ function cheatCodeMap() {
     if (map !== 0) 
       map.remove();
     document.querySelector(".mapContain").remove();
+    document.querySelector(".texte1").classList.remove("invisible");
     document.querySelector("#start").classList.remove("invisible");
     clearInterval(locationUpdate);
   }

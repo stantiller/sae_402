@@ -45,7 +45,9 @@ self.addEventListener("install", function(event) {
 		  'img/siteImg/fondbanc.jpg',
 		  'img/siteImg/fondmussée.jpg',
 		  'img/siteImg/fondportail.jpg',
-		  'img/siteImg/player.jpg',
+		  'img/siteImg/player.png',
+		  'img/siteImg/staff.png',
+		  'img/siteImg/thief.png',
 
 		  'sounds/game2/damage00.wav',
 		  'sounds/game2/pldead00.wav',

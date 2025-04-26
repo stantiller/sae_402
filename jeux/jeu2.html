@@ -39,7 +39,8 @@
       }
 
       .start,
-      .quitter, .tuto {
+      .quitter,
+      .tuto {
         background: linear-gradient(to bottom, #ffffff, #d9d9d9);
         margin-top: 4px;
         color: black;
@@ -56,7 +57,8 @@
       }
 
       .start:hover,
-      .quitter:hover, .tuto:hover {
+      .quitter:hover,
+      .tuto:hover {
         background: linear-gradient(to bottom, #e6e6e6, #cccccc);
         box-shadow: 0 2px #999999;
       }
@@ -98,8 +100,7 @@
         width: 100vw;
       }
 
-      .cheatCodeMap
-      {
+      .cheatCodeMap {
         position: absolute;
         width: fit-content;
         bottom: 0;
@@ -109,6 +110,18 @@
         background: rgba(34, 34, 34, 0.6);
         display: flex;
         z-index: 1000000;
+      }
+
+      .texte1 {
+        font-size: 18px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: auto;
+        background-color: rgb(145, 73, 40);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        text-align: center;
+        z-index: 5000;
+        text-decoration: none;
       }
     </style>
 
@@ -135,7 +148,11 @@
       </div>
       <div id="map"></div>
     </div>
-
+    <div class="texte1 invisible">
+      <a style="text-decoration: none; color: white;" href="../jeux/jeu1.html">Game 1</a>
+      <a style="text-decoration: none; color: white;" href="../jeux/jeu2.html">Game 2</a>
+      <a style="text-decoration: none; color: white;" href="../jeux/jeu3.html">Game 3</a>
+    </div>
     <!-- div pour le début du jeu -->
     <div class="flex image-fond startBackground invisible">
       <div class="texte">
@@ -184,9 +201,7 @@
       <div class="grande-boite">
         <div class="perso">
           <div class="boite speaker"></div>
-          <div class="image-perso imgSpeaker">
-
-          </div>
+          <div class="image-perso imgSpeaker"></div>
         </div>
         <div class="dialogue animTxt">Click to start</div>
       </div>

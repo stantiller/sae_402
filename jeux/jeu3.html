@@ -37,7 +37,17 @@
         background: linear-gradient(to bottom, #e6e6e6, #cccccc);
         box-shadow: 0 2px #999999;
       }
-
+      .texte1 {
+        font-size: 18px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: auto;
+        background-color: rgb(145, 73, 40);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        text-align: center;
+        z-index: 5000;
+        text-decoration: none;
+      }
       .flex {
         display: flex;
         align-items: center;
@@ -117,8 +127,7 @@
         width: 100vw;
       }
 
-      .cheatCodeMap
-      {
+      .cheatCodeMap {
         position: absolute;
         width: fit-content;
         bottom: 0;
@@ -152,6 +161,11 @@
         <button class="codeMap">Try code</button>
       </div>
       <div id="map"></div>
+    </div>
+    <div class="texte1 invisible">
+      <a style="text-decoration: none; color: white;" href="../jeux/jeu1.html">Game 1</a>
+      <a style="text-decoration: none; color: white;" href="../jeux/jeu2.html">Game 2</a>
+      <a style="text-decoration: none; color: white;" href="../jeux/jeu3.html">Game 3</a>
     </div>
     <!-- div pour le début du jeu -->
     <div class="flex image-fond invisible" id="start">
@@ -215,9 +229,7 @@
       <div class="grande-boite">
         <div class="perso">
           <div class="boite speaker"></div>
-          <div class="image-perso imgSpeaker">
-
-          </div>
+          <div class="image-perso imgSpeaker"></div>
         </div>
         <div class="dialogue animTxt">Click to start</div>
       </div>

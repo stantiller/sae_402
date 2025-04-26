@@ -39,6 +39,7 @@ function success(pos) {
     }
     if (map !== 0) map.remove();
     document.querySelector(".mapContain").remove();
+    document.querySelector(".texte1").classList.remove("invisible");
     document.querySelector("#start").classList.remove("invisible");
     clearInterval(locationUpdate);
   } else {
@@ -145,6 +146,7 @@ document.querySelector(".start").addEventListener("click", commencerJeu);
 // Fonction du commencement de la partie
 function commencerJeu() {
     document.querySelector("#start").classList.add("invisible");
+    document.querySelector(".texte1").classList.add("invisible");
     document.querySelector(".game").classList.remove("invisible");
 
     reinitialiserJeu();
@@ -175,6 +177,7 @@ function finDuJeu() {
     cancelAnimationFrame(animationId);
 
     document.querySelector(".winScreen").classList.remove("invisible");
+    document.querySelector(".texte1").classList.add("invisible");
     document.querySelector(".game").classList.add("invisible");
     
 }
@@ -182,11 +185,13 @@ function mort(){
     jeuEnCours = false;
     cancelAnimationFrame(animationId);
     document.querySelector(".loseScreen").classList.remove("invisible");
+    document.querySelector(".texte1").classList.remove("invisible");
     document.querySelector(".game").classList.add("invisible");
 }
 
 document.querySelector(".restart").addEventListener("click", restart);
 function restart(){
+    document.querySelector(".texte1").classList.add("invisible");
     document.querySelector(".loseScreen").classList.add("invisible");
     document.querySelector(".game").classList.remove("invisible");
 
@@ -319,6 +324,7 @@ let clickCount = 0;
 function startStory()
 {
     document.querySelector(".winScreen").classList.add("invisible");
+    document.querySelector(".texte1").classList.remove("invisible");
     storyScreen.classList.remove("invisible");
 
     storyDiv.addEventListener("click", () => {
@@ -408,6 +414,7 @@ function cheatCodeMap() {
       map.remove();
     document.querySelector(".mapContain").remove();
     document.querySelector("#start").classList.remove("invisible");
+    document.querySelector(".texte1").classList.remove("invisible");
     clearInterval(locationUpdate);
   }
 }

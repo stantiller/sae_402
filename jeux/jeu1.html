@@ -72,8 +72,7 @@
         width: 100vw;
       }
 
-      .cheatCodeMap
-      {
+      .cheatCodeMap {
         position: absolute;
         width: fit-content;
         bottom: 0;
@@ -84,25 +83,36 @@
         display: flex;
         z-index: 1000000;
       }
+
+      .texte1 {
+        font-size: 18px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: auto;
+        background-color: rgb(145, 73, 40);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        text-align: center;
+        z-index: 5000;
+        text-decoration: none;
+      }
     </style>
     <link rel="preload" href="../styles/styleJeu1.css" as="style" />
 
     <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  />
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"
-  />
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"
+    />
 
     <link rel="stylesheet" href="../styles/styleJeu1.css" />
     <title>Jeu 1</title>
   </head>
   <body>
-
     <div class="mapContain">
       <div class="cheatCodeMap">
         <input type="text" class="cheatMap" value="" placeholder="Code ?" />
@@ -110,7 +120,11 @@
       </div>
       <div id="map"></div>
     </div>
-
+    <div class="texte1 invisible">
+      <a style="text-decoration: none; color: white;" href="../jeux/jeu1.html">Game 1</a>
+      <a style="text-decoration: none; color: white;" href="../jeux/jeu2.html">Game 2</a>
+      <a style="text-decoration: none; color: white;" href="../jeux/jeu3.html">Game 3</a>
+    </div>
     <div class="flex image-fond invisible" id="start">
       <div class="texte">
         <div class="cheatCode">
@@ -143,19 +157,17 @@
       <div class="grande-boite">
         <div class="perso">
           <div class="boite speaker"></div>
-          <div class="image-perso imgSpeaker">
-
-          </div>
+          <div class="image-perso imgSpeaker"></div>
         </div>
         <div class="dialogue animTxt">Click to start</div>
       </div>
     </div>
     <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-  ></script>
-  <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
     <script src="../js/jeu1.js" defer></script>
   </body>
 </html>

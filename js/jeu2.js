@@ -125,6 +125,7 @@ function success(pos) {
             map.remove();
         affichageMap.remove();
         startScreen.classList.remove("invisible");
+        document.querySelector(".texte1").classList.remove("invisible");
         clearInterval(locationUpdate);
     }
     else
@@ -209,6 +210,7 @@ function stopVideo()
 function startGame()
 {
     // display
+    document.querySelector(".texte1").classList.add("invisible");
     showScore.classList.remove("invisible");
     background.classList.remove("invisible");
     ennemy.classList.remove("invisible");
@@ -2037,6 +2039,7 @@ function winScreen()
     winSound.pause();
     winSound.load();
     winSound.play();
+    document.querySelector(".texte1").classList.remove("invisible");
     winningScreen.classList.remove("invisible");
     startScreen.classList.add("invisible");
 }
@@ -2044,10 +2047,12 @@ function winScreen()
 function gameQuit()
 {
     startScreen.classList.remove("invisible");
+    document.querySelector(".texte1").classList.remove("invisible");
 }
 
 function loseScreen()
 {
+    document.querySelector(".texte1").classList.remove("invisible");
     losingScreen.classList.remove("invisible");
 }
 
@@ -2169,6 +2174,7 @@ function cheatCodeMap() {
         map.remove();
     affichageMap.remove();
     startScreen.classList.remove("invisible");
+    document.querySelector(".texte1").classList.remove("invisible");
     clearInterval(locationUpdate);
   }
 }
